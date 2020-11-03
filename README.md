@@ -1,10 +1,15 @@
 # parisportif4
 
 parieur (nom , prenom , date de naissance,  adress , ville , tel , mail , solde , mdp)
-pari ( date , type)
+
+pari ( date , type, solde , mise)
+
 cote ( nom, cote)
+
 rencontre ( nom , lieu , date )
+
 evenement ( nom )
+
 Sport ( nom , type )
 
 parieur 0..* ---> 1 pari
