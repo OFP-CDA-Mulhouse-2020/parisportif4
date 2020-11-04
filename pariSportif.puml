@@ -7,6 +7,8 @@ class Evenement
 class Sport
 
 Parieur "1" *-- "0..*" Pari
+Parieur "1" -- "1" Portefeuille
+Pari "0..*" -- "1" Portefeuille
 Pari "0..*" --* "1" Cote
 Cote "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
@@ -14,6 +16,7 @@ Evenement "0..*" --* "1" Sport
 Sport "1"*--"1..*" Equipe
 Sport "1" *--"1..*" JoueurIndividuel
 Equipe "1" *-- "1..*" Joueur
+
 class Parieur {
     - Nom string
     - Prenom stringe
@@ -23,7 +26,6 @@ class Parieur {
     - Ville string
     - Telephone number
     - Email string
-    - Solde float
 
     + getNom()
     + getPrenom()
@@ -33,7 +35,6 @@ class Parieur {
     + getville()
     + gettelephone()
     + getemail()
-    + getsolde()
     + setNom()
     + setPrenom()
     + setDateDeNassance()
@@ -42,7 +43,6 @@ class Parieur {
     + setville()
     + settelephone()
     + setemail()
-    + setsolde()
 
 }
 
@@ -60,6 +60,22 @@ class Pari {
     + setType()
     + setMise()
     + setSolde()
+}
+class Portefeuille {
+    - solde float
+    - idPari integer
+    - idutilisateur integer
+    - statut string
+    
+    + getSolde()
+    + setSolde()
+    + getidPari()
+    + getidutilisateur()
+    + getstatut()
+    + settidPari()
+    + setidutilisateur()
+    + setstatut()
+
 }
 
 class Cote {
@@ -106,7 +122,7 @@ class Sport {
 }
 class Equipe {
     - Nom string
-    
+
     + getNom()
     + setNom()
 }
@@ -114,14 +130,14 @@ class Joueur {
     - Nom string
     - Prenom
     - Statut
-    
+
     + getNom()
     + setNom()
     + getPrenom()
     + setPrenom()
     + getStatut()
     + setStatut()
-    
+
 }
 class JoueurIndividuel {
     - Nom string
@@ -134,7 +150,7 @@ class JoueurIndividuel {
     + setPrenom()
     + getStatut()
     + setStatut()
-    
+
 }
 
 
