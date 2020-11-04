@@ -1,98 +1,141 @@
 @startuml
+class Parieur
+class Pari
+class Cote
+class Epreuve
+class Evenement
+class Sport
 
+Parieur "1" *-- "0..*" Pari
+Pari "0..*" --* "1" Cote
+Cote "0..*" --* "1" Epreuve
+Epreuve "0..*" --* "1" Evenement
+Evenement "0..*" --* "1" Sport
+Sport "1"*--"1..*" Equipe
+Sport "1" *--"1..*" JoueurIndividuel
+Equipe "1" *-- "1..*" Joueur
 class Parieur {
-    - nom string
-    - prenom string
-    - dateDeNaissance date
-    - adresse string
-    - ville string
-    - pays string
-    - tel number
-    - mail email
-    - solde float
+    - Nom string
+    - Prenom stringe
+    - Date de naissance date
+    - Adress string
+    - Pays string
+    - Ville string
+    - Telephone number
+    - Email string
+    - Solde float
 
     + getNom()
     + getPrenom()
-    + getDateDeNaissance()
+    + getDateDeNassance()
     + getAdresse()
-    + getVille()
-    + getPays()
-    + getTel()
-    + getMail()
-    + getSolde()
-    + getNom()
+    + getpays()
+    + getville()
+    + gettelephone()
+    + getemail()
+    + getsolde()
+    + setNom()
     + setPrenom()
-    + setDateDeNaissance()
+    + setDateDeNassance()
     + setAdresse()
-    + setVille()
-    + setPays()
-    + setTel()
-    + setMail()
-    + setSolde()
+    + setpays()
+    + setville()
+    + settelephone()
+    + setemail()
+    + setsolde()
+
 }
 
 class Pari {
-    - datePari
-    - typePari
-    - misePari float
-    - soldePari float
+    - Date date
+    - Type string
+    - Mise float
+    - Solde float
 
-    + getdatePari()
-    + gettypePari()
-    + getmisePari()
-    + getsoldePari()
-    + setdatePari()
-    + settypePari()
-    + setmisePari()
-    + setsoldePari()
-
+    + getDate()
+    + getType()
+    + getMise()
+    + getSolde()
+    + setDate()
+    + setType()
+    + setMise()
+    + setSolde()
 }
 
 class Cote {
-    - nomCote
-    - lacote
+    - Nom string
+    - Cote float
 
-    + getnomCote()
-    + setnomCote()
-    + getlacote()
-    + setlacote()
+    + getNom()
+    + getCote()
+    + setNom()
+    + setCote()
 }
 
 class Epreuve {
-    - dateEpreuve date
-    - lieuEpreuve string
-    - nomEpreuve string
+    - Nom string
+    - Date date
+    - Lieu string
 
-    + getdateEpreuve()
-    + getlieuEpreuve()
-    + getnomEpreuve()
-    + setdateEpreuve()
-    + setlieuEpreuve()
-    + setnomEpreuve()
+    + getNom()
+    + getDate()
+    + getLieu()
+    + setNom()
+    + setDate()
+    + setLieu()
+
+
 }
 
 class Evenement {
-    - nomEvenement string
+    - Nom string
 
-    + getnomEvenement()
-    + setnomEvenement()
+    +getNom()
+    +setNom()
 }
 
 class Sport {
-    - nomSport string
-    - typeSport string
+    - Nom string
+    - Type string
 
-    + getnomSport()
-    + gettypeSport()
-    + setnomSport()
-    + settypeSport()
+    + getNom()
+    + getType()
+    + setNom()
+    + setType()
+
+}
+class Equipe {
+    - Nom string
+    
+    + getNom()
+    + setNom()
+}
+class Joueur {
+    - Nom string
+    - Prenom
+    - Statut
+    
+    + getNom()
+    + setNom()
+    + getPrenom()
+    + setPrenom()
+    + getStatut()
+    + setStatut()
+    
+}
+class JoueurIndividuel {
+    - Nom string
+    - Prenom string
+    - statut integer
+
+    + getNom()
+    + setNom()
+    + getPrenom()
+    + setPrenom()
+    + getStatut()
+    + setStatut()
+    
 }
 
-
-Parieur "1" *-- "0:*" Pari
-Pari "0:*" --* "1" Cote
-Cote "0:*" --* "1" Epreuve
-Epreuve "0:*" --* "1" Evenement
-Evenement "0:*" --* "1" Sport
 
 @enduml
