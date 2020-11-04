@@ -14,7 +14,7 @@ Cote "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
 Evenement "0..*" --* "1" Sport
 Sport "1"*--"1..*" Equipe
-Sport "1" *--"1..*" JoueurIndividuel
+Sport "1" *--"1..*" Joueur
 Equipe "1" *-- "1..*" Joueur
 
 class Parieur {
@@ -26,6 +26,8 @@ class Parieur {
     - Ville string
     - Telephone number
     - Email string
+    - Solde float
+    - mot_de_passe integer
 
     + getNom()
     + getPrenom()
@@ -35,6 +37,8 @@ class Parieur {
     + getville()
     + gettelephone()
     + getemail()
+    + getSolde()
+    + getMot_de_passe()
     + setNom()
     + setPrenom()
     + setDateDeNassance()
@@ -43,6 +47,8 @@ class Parieur {
     + setville()
     + settelephone()
     + setemail()
+    + setSolde()
+    + setMot_de_passe()
 
 }
 
@@ -66,7 +72,7 @@ class Portefeuille {
     - idPari integer
     - idutilisateur integer
     - statut string
-    
+
     + getSolde()
     + setSolde()
     + getidPari()
@@ -139,19 +145,7 @@ class Joueur {
     + setStatut()
 
 }
-class JoueurIndividuel {
-    - Nom string
-    - Prenom string
-    - statut integer
 
-    + getNom()
-    + setNom()
-    + getPrenom()
-    + setPrenom()
-    + getStatut()
-    + setStatut()
-
-}
 
 
 @enduml
