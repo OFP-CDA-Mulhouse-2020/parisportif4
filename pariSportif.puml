@@ -1,7 +1,7 @@
 @startuml
 class Parieur
 class Pari
-class Cote
+class Pronostic
 class Epreuve
 class Evenement
 class Sport
@@ -9,8 +9,8 @@ class Sport
 Parieur "1" *-- "0..*" Pari
 Parieur "1" -- "1" Portefeuille
 Pari "0..*" -- "1" Portefeuille
-Pari "0..*" --* "1" Cote
-Cote "0..*" --* "1" Epreuve
+Pari "0..*" --* "1" Pronostic
+Pronostic "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
 Evenement "0..*" --* "1" Sport
 Sport "1"*--"1..*" Equipe
@@ -84,7 +84,7 @@ class Portefeuille {
 
 }
 
-class Cote {
+class Pronostic {
     - Nom string
     - Cote float
 
