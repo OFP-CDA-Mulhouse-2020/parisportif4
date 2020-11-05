@@ -6,10 +6,9 @@ class Epreuve
 class Evenement
 class Sport
 
-Parieur "1" *-- "0..*" Pari
-Parieur "1" -- "1" Portefeuille
-Pari "0..*" -- "1" Portefeuille
-Pari "0..*" --* "1" Pronostic
+
+(Parieur, Pronostic) . Pari
+Parieur "1" *-- "1" Portefeuille
 Pronostic "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
 Evenement "0..*" --* "1" Sport
@@ -18,6 +17,7 @@ Sport "1" *--"1..*" Joueur
 Equipe "1" *-- "1..*" Joueur
 
 class Parieur {
+    - id integer
     - Nom string
     - Prenom stringe
     - Date de naissance date
@@ -26,9 +26,9 @@ class Parieur {
     - Ville string
     - Telephone number
     - Email string
-    - Solde float
     - mot_de_passe integer
 
+    + getDate()
     + getNom()
     + getPrenom()
     + getDateDeNassance()
@@ -37,7 +37,6 @@ class Parieur {
     + getville()
     + gettelephone()
     + getemail()
-    + getSolde()
     + getMot_de_passe()
     + setNom()
     + setPrenom()
@@ -47,16 +46,20 @@ class Parieur {
     + setville()
     + settelephone()
     + setemail()
-    + setSolde()
     + setMot_de_passe()
 
 }
 
 class Pari {
+    - Id
+    - IdPronostic
+    - IdParieur
     - Date date
     - Type string
-    - Mise float
-    - Solde float
+    - MiseOrigine float
+    - MiseViertuelle float
+    - SoldeOrigine float
+    - SoldeVertuelle float
 
     + getDate()
     + getType()
@@ -68,9 +71,9 @@ class Pari {
     + setSolde()
 }
 class Portefeuille {
-    - solde float
-    - idPari integer
-    - idutilisateur integer
+    - idParieur integer
+    - SoldeOrigine float
+    - SoldeVirtuelle float
     - statut string
 
     + getSolde()
