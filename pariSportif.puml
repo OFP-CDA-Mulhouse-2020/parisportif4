@@ -1,20 +1,4 @@
 @startuml
-class Parieur
-class Pari
-class Pronostic
-class Epreuve
-class Evenement
-class Sport
-
-
-(Parieur, Pronostic) . Pari
-Parieur "1" *-- "1" Portefeuille
-Pronostic "0..*" --* "1" Epreuve
-Epreuve "0..*" --* "1" Evenement
-Evenement "0..*" --* "1" Sport
-Sport "1"*--"1..*" Equipe
-Sport "1" *--"1..*" Joueur
-Equipe "1" *-- "1..*" Joueur
 
 class Parieur {
     - id integer
@@ -149,6 +133,13 @@ class Joueur {
 
 }
 
-
+(Parieur, Pronostic) . Pari
+Parieur "1" *-- "1" Portefeuille
+Pronostic "0..*" --* "1" Epreuve
+Epreuve "0..*" --* "1" Evenement
+Evenement "0..*" --* "1" Sport
+Sport "1"*--"1..*" Equipe
+Sport "1" *--"1..*" Joueur
+Equipe "1" *-- "1..*" Joueur
 
 @enduml
