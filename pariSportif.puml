@@ -1,7 +1,7 @@
 @startuml
 
-class Parieur {
-    - id integer
+class Utilisateur {
+    - Id integer
     - Nom string
     - Prenom stringe
     - Date de naissance date
@@ -10,136 +10,94 @@ class Parieur {
     - Ville string
     - Telephone number
     - Email string
-    - mot_de_passe integer
+    - Mot_de_passe integer
+    - IdStatut StatutUtilisateur
+    - Solde float
 
-    + getDate()
-    + getNom()
-    + getPrenom()
-    + getDateDeNassance()
-    + getAdresse()
-    + getpays()
-    + getville()
-    + gettelephone()
-    + getemail()
-    + getMot_de_passe()
-    + setNom()
-    + setPrenom()
-    + setDateDeNassance()
-    + setAdresse()
-    + setpays()
-    + setville()
-    + settelephone()
-    + setemail()
-    + setMot_de_passe()
 
+}
+class StatutUtilisateur {
+    - id integer
+    - Document_Officelle Bloob
+    - Statut <0,1>
+}
+
+class Transaction {
+    - id integer
+    - IdUtilisateur
+    - Dernnier_solde_mis integer
+    - Dernnier_solde_sorti integer
 }
 
 class Pari {
     - Id
     - IdPronostic
-    - IdParieur
+    - IdUtilisateur
     - Date date
-    - Type string
-    - MiseOrigine float
-    - MiseViertuelle float
-    - SoldeOrigine float
-    - SoldeVertuelle float
-
-    + getDate()
-    + getType()
-    + getMise()
-    + getSolde()
-    + setDate()
-    + setType()
-    + setMise()
-    + setSolde()
+    - mise float
+    - solde float
 }
-class Portefeuille {
-    - idParieur integer
-    - SoldeOrigine float
-    - SoldeVirtuelle float
-    - statut string
 
-    + getSolde()
-    + setSolde()
-    + getidPari()
-    + getidutilisateur()
-    + getstatut()
-    + settidPari()
-    + setidutilisateur()
-    + setstatut()
-
-}
 
 class Pronostic {
     - Nom string
     - Cote float
-
-    + getNom()
-    + getCote()
-    + setNom()
-    + setCote()
 }
 
 class Epreuve {
+    - id integer
     - Nom string
     - Date date
     - Lieu string
-
-    + getNom()
-    + getDate()
-    + getLieu()
-    + setNom()
-    + setDate()
-    + setLieu()
-
-
+    - idEvenement Evenement
 }
 
 class Evenement {
+    - id integer
     - Nom string
-
-    +getNom()
-    +setNom()
+    - Date_Debut
 }
 
 class Sport {
     - Nom string
-    - Type string
-
-    + getNom()
-    + getType()
-    + setNom()
-    + setType()
-
+}
+class SportCollectif {
+    - Nombre_joueurs
 }
 class Equipe {
-    - Nom string
-
-    + getNom()
-    + setNom()
+    - id integer
+    - Nom Equipe
 }
-class Joueur {
+class Joueurs {
     - Nom string
-    - Prenom
-    - Statut
-
-    + getNom()
-    + setNom()
-    + getPrenom()
-    + setPrenom()
-    + getStatut()
-    + setStatut()
-
+    - Prenom string
+    - Statut string
 }
 
-(Parieur, Pronostic) . Pari
-Parieur "1" *-- "1" Portefeuille
+class SportIndivesuelle {
+    - Nom_joueur string
+    - Prenom_joueur string
+    - Statut string
+}
+class HistoriquePari {
+    - id integer
+    - IdUtilisateur integer
+    - Date date date
+    - mise float
+    - solde float
+}
+
+(Utilisateur, Pronostic) . Pari
+Utilisateur "1" *-- "0..*" Transaction
+Utilisateur "1" *-- "1" StatutUtilisateur
 Pronostic "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
 Evenement "0..*" --* "1" Sport
-Sport "1"*--"1..*" Equipe
-Sport "1" *--"1..*" Joueur
-Equipe "1" *-- "1..*" Joueur
+Pronostic "0..*" -- "1" Evenement
+Sport <|-- SportIndivesuelle
+Sport <|-- SportCollectif
+SportCollectif "1" -- "1..*" Equipe
+Equipe "1" -- "1..*" Joueurs
+Pari -- HistoriquePari
 
 @enduml
