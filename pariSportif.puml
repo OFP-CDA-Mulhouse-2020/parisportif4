@@ -87,6 +87,7 @@ class HistoriquePari {
     - solde float
 }
 
+
 (Utilisateur, Pronostic) . Pari
 Utilisateur "1" *-- "0..*" Transaction
 Utilisateur "1" *-- "1" StatutUtilisateur
