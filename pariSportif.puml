@@ -1,6 +1,6 @@
 @startuml
 
-class Parieur {
+class Utilisateur {
     - Id integer
     - Nom string
     - Prenom stringe
@@ -12,18 +12,19 @@ class Parieur {
     - Email string
     - Mot_de_passe integer
     - IdStatut StatutUtilisateur
-    - Idportefeuille Portefeuille
+    - Solde float
+
 
 }
-class StatutParieur {
+class StatutUtilisateur {
     - id integer
     - Document_Officelle Bloob
     - Statut <0,1>
 }
 
-class Portefeuille {
+class Transaction {
     - id integer
-    - Solde
+    - IdUtilisateur
     - Dernnier_solde_mis integer
     - Dernnier_solde_sorti integer
 }
@@ -31,7 +32,7 @@ class Portefeuille {
 class Pari {
     - Id
     - IdPronostic
-    - IdParieur
+    - IdUtilisateur
     - Date date
     - mise float
     - solde float
@@ -74,14 +75,21 @@ class Joueurs {
 }
 
 class SportIndivesuelle {
-    - Nom_joueur
-    - Prenom_joueur
+    - Nom_joueur string
+    - Prenom_joueur string
     - Statut string
 }
+class HistoriquePari {
+    - id integer
+    - IdUtilisateur integer
+    - Date date date
+    - mise float
+    - solde float
+}
 
-(Parieur, Pronostic) . Pari
-Parieur "1" *-- "1" Portefeuille
-Parieur "1" *-- "1" StatutParieur
+(Utilisateur, Pronostic) . Pari
+Utilisateur "1" *-- "0..*" Transaction
+Utilisateur "1" *-- "1" StatutUtilisateur
 Pronostic "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
 Evenement "0..*" --* "1" Sport
@@ -90,5 +98,6 @@ Sport <|-- SportIndivesuelle
 Sport <|-- SportCollectif
 SportCollectif "1" -- "1..*" Equipe
 Equipe "1" -- "1..*" Joueurs
+Pari -- HistoriquePari
 
 @enduml
