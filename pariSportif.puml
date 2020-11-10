@@ -11,13 +11,13 @@ class Utilisateur {
     - Telephone number
     - Email string
     - Mot_de_passe integer
-    - IdStatut StatutUtilisateur
     - Solde float
 
 
 }
 class StatutUtilisateur {
     - id integer
+    - IdStatut StatutUtilisateur
     - Document_Officelle Bloob
     - Statut <0,1>
 }
