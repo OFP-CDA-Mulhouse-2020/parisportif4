@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   traefik:
     image: "traefik"
@@ -14,51 +13,58 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
+  ## php container
   php-apache:
     build:
-      context: Docker
+      context: docker
       dockerfile: Dockerfile
     image: hello-world-demo
     restart: "always"
     environment:
-        XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.php.rule=Host(`php.docker.localhost`)"
     volumes:
-      - "./parisSportifCode:/var/www/html/"
-
+      - ./parisSportifCode:/app
+  #    depends_on:
+  #      - db
+  ## composer container
   composer:
-    image: "composer"
+    image: composer
     restart: "no"
-    working_dir: "/app"
-    command: "install"
+    command: install
+    working_dir: /app
     volumes:
-      - "./parisSportifCode:/app"
+      - ./parisSportifCode:/app
 
+  ## mysql container
   db:
-    image: mysql
-    restart: on-failure
+    #container_name: "db"
+    image: "mysql"
+    restart: "always"
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ROOT_PASSWORD: "root"
     volumes:
-      - "./db/:/var/lib/mysql/"
+      - ./mysql-data:/var/lib/mysql
 
-
+  ## phpMyAdmin container
   phpmyadmin:
+    #container_name: "phmyadmin"
     image: "phpmyadmin"
     environment:
       PMA_HOST: "db"
     labels:
-      - "traefik.enable=true"
       - "traefik.http.routers.phpmyadmin.rule=Host(`pma.docker.localhost`)"
+      - "traefik.http.routers.phpmyadmin.entrypoints=web"
 
+  ## mailhog container
   mailhog:
     image: mailhog/mailhog
     ports:
       - 1025:1025
       - 8025:8025
     labels:
-      - "traefik.enable=true"
       - "traefik.http.routers.mailhog.rule=Host(`mho.docker.localhost`)"
-      - "traefik.services.mailhog.loadbalancer.server.port=8025"
+      - "traefik.http.routers.mailhog.entrypoints=web"
+      - "trafik.services.mailhog.loadbalancer.server.port=8025"
