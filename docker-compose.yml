@@ -1,41 +1,64 @@
-version: '3.3'
+version: '3'
+
 services:
-  php74:
-    build:
-      context: docker
-      dockerfile: Dockerfile
+  traefik:
+    image: "traefik"
+    restart: "always"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--entrypoints.web.address=:80"
     ports:
-      - 8086:80
-    working_dir: /app
+      - "8080:8080"
+      - "80:80"
     volumes:
-      - ./parisSportifCode/app
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  php-apache:
+    build:
+      context: Docker
+      dockerfile: Dockerfile
+    image: hello-world-demo
+    restart: "always"
+    environment:
+        XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.php.rule=Host(`php.docker.localhost`)"
+    volumes:
+      - "./parisSportifCode:/var/www/html/"
+
+  composer:
+    image: "composer"
+    restart: "no"
+    working_dir: "/app"
+    command: "install"
+    volumes:
+      - "./parisSportifCode:/app"
+
   db:
     image: mysql
-    restart: always
+    restart: on-failure
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE:
-    ports:
-      - "3308:3306"
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    restart: always
-    environment:
-      PMA_HOST: db
-      PMA_USER: root
-      PMA_PASSWORD: root
-    ports:
-      - "8080:80"
-  composer:
-    restart: always
-    image: composer
-    command: install
-    working_dir: /app
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     volumes:
-      - ./parisSportifCode:/app
+      - "./db/:/var/lib/mysql/"
+
+
+  phpmyadmin:
+    image: "phpmyadmin"
+    environment:
+      PMA_HOST: "db"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`pma.docker.localhost`)"
+
   mailhog:
-    image: mailhog/mailhog:latest
-    restart: always
+    image: mailhog/mailhog
     ports:
       - 1025:1025
       - 8025:8025
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailhog.rule=Host(`mho.docker.localhost`)"
+      - "traefik.services.mailhog.loadbalancer.server.port=8025"
