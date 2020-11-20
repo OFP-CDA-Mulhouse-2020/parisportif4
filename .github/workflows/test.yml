@@ -5,7 +5,7 @@ name: Deploy Test Unitaire sur le push
 # ici sur le push dans la branche main et sur la pull request
 on:
   push:
-    branches: [ create_entity/Test ]
+    branches: [ entityTest ]
   pull_request:
     branches: [ main ]
 
