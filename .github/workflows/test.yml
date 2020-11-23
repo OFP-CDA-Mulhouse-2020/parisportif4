@@ -1,7 +1,7 @@
 name: Class User test
 on:
   push:
-    branches: [ feature/create_entity_Test ]
+    branches: [ feature/create_entitywith_Test ]
 
 jobs:
   build-test:
