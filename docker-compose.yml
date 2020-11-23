@@ -38,12 +38,11 @@ services:
 
   db:
     image: mysql
-    restart: on-failure
+    restart: always
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "root"
     volumes:
-      - ./db/:/var/lib/mysql/
-
+      - ./mysql-data:/var/lib/mysql
 
   phpmyadmin:
     image: "phpmyadmin"
