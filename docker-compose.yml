@@ -21,12 +21,12 @@ services:
     image: hello-world-demo
     restart: "always"
     environment:
-        XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.php.rule=Host(`php.docker.localhost`)"
     volumes:
-      - "./parisSportifCode:/var/www/html/"
+      - ./parisSportifCode:/app
 
   composer:
     image: "composer"
@@ -34,7 +34,7 @@ services:
     working_dir: "/app"
     command: "install"
     volumes:
-      - "./parisSportifCode:/app"
+      - ./parisSportifCode:/app
 
   db:
     image: mysql
@@ -42,7 +42,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     volumes:
-      - "./db/:/var/lib/mysql/"
+      - ./db/:/var/lib/mysql/
 
 
   phpmyadmin:
