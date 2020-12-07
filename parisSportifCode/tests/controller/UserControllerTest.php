@@ -31,4 +31,6 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseRedirects ('/login');
     }
 
+
+
 }
