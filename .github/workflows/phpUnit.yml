@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+
+      - uses: actions/checkout@v1
+      - name: Run Composer
+        run: |
+          cd parisSportifCode
+          composer install --prefer-dist
+      - name: MySQL connection
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port 3306 -uroot -e "SHOW DATABASES"
+          cd parisSportifCode
+          cp -r .env.test.dist .env
+          php bin/console doctrine:database:create --no-interaction
+          php bin/console make:migration
+          php bin/console doctrine:schema:update --force
+          php bin/console doctrine:fixtures:load --no-interaction
+      - name: Run phpunit
+        run: |
+          cd parisSportifCode
+          ./vendor/bin/simple-phpunit

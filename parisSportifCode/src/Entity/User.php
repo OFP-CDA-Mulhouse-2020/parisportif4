@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -27,7 +29,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
-     *
+     * @Groups({"naming"})
      */
     private ?string $firstname;
 
@@ -36,7 +38,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
-     *
+     * @Groups({"naming"})
      */
     private ?string $lastname;
 
@@ -44,6 +46,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @Groups({"email"})
      */
     private ?string $email;
 
@@ -58,12 +61,14 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      * @Assert\LessThanOrEqual(value="today")
+     * @Groups({"date"})
      */
     private DateTimeInterface $createDate;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
+     * @Groups({"date"})
      */
     private bool $userValidation = false;
 
@@ -108,6 +113,7 @@ class User implements UserInterface
      * @Assert\Length(min="8",max="20")
      * @Assert\Regex(
      * pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/")
+     * @Groups({"pass"})
      */
     private $plainPassword;
 
@@ -209,10 +215,10 @@ class User implements UserInterface
         return $this->userValidationDate;
     }
 
-    public function setUserValidationDate(?\DateTimeInterface $userValidationDate): self
+    public function isUserValidated(): self
     {
-        $this->userValidation = true;
-        $this->userValidationDate = $userValidationDate;
+        
+        $this->userValidationDate = new DateTime();
 
         return $this;
     }
@@ -234,10 +240,10 @@ class User implements UserInterface
         return $this->userSuspendedDate;
     }
 
-    public function setUserSuspendedDate(?\DateTimeInterface $userSuspendedDate): self
+    public function isUserSuspended(): self
     {
-        $this->userSuspended = true;
-        $this->userSuspendedDate = $userSuspendedDate;
+        
+        $this->userSuspendedDate = new DateTime();
 
         return $this;
     }
@@ -259,10 +265,10 @@ class User implements UserInterface
         return $this->userDeletedDate;
     }
 
-    public function setUserDeletedDate(?\DateTimeInterface $userDeletedDate): self
+    public function isUserDeleted(): self
     {
         $this->userDeleted = true;
-        $this->userDeletedDate = $userDeletedDate;
+        $this->userDeletedDate = new DateTime();
 
         return $this;
     }

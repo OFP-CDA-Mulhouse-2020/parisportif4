@@ -70,8 +70,8 @@ class UserTest extends KernelTestCase
         $user = new User();
 
         $user->setEmail($email);
-        $errors = $this->validator->validate($user);
-        $this->assertEquals(5, count($errors));
+        $errors = $this->validator->validate($user,null,"email");
+        $this->assertEquals(0, count($errors));
     }
 
     public function ProviderValidEmail(): array
@@ -114,8 +114,8 @@ class UserTest extends KernelTestCase
 
         $user = new User();
         $user->setFirstname ($firstname);
-        $errors = $this->validator->validate($user);
-        $this->assertEquals(5, count($errors));
+        $errors = $this->validator->validate($user,null,"naming");
+        $this->assertEquals(0, count($errors));
     }
 
     public function provideValidFirstnameValues()
@@ -156,8 +156,8 @@ class UserTest extends KernelTestCase
     {
         $user = new User();
         $user->setBirthDate ($birthDate);
-        $errors = $this->validator->validate($user);
-        $this->assertEquals(5, count($errors));
+        $errors = $this->validator->validate($user,null,"date");
+        $this->assertEquals(0, count($errors));
     }
 
     public function provideValidBirthDateValues ()
@@ -219,8 +219,8 @@ class UserTest extends KernelTestCase
     {
         $user = new User();
         $user->setPlainPassword ($password);
-        $errors = $this->validator->validate($user);
-        $this->assertEquals(5, count($errors));
+        $errors = $this->validator->validate($user,null,"pass");
+        $this->assertEquals(0, count($errors));
     }
 
     public function provideValidPasswordValues ()

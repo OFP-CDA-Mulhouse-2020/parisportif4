@@ -25,7 +25,7 @@ class RegisterTest extends WebTestCase
         $this->assertSelectorNotExists('ul li');
     }
 
-    public function testInvalidRegisterUser ()
+    public function testBlankinputRegisterUser ()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
