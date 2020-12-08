@@ -60,7 +60,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Assert\LessThanOrEqual(value="today")
+     * @Assert\GreaterThanOrEqual(value="today")
      * @Groups({"date"})
      */
     private DateTimeInterface $createDate;
@@ -120,6 +120,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
+        $this->createDate = new DateTime();
     }
 
     public function getId(): ?int

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RefisteruserType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,10 @@ class RegisterController extends AbstractController
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            $user->setFirstname ($user->getFirstname ());
+            $user->setLastname ($user->getLastname ());
+            $user->setBirthDate ($user->getBirthDate ());
+            $user->setCreateDate (new DateTime());
           
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
@@ -41,7 +46,7 @@ class RegisterController extends AbstractController
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
 
-            return $this -> redirectToRoute ('app_login');
+            return $this -> redirectToRoute ('page_contoller');
         }
 
         return $this->render(

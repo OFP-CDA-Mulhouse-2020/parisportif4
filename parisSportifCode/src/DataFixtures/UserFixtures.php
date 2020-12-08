@@ -14,7 +14,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setFirstname ("namoune");
         $user->setLastname ("Sofiane");
-        $user->setEmail ("sofiane@gmail.com");
+        $user->setEmail ("sofiane1@gmail.com");
         $user->setBirthDate (DateTime::createFromFormat('Y-m-d', '1994-01-04'));
         $user->setCreateDate (new DateTime());
         $user->setRoles ([]);

@@ -65,6 +65,26 @@ class RegisterTest extends WebTestCase
         $this->assertSelectorExists('ul li');
     }
 
+    public function testAfterRegisterUser ()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/register');
+        $buttonCrawlerNode = $crawler->selectButton('submit');
+        $form = $buttonCrawlerNode->form();
+
+        $form['refisteruser[lastname]'] = 'namoune';
+        $form['refisteruser[firstname]'] = 'sofiane';
+        $form['refisteruser[birthdate]'] = '1994-01-04';
+        $form['refisteruser[email]'] = 'sofiane@gmail.com';
+        $form['refisteruser[plainPassword][first]'] = 'Sissouf123456';
+        $form['refisteruser[plainPassword][second]'] = 'Sissouf123456';
+
+
+        $client->submit ($form);
+        $this->assertResponseRedirects('/hello');
+        $client->followRedirect ();
+    }
+
 
 
 }
