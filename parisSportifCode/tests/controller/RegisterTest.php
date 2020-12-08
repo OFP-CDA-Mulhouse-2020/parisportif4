@@ -81,7 +81,7 @@ class RegisterTest extends WebTestCase
 
 
         $client->submit ($form);
-        $this->assertResponseRedirects('/hello');
+        $this->assertResponseRedirects('/login');
         $client->followRedirect ();
     }
 
