@@ -31,6 +31,13 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseRedirects ('/login');
     }
 
+    public function testUserAuthAccess ()
+    {
+        $client = static ::createClient ();
+        $client->request ('GET', '/auth');
+        $this->assertResponseRedirects (Response::HTTP_OK);
+    }
+
 
 
 }

@@ -45,7 +45,5 @@ class SecurityControllerTest extends WebTestCase
         ]);
         $client->submit ($form);
         $this->assertResponseRedirects ('/auth');
-        //$client->followRedirect ();
-        //$this->assertSelectorExists('.alert.alert-success');
     }
 }
