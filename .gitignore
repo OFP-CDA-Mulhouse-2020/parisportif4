@@ -2,4 +2,3 @@
 .idea
 .vscode
 db
-.env.test
