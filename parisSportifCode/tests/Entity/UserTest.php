@@ -304,6 +304,46 @@ class UserTest extends KernelTestCase
             ["+336784154"],
         ];
     }
+    /**
+     * @dataProvider ProviderInvalidStreet
+     * @param $street
+     */
+    public function testInvalidStreet($street)
+    {
+        $user = new User();
+
+        $user->setStreet($street);
+        $errors = $this->validator->validate($user,null,"naming");
+        $this->assertGreaterThanOrEqual(0, count($errors));
+    }
+
+    public function ProviderInvalidStreet(): array
+    {
+        return [
+            ["vdsdsfv?"],
+            ["02245"],
+        ];
+    }
+
+    /**
+     * @dataProvider ProviderValidStreet
+     * @param $street
+     */
+    public function testValidStreet($street)
+    {
+        $user = new User();
+
+        $user->setStreet($street);
+        $errors = $this->validator->validate($user,null,"naming");
+        $this->assertEquals(0, count($errors));
+    }
+
+    public function ProviderValidStreet(): array
+    {
+        return [
+            ["Rue vauban"],
+        ];
+    }
 
 
 }

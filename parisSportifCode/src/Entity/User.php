@@ -57,13 +57,22 @@ class User implements UserInterface
      */
     private ?DateTimeInterface $birthDate;
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-ZÀ-ÿ-\s]$/")
+     * @Groups({"naming"})
+     */
+    private ?string $street;
+
+    /**
      * @ORM\Column (type="string", unique=true)
      * @Assert\NotBlank ()
      * @Assert\Regex(
      *     pattern="^/((\+)33|0)[1-9](\d{2}){4}$/")
      * @Groups({"naming"})
      */
-    private string $phone;
+    private ?string $phone;
 
     /**
      * @ORM\Column(type="datetime")
@@ -191,6 +200,17 @@ class User implements UserInterface
     {
         $this->birthDate = $birthDate;
 
+        return $this;
+    }
+
+    public function getStreet () : ?string
+    {
+        return $this -> street;
+    }
+
+    public function setStreet ( ?string $street ) : self
+    {
+        $this -> street = $street;
         return $this;
     }
 
