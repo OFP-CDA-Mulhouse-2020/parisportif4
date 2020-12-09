@@ -56,11 +56,18 @@ class User implements UserInterface
      * @Assert\LessThanOrEqual(value="-18 years")
      */
     private ?DateTimeInterface $birthDate;
+    /**
+     * @ORM\Column (type="string", unique=true)
+     * @Assert\NotBlank ()
+     * @Assert\Regex(
+     *     pattern="^/((\+)33|0)[1-9](\d{2}){4}$/")
+     * @Groups({"naming"})
+     */
+    private string $phone;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(value="today")
      * @Groups({"date"})
      */
     private DateTimeInterface $createDate;
@@ -75,7 +82,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $userValidationDate;
+    private ?\DateTimeInterface $userValidationDate = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -85,7 +92,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $userSuspendedDate;
+    private ?\DateTimeInterface $userSuspendedDate = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -95,7 +102,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $userDeletedDate;
+    private ?\DateTimeInterface $userDeletedDate = null;
 
     /**
      * @ORM\Column(type="json")
@@ -187,16 +194,20 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getPhone () : string
+    {
+        return $this -> phone;
+    }
+
+    public function setPhone ( string $phone ) : self
+    {
+        $this -> phone = $phone;
+        return $this;
+    }
+
     public function getCreateDate(): ?\DateTimeInterface
     {
         return $this->createDate;
-    }
-
-    public function setCreateDate(\DateTimeInterface $createDate): self
-    {
-        $this->createDate = $createDate;
-
-        return $this;
     }
 
     public function getUserValidation(): ?bool
@@ -204,11 +215,11 @@ class User implements UserInterface
         return $this->userValidation;
     }
 
-    public function setUserValidation(): self
+    public function setUserValidation(): ?bool
     {
-        $this->userValidation = true;
+        return $this->userValidation = true;
 
-        return $this;
+
     }
 
     public function getUserValidationDate(): ?\DateTimeInterface
@@ -218,7 +229,7 @@ class User implements UserInterface
 
     public function isUserValidated(): self
     {
-        
+        $this->userValidation = true;
         $this->userValidationDate = new DateTime();
 
         return $this;
@@ -229,11 +240,9 @@ class User implements UserInterface
         return $this->userSuspended;
     }
 
-    public function setUserSuspended(): self
+    public function setUserSuspended(): ?bool
     {
-        $this->userSuspended = true;
-
-        return $this;
+        return $this->userSuspended = true;
     }
 
     public function getUserSuspendedDate(): ?\DateTimeInterface
@@ -243,7 +252,7 @@ class User implements UserInterface
 
     public function isUserSuspended(): self
     {
-        
+        $this->userSuspended = true;
         $this->userSuspendedDate = new DateTime();
 
         return $this;
@@ -254,11 +263,9 @@ class User implements UserInterface
         return $this->userDeleted;
     }
 
-    public function setUserDeleted()
+    public function setUserDeleted(): ?bool
     {
-        $this->userDeleted = true;
-
-        return $this;
+        return $this->userDeleted = true;
     }
 
     public function getUserDeletedDate(): ?\DateTimeInterface

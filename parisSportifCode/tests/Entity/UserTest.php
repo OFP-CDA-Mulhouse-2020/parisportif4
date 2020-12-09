@@ -5,8 +5,8 @@ namespace App\Tests\Entity;
 
 
 use App\Entity\User;
-use DateInterval;
 use DateTime;
+use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserTest extends KernelTestCase
@@ -37,9 +37,10 @@ class UserTest extends KernelTestCase
         $this->assertClassHasAttribute("userSuspendedDate", User::class);
         $this->assertClassHasAttribute("userDeleted", User::class);
         $this->assertClassHasAttribute("userDeletedDate", User::class);
+        $this->assertClassHasAttribute("phone", User::class);
     }
     /**
-     * @dataProvider ProviderinvalidEmail
+     * @dataProvider ProviderInvalidEmail
      * @param $email
      */
     public function testInvalidEmail($email)
@@ -51,7 +52,7 @@ class UserTest extends KernelTestCase
         $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
-    public function ProviderinvalidEmail(): array
+    public function ProviderInvalidEmail(): array
     {
         return [
             [""],
@@ -168,28 +169,7 @@ class UserTest extends KernelTestCase
             [DateTime::createFromFormat('Y-m-d', '2000-01-04')],
         ];
     }
-
-    /**
-     * @param $createAt
-     * @dataProvider provideInvalidCreateAtValues
-     */
-    public function testInvalidCreateAt ( $createAt)
-    {
-        $user = new User();
-        $user->setCreateDate ($createAt);
-        $errors = $this->validator->validate($user);
-        $this->assertGreaterThanOrEqual(1, count($errors));
-    }
-
-    public function provideInvalidCreateAtValues ()
-    {
-        return [
-            [(new DateTime())->sub(new DateInterval('P01Y'))],
-            [(new DateTime())->sub(new DateInterval('P10Y'))],
-            [(new DateTime())->sub(new DateInterval('P11Y'))],
-        ];
-    }
-
+    
     /**
      * @param $password
      * @dataProvider provideInvalidPasswordValues
@@ -229,6 +209,99 @@ class UserTest extends KernelTestCase
             ['Sissouf1'],
             ['Sisssasa7'],
             ['mohAmmedsofiane3']
+        ];
+    }
+
+    public function testValidate ()
+    {
+        $user = new User();
+        self::assertSame (false,$user->getUserValidation ());
+        $user->setUserValidation ();
+        self::assertSame (true,$user->getUserValidation ());
+    }
+
+    public function testSuspended ()
+    {
+        $user = new User();
+        self::assertSame (false,$user->getUserSuspended ());
+        $user->setUserSuspended ();
+        self::assertSame (true,$user->getUserSuspended ());
+    }
+
+    public function testDeleted ()
+    {
+        $user = new User();
+        self::assertSame (false,$user->getUserDeleted ());
+        $user->setUserDeleted () ;
+        self::assertSame (true,$user->getUserDeleted ());
+    }
+
+
+    public function testActivatedAccountUser ()
+    {
+        $user = new User();
+        self::assertNull ($user->getUserValidationDate ());
+        $user->isUserValidated();
+        self::assertInstanceOf(DateTimeInterface::class, $user->getUserValidationDate ());
+    }
+
+    public function testSuspendedAccountUser ()
+    {
+        $user = new User();
+        self::assertNull ($user->getUserSuspendedDate ());
+        $user->isUserSuspended ();
+        self::assertInstanceOf(DateTimeInterface::class, $user->getUserSuspendedDate ());
+    }
+
+    public function testDeletedAccountUser ()
+    {
+        $user = new User();
+        self::assertNull ($user->getUserDeletedDate());
+        $user->isUserDeleted ();
+        self::assertInstanceOf(DateTimeInterface::class, $user->getUserDeletedDate());
+    }
+
+    /**
+     * @dataProvider ProviderInvalidPhone
+     * @param $phone
+     */
+    public function testInvalidPhone($phone)
+    {
+        $user = new User();
+
+        $user->setPhone($phone);
+        $errors = $this->validator->validate($user,null,"naming");
+        $this->assertGreaterThanOrEqual(0, count($errors));
+    }
+
+    public function ProviderInvalidPhone(): array
+    {
+        return [
+            [""],
+            ["02245"],
+            ["545484"],
+            ["00015151651651651651"]
+        ];
+    }
+
+    /**
+     * @dataProvider ProviderValidPhone
+     * @param $phone
+     */
+    public function testValidPhone($phone)
+    {
+        $user = new User();
+
+        $user->setPhone($phone);
+        $errors = $this->validator->validate($user,null,"naming");
+        $this->assertEquals(0, count($errors));
+    }
+
+    public function ProviderValidPhone(): array
+    {
+        return [
+            ["01478745896"],
+            ["+336784154"],
         ];
     }
 
