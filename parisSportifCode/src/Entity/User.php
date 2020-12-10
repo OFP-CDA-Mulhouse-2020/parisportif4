@@ -29,7 +29,6 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
-     * @Groups({"naming"})
      */
     private ?string $firstname;
 
@@ -38,7 +37,6 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
-     * @Groups({"naming"})
      */
     private ?string $lastname;
 
@@ -46,7 +44,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"email"})
      */
     private ?string $email;
 
@@ -56,35 +53,57 @@ class User implements UserInterface
      * @Assert\LessThanOrEqual(value="-18 years")
      */
     private ?DateTimeInterface $birthDate;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Regex(
-     *     pattern="/^[a-zA-ZÀ-ÿ-\s]$/")
-     * @Groups({"naming"})
+     *     pattern="/^[a-zA-Z\s,-]+$/")
      */
     private ?string $street;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z]*$/")
+     */
+    private ?string $street_number;
+
+
+    /**
+     * @ORM\Column(type="string", length=5)
+     * @Assert\NotBlank ()
+     * @Assert\Regex (
+     *     pattern="/^[0-9]{5}$/")
+     */
+    private ?string $code_postal;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     * @Assert\NotBlank ()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-ZÀ-ÿ-]{3,30}$/")
+     */
+    private ?string $city;
 
     /**
      * @ORM\Column (type="string", unique=true)
      * @Assert\NotBlank ()
      * @Assert\Regex(
-     *     pattern="^/((\+)33|0)[1-9](\d{2}){4}$/")
-     * @Groups({"naming"})
+     *     pattern="/^((\+)33|0)[1-9](\d{2}){4}$/")
      */
     private ?string $phone;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Groups({"date"})
      */
     private DateTimeInterface $createDate;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
-     * @Groups({"date"})
      */
     private bool $userValidation = false;
 
@@ -126,10 +145,9 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(min="8",max="20")
+     * @Assert\Length(min="8",max="16")
      * @Assert\Regex(
      * pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/")
-     * @Groups({"pass"})
      */
     private $plainPassword;
 
@@ -211,6 +229,39 @@ class User implements UserInterface
     public function setStreet ( ?string $street ) : self
     {
         $this -> street = $street;
+        return $this;
+    }
+
+    public function getStreetNumber () : ?string
+    {
+        return $this -> street_number;
+    }
+
+    public function setStreetNumber ( ?string $street_number ) : self
+    {
+        $this -> street_number = $street_number;
+        return $this;
+    }
+
+    public function getCodePostal () : ?string
+    {
+        return $this -> code_postal;
+    }
+
+    public function setCodePostal ( ?string $code_postal ) : self
+    {
+        $this -> code_postal = $code_postal;
+        return $this;
+    }
+
+    public function getCity () : ?string
+    {
+        return $this -> city;
+    }
+
+    public function setCity ( ?string $city ) : self
+    {
+        $this -> city = $city;
         return $this;
     }
 

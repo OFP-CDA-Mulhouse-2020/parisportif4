@@ -38,6 +38,10 @@ class UserTest extends KernelTestCase
         $this->assertClassHasAttribute("userDeleted", User::class);
         $this->assertClassHasAttribute("userDeletedDate", User::class);
         $this->assertClassHasAttribute("phone", User::class);
+        $this->assertClassHasAttribute("street", User::class);
+        $this->assertClassHasAttribute("street_number", User::class);
+        $this->assertClassHasAttribute("code_postal", User::class);
+        $this->assertClassHasAttribute("city", User::class);
     }
     /**
      * @dataProvider ProviderInvalidEmail
@@ -71,8 +75,8 @@ class UserTest extends KernelTestCase
         $user = new User();
 
         $user->setEmail($email);
-        $errors = $this->validator->validate($user,null,"email");
-        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertEquals(8, count($errors));
     }
 
     public function ProviderValidEmail(): array
@@ -115,8 +119,8 @@ class UserTest extends KernelTestCase
 
         $user = new User();
         $user->setFirstname ($firstname);
-        $errors = $this->validator->validate($user,null,"naming");
-        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertEquals(8, count($errors));
     }
 
     public function provideValidFirstnameValues()
@@ -157,8 +161,8 @@ class UserTest extends KernelTestCase
     {
         $user = new User();
         $user->setBirthDate ($birthDate);
-        $errors = $this->validator->validate($user,null,"date");
-        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertEquals(8, count($errors));
     }
 
     public function provideValidBirthDateValues ()
@@ -199,8 +203,8 @@ class UserTest extends KernelTestCase
     {
         $user = new User();
         $user->setPlainPassword ($password);
-        $errors = $this->validator->validate($user,null,"pass");
-        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertEquals(8, count($errors));
     }
 
     public function provideValidPasswordValues ()
@@ -270,8 +274,8 @@ class UserTest extends KernelTestCase
         $user = new User();
 
         $user->setPhone($phone);
-        $errors = $this->validator->validate($user,null,"naming");
-        $this->assertGreaterThanOrEqual(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
     public function ProviderInvalidPhone(): array
@@ -293,15 +297,15 @@ class UserTest extends KernelTestCase
         $user = new User();
 
         $user->setPhone($phone);
-        $errors = $this->validator->validate($user,null,"naming");
-        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertEquals(8, count($errors));
     }
 
     public function ProviderValidPhone(): array
     {
         return [
-            ["01478745896"],
-            ["+336784154"],
+            ["0752796749"],
+            ["+33752796749"],
         ];
     }
     /**
@@ -313,8 +317,8 @@ class UserTest extends KernelTestCase
         $user = new User();
 
         $user->setStreet($street);
-        $errors = $this->validator->validate($user,null,"naming");
-        $this->assertGreaterThanOrEqual(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
     public function ProviderInvalidStreet(): array
@@ -334,8 +338,8 @@ class UserTest extends KernelTestCase
         $user = new User();
 
         $user->setStreet($street);
-        $errors = $this->validator->validate($user,null,"naming");
-        $this->assertEquals(0, count($errors));
+        $errors = $this->validator->validate($user);
+        $this->assertEquals(8, count($errors));
     }
 
     public function ProviderValidStreet(): array
@@ -344,6 +348,137 @@ class UserTest extends KernelTestCase
             ["Rue vauban"],
         ];
     }
+
+    /**
+     * @dataProvider ProviderInvalidStreetNumber
+     * @param $streetNumber
+     */
+    public function testInvalidStreetNumber ($streetNumber)
+    {
+        $user = new User();
+        $user->setStreetNumber($streetNumber);
+        $errors = $this->validator->validate($user);
+        $this->assertGreaterThanOrEqual (1,count($errors));
+
+    }
+
+    public function ProviderInvalidStreetNumber ()
+    {
+        return [
+          ["85?"],
+          ["85."],
+          [".85"],
+        ];
+    }
+
+    /**
+     * @dataProvider ProviderValidStreetNumber
+     * @param $streetNumber
+     */
+    public function testValidStreetNumber ($streetNumber)
+    {
+        $user = new User();
+        $user->setStreetNumber ($streetNumber);
+        $errors = $this->validator->validate($user);
+        $this->assertEquals (9,count($errors));
+
+    }
+
+    public function ProviderValidStreetNumber ()
+    {
+        return [
+            [""],
+            ["A"],
+            ["B"],
+            ["BB"]
+        ];
+    }
+
+    /**
+     * @dataProvider ProviderInvalidCodePostal
+     * @param $codePostal
+     */
+    public function testInvalidCodePostal ($codePostal)
+    {
+        $user = new User ();
+        $user->setCodePostal ($codePostal);
+        $errors = $this->validator->validate($user);
+        $this->assertGreaterThanOrEqual (1,count($errors));
+    }
+
+    public function ProviderInvalidCodePostal ()
+    {
+        return [
+            [""],
+            ["12"],
+            ["A125"]
+        ];
+    }
+
+    /**
+     * @dataProvider ProviderValidCodePostal
+     * @param $codePostal
+     */
+    public function testValidCodePostal ($codePostal)
+    {
+        $user = new User();
+        $user->setCodePostal ($codePostal);
+        $errors = $this->validator->validate($user);
+        $this->assertEquals (8,count($errors));
+    }
+
+    public function ProviderValidCodePostal ()
+    {
+        return [
+            ["75000"],
+            ["68000"],
+            ["68100"]
+
+        ];
+    }
+
+    /**
+     * @dataProvider ProviderInvalidCity
+     * @param $city
+     */
+    public function testInvalidCity ($city)
+    {
+        $user = new User();
+        $user->setCity ($city);
+        $errors = $this->validator->validate($user);
+        $this->assertGreaterThanOrEqual (1,count($errors));
+    }
+
+    public function ProviderInvalidCity()
+    {
+        return [
+            [""],
+            ["pa_ris"],
+            ["Mulhouse68"]
+        ];
+    }
+
+    /**
+     * @dataProvider providerValidCity
+     * @param $city
+     */
+    public function testValidCity ($city)
+    {
+        $user = new User();
+        $user->setCity ($city);
+        $errors = $this->validator->validate($user);
+        $this->assertEquals (8,count($errors));
+    }
+
+    public function providerValidCity ()
+    {
+        return [
+            ["Mulhouse"],
+            ["marseille"],
+        ];
+    }
+
+
 
 
 }
