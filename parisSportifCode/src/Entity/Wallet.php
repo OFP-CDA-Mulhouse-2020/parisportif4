@@ -21,8 +21,21 @@ class Wallet
      * @ORM\Column(type="integer", length=10)
      * @Assert\PositiveOrZero
      */
-    private ?int $credit;
+    private ?int $credit = 0;
+    /**
+     * @ORM\Column(type="integer", length=5, nullable=true)
+     * @Assert\Positive
+     * @Assert\LessThanOrEqual(value="50000")
+     */
+    private ?int $addMoney = null;
+    /**
+     * @ORM\Column(type="integer", length=5, nullable=true)
+     * @Assert\PositiveOrZero
+     * @Assert\LessThanOrEqual(value="50000")
+     */
+    private ?int $withdraw = null;
 
+    private ?bool $isValid;
 
     public function getId(): ?int
     {
@@ -34,9 +47,18 @@ class Wallet
         return $this -> credit;
     }
 
-    public function setCredit ( ?int $credit ) : self
+    public function getAddMoney () : ?int
     {
-        $this -> credit = $credit*100;
+        return $this -> addMoney;
+    }
+
+    public function AddMoney ( ?int $addMoney ) : self
+    {
+        $this -> addMoney = $addMoney*100;
+        $this->credit += ($addMoney*100);
         return $this;
     }
+
+
+
 }

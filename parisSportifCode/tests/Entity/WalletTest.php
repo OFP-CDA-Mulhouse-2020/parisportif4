@@ -24,47 +24,58 @@ class WalletTest extends KernelTestCase
         $wallet = new Wallet();
         $this->assertInstanceOf(Wallet::class, $wallet);
         $this->assertClassHasAttribute("credit", Wallet::class);
+        $this->assertClassHasAttribute("addMoney", Wallet::class);
     }
+
 
     /**
-     * @dataProvider providerInvalidCredit
-     * @param $credit
+     * @dataProvider providerAddMoney
+     * @param $money
      */
-    public function testInvalidCredit ($credit)
+    public function testAddMoney($money)
     {
         $wallet = new Wallet();
-        $wallet->setCredit($credit);
+        self::assertSame (0,$wallet->getCredit ());
+        $wallet->AddMoney ($money);
         $errors = $this->validator->validate($wallet);
-        $this->assertGreaterThanOrEqual(1, count($errors));
-    }
+        $this->assertEquals(0, count($errors));
+        self::assertSame ($money*100,$wallet->getCredit ());
+        self::assertSame ($money*100,$wallet->getAddMoney ());
 
-    public function providerInvalidCredit()
+
+    }
+    public function providerAddMoney ()
     {
         return [
-            [-254]
+            [500],
+            [200],
+            [10]
         ];
     }
 
     /**
-     * @dataProvider providerValidCredit
-     * @param $credit
+     * @dataProvider providerInvalidAddMoney
+     * @param $money
      */
-    public function testValidCredit ($credit)
+    public function testInvalidAddMoney($money)
     {
         $wallet = new Wallet();
-        $wallet->setCredit($credit);
+        self::assertSame (0,$wallet->getCredit ());
+        $wallet->AddMoney ($money);
         $errors = $this->validator->validate($wallet);
-        $this->assertEquals(0, count($errors));
-    }
+        $this->assertGreaterThanOrEqual(1, count($errors));
 
-    public function providerValidCredit()
+
+    }
+    public function providerInvalidAddMoney ()
     {
         return [
             [0],
-            [10.99],
-            [254]
+            [501],
+            [-200]
         ];
     }
+
 
 
 }
