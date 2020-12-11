@@ -29,7 +29,6 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
-     * @Groups({"naming"})
      */
     private ?string $firstname;
 
@@ -38,7 +37,6 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
-     * @Groups({"naming"})
      */
     private ?string $lastname;
 
@@ -46,7 +44,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Groups({"email"})
      */
     private ?string $email;
 
@@ -58,24 +55,62 @@ class User implements UserInterface
     private ?DateTimeInterface $birthDate;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z\s,-]+$/")
+     */
+    private ?string $street;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z]*$/")
+     */
+    private ?string $street_number;
+
+
+    /**
+     * @ORM\Column(type="string", length=5)
+     * @Assert\NotBlank ()
+     * @Assert\Regex (
+     *     pattern="/^[0-9]{5}$/")
+     */
+    private ?string $code_postal;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     * @Assert\NotBlank ()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-ZÀ-ÿ-]{3,30}$/")
+     */
+    private ?string $city;
+
+    /**
+     * @ORM\Column (type="string", unique=true)
+     * @Assert\NotBlank ()
+     * @Assert\Regex(
+     *     pattern="/^((\+)33|0)[1-9](\d{2}){4}$/")
+     */
+    private ?string $phone;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(value="today")
-     * @Groups({"date"})
      */
     private DateTimeInterface $createDate;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
-     * @Groups({"date"})
      */
     private bool $userValidation = false;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $userValidationDate;
+    private ?\DateTimeInterface $userValidationDate = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -85,7 +120,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $userSuspendedDate;
+    private ?\DateTimeInterface $userSuspendedDate = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -95,7 +130,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $userDeletedDate;
+    private ?\DateTimeInterface $userDeletedDate = null;
 
     /**
      * @ORM\Column(type="json")
@@ -110,10 +145,9 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(min="8",max="20")
+     * @Assert\Length(min="8",max="16")
      * @Assert\Regex(
      * pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/")
-     * @Groups({"pass"})
      */
     private $plainPassword;
 
@@ -187,16 +221,64 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getStreet () : ?string
+    {
+        return $this -> street;
+    }
+
+    public function setStreet ( ?string $street ) : self
+    {
+        $this -> street = $street;
+        return $this;
+    }
+
+    public function getStreetNumber () : ?string
+    {
+        return $this -> street_number;
+    }
+
+    public function setStreetNumber ( ?string $street_number ) : self
+    {
+        $this -> street_number = $street_number;
+        return $this;
+    }
+
+    public function getCodePostal () : ?string
+    {
+        return $this -> code_postal;
+    }
+
+    public function setCodePostal ( ?string $code_postal ) : self
+    {
+        $this -> code_postal = $code_postal;
+        return $this;
+    }
+
+    public function getCity () : ?string
+    {
+        return $this -> city;
+    }
+
+    public function setCity ( ?string $city ) : self
+    {
+        $this -> city = $city;
+        return $this;
+    }
+
+    public function getPhone () : string
+    {
+        return $this -> phone;
+    }
+
+    public function setPhone ( string $phone ) : self
+    {
+        $this -> phone = $phone;
+        return $this;
+    }
+
     public function getCreateDate(): ?\DateTimeInterface
     {
         return $this->createDate;
-    }
-
-    public function setCreateDate(\DateTimeInterface $createDate): self
-    {
-        $this->createDate = $createDate;
-
-        return $this;
     }
 
     public function getUserValidation(): ?bool
@@ -204,11 +286,11 @@ class User implements UserInterface
         return $this->userValidation;
     }
 
-    public function setUserValidation(): self
+    public function setUserValidation(): ?bool
     {
-        $this->userValidation = true;
+        return $this->userValidation = true;
 
-        return $this;
+
     }
 
     public function getUserValidationDate(): ?\DateTimeInterface
@@ -218,7 +300,7 @@ class User implements UserInterface
 
     public function isUserValidated(): self
     {
-        
+        $this->userValidation = true;
         $this->userValidationDate = new DateTime();
 
         return $this;
@@ -229,11 +311,9 @@ class User implements UserInterface
         return $this->userSuspended;
     }
 
-    public function setUserSuspended(): self
+    public function setUserSuspended(): ?bool
     {
-        $this->userSuspended = true;
-
-        return $this;
+        return $this->userSuspended = true;
     }
 
     public function getUserSuspendedDate(): ?\DateTimeInterface
@@ -243,7 +323,7 @@ class User implements UserInterface
 
     public function isUserSuspended(): self
     {
-        
+        $this->userSuspended = true;
         $this->userSuspendedDate = new DateTime();
 
         return $this;
@@ -254,11 +334,9 @@ class User implements UserInterface
         return $this->userDeleted;
     }
 
-    public function setUserDeleted()
+    public function setUserDeleted(): ?bool
     {
-        $this->userDeleted = true;
-
-        return $this;
+        return $this->userDeleted = true;
     }
 
     public function getUserDeletedDate(): ?\DateTimeInterface
