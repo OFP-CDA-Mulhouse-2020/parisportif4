@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=WalletRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\WalletRepository", repositoryClass=WalletRepository::class)
  */
 class Wallet
 {
@@ -33,9 +33,10 @@ class Wallet
      * @Assert\PositiveOrZero
      * @Assert\LessThanOrEqual(value="50000")
      */
-    private ?int $withdraw = null;
+    private ?int $withdrawMoney = null;
 
-    private ?bool $isValid;
+    private bool $isValid ;
+
 
     public function getId(): ?int
     {
@@ -57,6 +58,31 @@ class Wallet
         $this -> addMoney = $addMoney*100;
         $this->credit += ($addMoney*100);
         return $this;
+    }
+
+    public function getWithdrawMoney () : ?int
+    {
+        return $this -> withdrawMoney;
+    }
+
+    public function Drawmoney(?int $drawmoney) : self
+    {
+        if($drawmoney*100 > $this->getCredit ())
+        {
+            $this->isValid = false;
+        }else
+        {
+            $this->withdrawMoney = $drawmoney*100;
+            $this->credit -= ($drawmoney*100);
+
+            $this->isValid = true;
+        }
+        return $this;
+    }
+
+    public function isValiddrawmoney (): bool
+    {
+        return $this->isValid ;
     }
 
 

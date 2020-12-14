@@ -76,6 +76,48 @@ class WalletTest extends KernelTestCase
         ];
     }
 
+    /**
+     * @dataProvider providerDrawMoney
+     * @param $drawMoney
+     */
+    public function testDrawMoney($drawMoney)
+    {
+        $wallet = new Wallet();
+        $wallet->AddMoney (100);
+        $wallet->Drawmoney ($drawMoney);
+        self::assertEquals (true,$wallet->isValidDrawMoney ());
+
+    }
+
+    public function providerDrawMoney()
+    {
+        return [
+          [50]
+        ];
+    }
+
+    /**
+     * @dataProvider providerInvalidDrawMoney
+     * @param $drawMoney
+     */
+    public function testInvalidDrawMoney($drawMoney)
+    {
+        $wallet = new Wallet();
+        $wallet->AddMoney (100);
+        $wallet->Drawmoney ($drawMoney);
+        self::assertEquals (false,$wallet->isValidDrawMoney ());
+
+    }
+
+    public function providerInvalidDrawMoney()
+    {
+        return [
+            [200]
+        ];
+    }
+
+
+
 
 
 }
