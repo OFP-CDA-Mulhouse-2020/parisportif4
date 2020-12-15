@@ -45,15 +45,15 @@ class Wallet
 
     public function getCredit () : ?int
     {
-        return $this -> credit;
+        return $this -> credit/100;
     }
 
     public function getAddMoney () : ?int
     {
-        return $this -> addMoney;
+        return $this -> addMoney/100;
     }
 
-    public function AddMoney ( ?int $addMoney ) : self
+    public function AddMoney ( ?float $addMoney ) : self
     {
         $this -> addMoney = $addMoney*100;
         $this->credit += ($addMoney*100);
@@ -62,12 +62,12 @@ class Wallet
 
     public function getWithdrawMoney () : ?int
     {
-        return $this -> withdrawMoney;
+        return $this -> withdrawMoney/100;
     }
 
     public function Drawmoney(?int $drawmoney) : self
     {
-        if($drawmoney*100 > $this->getCredit ())
+        if($drawmoney > $this->getCredit ())
         {
             $this->isValid = false;
         }else
