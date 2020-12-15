@@ -125,7 +125,7 @@ User "1" *-- "1" StatutUser
 Bet "0..*" --* "1" Epreuve
 Epreuve "0..*" --* "1" Evenement
 Evenement "0..*" --* "1" Sport
-Pronostic "0..*" -- "1" Evenement
+Bet "0..*" -- "1" Evenement
 Sport <|-- SportIndivesuelle
 Sport <|-- SportCollectif
 SportCollectif "1" -- "1..*" Equipe
