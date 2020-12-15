@@ -89,7 +89,7 @@ class Equipe {
     - id integer
     - Nom Equipe
 
-    + AjouterEquipe()
+    + AjouterEquipe()q
     + ModifierEquipe()
 }
 class Joueurs {

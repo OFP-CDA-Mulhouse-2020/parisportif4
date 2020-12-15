@@ -8,7 +8,7 @@ prepare:
 
 
 test:
-	${CURDIR}\vendor\bin\simple-phpunit tests/Entity/WalletTest.php
+	${CURDIR}\vendor\bin\simple-phpunit tests/Entity/UserTest.php
 
 cache-clear:
 	docker-compose exec php7.4 php bin/console cache:clear

@@ -147,8 +147,6 @@ class UserTest extends KernelTestCase
     public function provideInvalidBirthDateValues()
     {
         return [
-            [new DateTime()],
-            [DateTime::createFromFormat('Y-m-d', '2008-01-04')],
             [DateTime::createFromFormat('Y-m-d', '2008-01-04')],
             [DateTime::createFromFormat('Y-m-d', '2010-01-04')],
             [DateTime::createFromFormat('Y-m-d', '2004-01-04')],
