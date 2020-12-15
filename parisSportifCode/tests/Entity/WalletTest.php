@@ -39,8 +39,8 @@ class WalletTest extends KernelTestCase
         $wallet->AddMoney ($money);
         $errors = $this->validator->validate($wallet);
         $this->assertEquals(0, count($errors));
-        self::assertSame ($money*100,$wallet->getCredit ());
-        self::assertSame ($money*100,$wallet->getAddMoney ());
+        self::assertSame ((int)($money),$wallet->getCredit ());
+        self::assertSame ((int)($money),$wallet->getAddMoney ());
 
 
     }
@@ -48,7 +48,7 @@ class WalletTest extends KernelTestCase
     {
         return [
             [500],
-            [200],
+            [200.99],
             [10]
         ];
     }
