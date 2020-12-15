@@ -39,7 +39,7 @@ class Bet
      * @Assert\NotBlank()
      */
     private DateTimeInterface $createDate;
-
+    
     public function __construct()
     {
         $this->createDate = new DateTime();

@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields="email", message="Email already taken")
  */
 class User implements UserInterface
 {
