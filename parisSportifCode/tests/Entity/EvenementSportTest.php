@@ -27,7 +27,7 @@ class EvenementSportTest extends KernelTestCase
         $this->assertInstanceOf(EvenementSport::class, $event);
         $this->assertClassHasAttribute("name", EvenementSport::class);
         $this->assertClassHasAttribute("beginDate", EvenementSport::class);
-        $this->assertClassHasAttribute("lieu", EvenementSport::class);
+        $this->assertClassHasAttribute("eventPlace", EvenementSport::class);
     }
 
     /**
@@ -95,44 +95,46 @@ class EvenementSportTest extends KernelTestCase
     }
 
     /**
-     * @dataprovider provideLieuValues
-     * @param $lieu
+     * @param $eventPlace
+     * @dataProvider provideEventPlaceValues
      */
-    public function testLieuValid($lieu)
+    public function testLieuValid($eventPlace)
     {
-        $event = new EvenementSport();
-        $event->setLieu($lieu);
-        $errors = $this->validator->validate($event, null, "naming");
+        $user = new EvenementSport();
+        $user->setEventPlace($eventPlace);
+        $errors = $this->validator->validate($user, null, "naming");
         $this->assertGreaterThanOrEqual(0, count($errors));
     }
 
-    public function provideLieuValues(): array
+    public function provideEventPlaceValues(): array
     {
         return [
             ['Colmar'],
-            ['COLMAR'],
-            ['marseille '],
-            ['brive-la-gayarde'],
+            ['LYON'],
+            ['BRIVE-LA-GAYADRE'],
         ];
     }
 
     /**
-     * @dataprovider provideInvalidLieuValues
-     * @param $lieu
+     * @param $eventPlace
+     * @dataProvider provideInvalidEventPlaceValues
      */
-    public function testInvalidLieu($lieu)
+    public function testLieuInvalid($eventPlace)
     {
-        $event = new EvenementSport();
-        $event->setLieu($lieu);
-        $errors = $this->validator->validate($event, null, "naming");
+        $user = new EvenementSport();
+        $user->setEventPlace($eventPlace);
+        $errors = $this->validator->validate($user, null, "naming");
         $this->assertGreaterThanOrEqual(0, count($errors));
     }
 
-    public function provideInvalidLieuValues(): array
+    public function provideInvalidEventPlaceValues(): array
     {
         return [
-            [''],
-            ['COLMAR23'],
+            ['Colmar12'],
+            ['LYON '],
+            ['BRIVE-LA-GAYADRE @'],
         ];
     }
+
+
 }

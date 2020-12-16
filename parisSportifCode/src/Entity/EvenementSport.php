@@ -43,7 +43,7 @@ class EvenementSport
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
      * @Groups({"naming"})
      */
-    private ?string $lieu;
+    private ?string $eventPlace;
 
     public function getId(): ?int
     {
@@ -69,14 +69,13 @@ class EvenementSport
 
         return $this;
     }
-    public function getLieu(): ?string
+    public function getEventPlace(): ?string
     {
-        return $this->lieu;
+        return $this->eventPlace;
     }
-    public function setLieu(?string $lieu): self
+    public function setEventPlace($eventPlace): self
     {
-        $this->lieu = $lieu;
-
+        $this->eventPlace = $eventPlace;
         return $this;
     }
 }
