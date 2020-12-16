@@ -24,6 +24,7 @@ class EquipeTest extends KernelTestCase
     {
         $equipe = new Equipe();
         $this->assertInstanceOf(Equipe::class, $equipe);
+        $this->assertClassHasAttribute("name", Equipe::class);
     }
 
     /**
@@ -43,6 +44,27 @@ class EquipeTest extends KernelTestCase
         return [
             ['om'],
             ['PSG'],
+        ];
+    }
+
+    /**
+     * @param $name
+     * @dataProvider provideNameInvalidEquipeValues
+     */
+    public function testNameInvalidEquipe($name)
+    {
+        $equipe = new Equipe();
+        $equipe->setName($name);
+        $errors = $this->validator->validate($equipe, null, "naming");
+        $this->assertEquals(0, count($errors));
+    }
+
+    public function provideNameInvalidEquipeValues(): array
+    {
+        return [
+            ['om12'],
+            ['PSG '],
+            [''],
         ];
     }
 
