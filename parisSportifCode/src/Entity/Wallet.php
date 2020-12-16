@@ -35,6 +35,18 @@ class Wallet
      */
     private ?int $withdrawMoney = null;
 
+    /**
+     * @ORM\Column(type="integer", length=5, nullable=true)
+     * @Assert\PositiveOrZero
+     */
+    private ?int $drawBet = null;
+
+    /**
+     * @ORM\Column(type="integer", length=5, nullable=true)
+     * @Assert\PositiveOrZero
+     */
+    private ?int $withAddEarnings = null;
+
     private bool $isValid ;
 
 
@@ -83,6 +95,39 @@ class Wallet
     public function isValiddrawmoney (): bool
     {
         return $this->isValid ;
+    }
+
+    public function getDrawBet () : ?float
+    {
+        return $this -> drawBet/100;
+    }
+
+
+    public function isValidDrawBet ( ?int $drawBet, bool $valide ) : void
+    {
+        if ($valide == true) {
+            $this -> drawBet = $drawBet;
+        }
+    }
+
+
+    public function getWithAddEarnings () : ?float
+    {
+        return $this -> withAddEarnings/100;
+    }
+
+    public function WithAddEarnings ( ?int $withAddEarnings, bool $statusEarnings )
+    {
+        $result = false;
+        if($statusEarnings == true )
+        {
+            $this -> withAddEarnings = $withAddEarnings*100;
+            $this->credit += ($withAddEarnings*100);
+            $result = true;
+        }
+
+        return $result;
+
     }
 
 

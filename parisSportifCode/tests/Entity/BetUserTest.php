@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class BetUserTest extends KernelTestCase
 {
-    private $validator;
+    private ?object $validator;
 
     protected function setUp(): void
     {
@@ -23,7 +23,7 @@ class BetUserTest extends KernelTestCase
     {
         $betUser = new BetUser();
         $this->assertInstanceOf (BetUser::class, $betUser);
-        $this->assertClassHasAttribute ("createDate", BetUser::class);
+        $this->assertClassHasAttribute ("amountBetDate", BetUser::class);
         $this->assertClassHasAttribute ("amountBet", BetUser::class);
     }
 
@@ -34,17 +34,13 @@ class BetUserTest extends KernelTestCase
     public function testInvalidAmountBet ($amountBet)
     {
         $betUser = new BetUser();
-        $betUser->setAmountBet ($amountBet);
-        $errors = $this->validator->validate($betUser);
-        $this->assertGreaterThanOrEqual(1, count($errors));
+        $this->assertEquals(false,$betUser->setAmountBet ($amountBet,100));
     }
 
     public function providerInvalidAmountBet ()
     {
         return [
-            [0],
-            [10001],
-            [-1000]
+            [200],
         ];
     }
 
@@ -55,9 +51,10 @@ class BetUserTest extends KernelTestCase
     public function testValidAmountBet ($amountBet)
     {
         $betUser = new BetUser();
-        $betUser->setAmountBet ($amountBet);
+        $betUser->setAmountBet ($amountBet,100);
         $errors = $this->validator->validate($betUser);
         $this->assertEquals(0, count($errors));
+        $this->assertEquals(true,$betUser->setAmountBet ($amountBet,100));
     }
 
     public function providerValidAmountBet ()
