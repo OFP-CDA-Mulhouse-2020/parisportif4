@@ -26,7 +26,8 @@ class EvenementSportTest extends KernelTestCase
         $event = new EvenementSport();
         $this->assertInstanceOf(EvenementSport::class, $event);
         $this->assertClassHasAttribute("name", EvenementSport::class);
-        $this->assertClassHasAttribute("birthDate", EvenementSport::class);
+        $this->assertClassHasAttribute("beginDate", EvenementSport::class);
+        $this->assertClassHasAttribute("lieu", EvenementSport::class);
     }
 
     /**
@@ -73,14 +74,14 @@ class EvenementSportTest extends KernelTestCase
     }
 
     /**
-     * @param $birthDate
+     * @param $beginDate
      * @dataProvider provideInvalidBirthDateValues
      */
-    public function testInvalidBirthDate($birthDate)
+    public function testInvalidBirthDate($beginDate)
     {
         $user = new EvenementSport();
-        $user->setBirthDate($birthDate);
-        $errors = $this->validator->validate($user, null, "birthDate");
+        $user->setBeginDate($beginDate);
+        $errors = $this->validator->validate($user, null, "beginDate");
         $this->assertGreaterThanOrEqual(0, count($errors));
     }
 
@@ -90,6 +91,48 @@ class EvenementSportTest extends KernelTestCase
             [DateTime::createFromFormat('Y-m-d', '2008-01-04')],
             [DateTime::createFromFormat('Y-m-d', '2010-01-04')],
             [DateTime::createFromFormat('Y-m-d', '2004-01-04')],
+        ];
+    }
+
+    /**
+     * @dataprovider provideLieuValues
+     * @param $lieu
+     */
+    public function testLieuValid($lieu)
+    {
+        $event = new EvenementSport();
+        $event->setLieu($lieu);
+        $errors = $this->validator->validate($event, null, "naming");
+        $this->assertGreaterThanOrEqual(0, count($errors));
+    }
+
+    public function provideLieuValues(): array
+    {
+        return [
+            ['Colmar'],
+            ['COLMAR'],
+            ['marseille '],
+            ['brive-la-gayarde'],
+        ];
+    }
+
+    /**
+     * @dataprovider provideInvalidLieuValues
+     * @param $lieu
+     */
+    public function testInvalidLieu($lieu)
+    {
+        $event = new EvenementSport();
+        $event->setLieu($lieu);
+        $errors = $this->validator->validate($event, null, "naming");
+        $this->assertGreaterThanOrEqual(0, count($errors));
+    }
+
+    public function provideInvalidLieuValues(): array
+    {
+        return [
+            [''],
+            ['COLMAR23'],
         ];
     }
 }

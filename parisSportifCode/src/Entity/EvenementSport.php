@@ -29,15 +29,21 @@ class EvenementSport
      * @Groups({"naming"})
      */
     private ?string $name;
-
-
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Groups({"birthDate"})
+     * @Groups({"beginDate"})
      */
-    private ?DateTimeInterface $birthDate;
+    private ?DateTimeInterface $beginDate;
 
+    /**
+     * @ORM\Column(type="string, length=255")
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
+     * @Groups({"naming"})
+     */
+    private ?string $lieu;
 
     public function getId(): ?int
     {
@@ -53,13 +59,23 @@ class EvenementSport
 
         return $this;
     }
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBeginDate(): ?\DateTimeInterface
     {
-        return $this->birthDate;
+        return $this->beginDate;
     }
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    public function setBeginDate(?\DateTimeInterface $beginDate): self
     {
-        $this->birthDate = $birthDate;
+        $this->beginDate = $beginDate;
+
+        return $this;
+    }
+    public function getLieu(): ?string
+    {
+        return $this->lieu;
+    }
+    public function setLieu(?string $lieu): self
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }
