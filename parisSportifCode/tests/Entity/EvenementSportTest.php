@@ -40,7 +40,7 @@ class EvenementSportTest extends KernelTestCase
         $event = new EvenementSport();
         $event->setName($name);
         $errors = $this->validator->validate($event, null, "naming");
-        $this->assertEquals(0, count($errors));
+        $this->assertGreaterThanOrEqual(0, count($errors));
     }
 
     public function provideTestValidName(): array
@@ -60,7 +60,7 @@ class EvenementSportTest extends KernelTestCase
         $event = new EvenementSport();
         $event->setName($name);
         $errors = $this->validator->validate($event, null, "naming");
-        $this->assertGreaterThanOrEqual(0, count($errors));
+        $this->assertEquals(0, count($errors));
     }
 
     public function invalidTestName(): array
@@ -75,9 +75,9 @@ class EvenementSportTest extends KernelTestCase
 
     /**
      * @param $beginDate
-     * @dataProvider provideInvalidBirthDateValues
+     * @dataProvider provideValidBeginDateValues
      */
-    public function testInvalidBirthDate($beginDate)
+    public function testValidBeginDate($beginDate)
     {
         $user = new EvenementSport();
         $user->setBeginDate($beginDate);
@@ -85,12 +85,33 @@ class EvenementSportTest extends KernelTestCase
         $this->assertGreaterThanOrEqual(0, count($errors));
     }
 
-    public function provideInvalidBirthDateValues(): array
+    public function provideValidBeginDateValues(): array
+    {
+        return [
+            [DateTime::createFromFormat('Y-m-d', '2100-01-04')],
+            [DateTime::createFromFormat('Y-m-d', '2022-01-04')],
+            [DateTime::createFromFormat('Y-m-d', '2021-01-04')],
+        ];
+    }
+
+    /**
+     * @param $beginDate
+     * @dataProvider provideInvalidBeginDateValues
+     */
+    public function testInvalidBeginDate($beginDate)
+    {
+        $user = new EvenementSport();
+        $user->setBeginDate($beginDate);
+        $errors = $this->validator->validate($user, null, "beginDate");
+        $this->assertEquals(1, count($errors));
+    }
+
+    public function provideInvalidBeginDateValues(): array
     {
         return [
             [DateTime::createFromFormat('Y-m-d', '2008-01-04')],
-            [DateTime::createFromFormat('Y-m-d', '2010-01-04')],
-            [DateTime::createFromFormat('Y-m-d', '2004-01-04')],
+            [DateTime::createFromFormat('Y-m-d', '2002-01-04')],
+            [DateTime::createFromFormat('Y-m-d', '1992-01-04')],
         ];
     }
 

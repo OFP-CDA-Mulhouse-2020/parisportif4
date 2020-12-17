@@ -32,7 +32,7 @@ class EvenementSport
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Groups({"beginDate"})
+     * @Assert\GreaterThanOrEqual(value="today", groups={"beginDate"})
      */
     private ?DateTimeInterface $beginDate;
 
