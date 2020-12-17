@@ -17,7 +17,7 @@ class SportCollectif
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     public function getId(): ?int
     {
@@ -36,24 +36,14 @@ class SportCollectif
      */
     private ?int $nombreJoueurs;
 
-    /**
-     * @return int|null
-     */
     public function getNombreJoueurs(): ?int
     {
         return $this->nombreJoueurs;
     }
 
-    /**
-     * @param int|null $nombreJoueurs
-     * @return SportCollectif
-     */
     public function setNombreJoueurs(?int $nombreJoueurs): self
     {
         $this->nombreJoueurs = $nombreJoueurs;
-
         return $this;
     }
-
-
 }

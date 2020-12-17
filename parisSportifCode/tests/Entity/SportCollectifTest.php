@@ -20,12 +20,9 @@ class SportCollectifTest extends KernelTestCase
     {
         $sport = new SportCollectif();
         $this->assertInstanceOf(SportCollectif::class, $sport);
-
     }
 
-    /**
-     * @param $nombreJoueurs
-     */
+
     public function testNombresJoueursIsNotNull()
     {
        $sport = new SportCollectif();
