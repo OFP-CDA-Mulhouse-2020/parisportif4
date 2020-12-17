@@ -39,6 +39,16 @@ class Joueurs
      * @Groups({"naming"})
      */
     private ?string $prenom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\ExpressionLanguageSyntax(
+     *     allowedVariables={"titulaire", "remplaçant", "suspendu", "blessé"}
+     * )
+     * @Groups({"status"})
+     */
+    private ?string $status;
+
     public function getName(): ?string
     {
         return $this->name;
@@ -55,6 +65,15 @@ class Joueurs
     public function setPrenom($prenom): self
     {
         $this->prenom = $prenom;
+        return $this;
+    }
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+    public function setStatus($status): self
+    {
+        $this->status = $status;
         return $this;
     }
 

@@ -24,6 +24,8 @@ class JoueursTest extends KernelTestCase
         $event = new Joueurs();
         $this->assertInstanceOf(Joueurs::class, $event);
         $this->assertClassHasAttribute("name", Joueurs::class);
+        $this->assertClassHasAttribute("prenom", Joueurs::class);
+        $this->assertClassHasAttribute("status", Joueurs::class);
     }
 
     /**
@@ -114,5 +116,47 @@ class JoueursTest extends KernelTestCase
         ];
     }
 
+    /**
+     * @param $status
+     * @dataProvider provideValidStatusValues
+     */
+    public function testStatusValid($status)
+    {
+        $joueurs = new Joueurs();
+        $joueurs->setStatus($status);
+        $errors = $this->validator->validate($joueurs);
+        $this->assertEquals(0, count($errors));
+    }
 
+    public function provideValidStatusValues(): array
+    {
+        return [
+            ['titulaire'],
+            ['remplaçant'],
+            ['suspendu'],
+            ['blessé'],
+        ];
+    }
+
+    /**
+     * @param $status
+     * @dataProvider provideInvalidStatusValues
+     */
+    public function testStatusInvalid($status)
+    {
+        $joueurs = new Joueurs();
+        $joueurs->setStatus($status);
+        $errors = $this->validator->validate($joueurs, null, "status");
+        $this->assertEquals(0, count($errors));
+    }
+
+    public function provideInvalidStatusValues(): array
+    {
+        return [
+            [''],
+            ['abandon'],
+            ['en voyage'],
+            ['décédé'],
+        ];
+    }
 }
