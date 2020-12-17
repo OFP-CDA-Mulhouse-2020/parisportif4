@@ -67,5 +67,4 @@ class EquipeTest extends KernelTestCase
             [''],
         ];
     }
-
 }
