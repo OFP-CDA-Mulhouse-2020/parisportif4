@@ -60,7 +60,7 @@ class Pronostic {
     + ModifierCote()
 }
 
-class Epreuve {
+class Evenement {
     - id integer
     - Nom string
     - Date date
@@ -122,13 +122,13 @@ class HistoriquePari {
 (Utilisateur, Pronostic) . Pari
 Utilisateur "1" *-- "0..*" Transaction
 Utilisateur "1" *-- "1" StatutUtilisateur
-Pronostic "0..*" --* "1" Epreuve
-Epreuve "0..*" --* "1" Evenement
+Pronostic "0..*" --* "1" Evenement
+
 Evenement "0..*" --* "1" Sport
-Bet "0..*" -- "1" Evenement
 Sport <|-- SportIndivesuelle
 Sport <|-- SportCollectif
 SportCollectif "1" -- "1..*" Equipe
 Equipe "1" -- "1..*" Joueurs
 Pari -- HistoriquePari
+SportIndivesuelle "1" -- "1..*" Joueurs
 @enduml
