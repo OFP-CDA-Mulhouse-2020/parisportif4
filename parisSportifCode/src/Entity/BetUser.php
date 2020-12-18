@@ -53,7 +53,7 @@ class BetUser
         $this->amountBetDate = new DateTime();
     }
 
-    public function getCreateDate(): ?\DateTimeInterface
+    public function getAmountBetDate(): ?\DateTimeInterface
     {
         return $this->amountBetDate;
     }
@@ -85,9 +85,6 @@ class BetUser
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getEarnings () : ?float
     {
         return $this -> Earnings/100;

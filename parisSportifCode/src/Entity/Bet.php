@@ -39,6 +39,12 @@ class Bet
      * @Assert\NotBlank()
      */
     private DateTimeInterface $createDate;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Assert\Type(type="bool")
+     */
+    private bool $resultBet;
     
     public function __construct()
     {
@@ -72,8 +78,19 @@ class Bet
         return $this;
     }
 
-    public function getCreateDate(): ?\DateTimeInterface
+    public function getCreateBetDate(): \DateTimeInterface
     {
         return $this->createDate;
+    }
+
+    public function isResultBet () : bool
+    {
+        return $this -> resultBet;
+    }
+
+    public function setResultBet ( bool $resultBet ) : self
+    {
+        $this -> resultBet = $resultBet;
+        return $this;
     }
 }
