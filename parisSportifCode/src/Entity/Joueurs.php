@@ -49,6 +49,18 @@ class Joueurs
      */
     private ?string $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SportIndividuel::class, inversedBy="joueurs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?SportIndividuel $joueurs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="joueurs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?Equipe $joueurs_equipe;
+
     public function getName(): ?string
     {
         return $this->name;
@@ -74,6 +86,30 @@ class Joueurs
     public function setStatus($status): self
     {
         $this->status = $status;
+        return $this;
+    }
+
+    public function getJoueurs(): ?SportIndividuel
+    {
+        return $this->joueurs;
+    }
+
+    public function setJoueurs(?SportIndividuel $joueurs): self
+    {
+        $this->joueurs = $joueurs;
+
+        return $this;
+    }
+
+    public function getJoueursEquipe(): ?Equipe
+    {
+        return $this->joueurs_equipe;
+    }
+
+    public function setJoueursEquipe(?Equipe $joueurs_equipe): self
+    {
+        $this->joueurs_equipe = $joueurs_equipe;
+
         return $this;
     }
 
