@@ -45,6 +45,12 @@ class EvenementSport
      */
     private ?string $eventPlace;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Sport::class, inversedBy="evenement")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?Sport $sport;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +82,18 @@ class EvenementSport
     public function setEventPlace($eventPlace): self
     {
         $this->eventPlace = $eventPlace;
+        return $this;
+    }
+
+    public function getSport(): ?Sport
+    {
+        return $this->sport;
+    }
+
+    public function setSport(?Sport $sport): self
+    {
+        $this->sport = $sport;
+
         return $this;
     }
 }
