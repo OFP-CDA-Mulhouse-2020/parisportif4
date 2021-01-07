@@ -32,4 +32,5 @@ final class Version20210107093837 extends AbstractMigration
         $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649C7E50DC6 FOREIGN KEY (status_document_id) REFERENCES document_user (id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649C7E50DC6 ON user (status_document_id)');
     }
+
 }

@@ -150,11 +150,6 @@ class User implements UserInterface
      */
     private $plainPassword;
 
-    /**
-     * @ORM\OneToOne(targetEntity=DocumentUser::class, cascade={"persist", "remove"})
-     */
-    private $StatusDocument;
-
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
@@ -417,7 +412,7 @@ class User implements UserInterface
          $this->plainPassword = null;
     }
 
-    public function getStatusDocument(): ?DocumentUser
+    /*public function getStatusDocument(): ?DocumentUser
     {
         return $this->StatusDocument;
     }
@@ -427,5 +422,5 @@ class User implements UserInterface
         $this->StatusDocument = $StatusDocument;
 
         return $this;
-    }
+    }*/
 }

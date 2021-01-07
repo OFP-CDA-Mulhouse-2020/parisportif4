@@ -22,6 +22,10 @@ class RegisterTest extends WebTestCase
         $this->assertCount(1,$crawler->filter('form input[name="refisteruser[email]"]'));
         $this->assertCount(1,$crawler->filter('form input[name="refisteruser[plainPassword][first]"]'));
         $this->assertCount(1,$crawler->filter('form input[name="refisteruser[plainPassword][second]"]'));
+        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[street]"]'));
+        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[city]"]'));
+        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[codePostal]"]'));
+        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[phone]"]'));
         $this->assertSelectorNotExists('ul li');
     }
 
@@ -38,6 +42,10 @@ class RegisterTest extends WebTestCase
             $form['refisteruser[email]'] = 'sofiane@gmail.com';
             $form['refisteruser[plainPassword][first]'] = 'Sissouf123456';
             $form['refisteruser[plainPassword][second]'] = 'Sissouf123456';
+            $form['refisteruser[street]'] = 'vauban';
+            $form['refisteruser[city]'] = 'mulhouse';
+            $form['refisteruser[codePostal]'] = '68100';
+            $form['refisteruser[phone]'] = '0741547854';
 
 
         $client->submit ($form);
@@ -58,6 +66,10 @@ class RegisterTest extends WebTestCase
             $form['refisteruser[email]'] = 'sofiane@gmail.com';
             $form['refisteruser[plainPassword][first]'] = 'Sissouf123456';
             $form['refisteruser[plainPassword][second]'] = 'Sissouf123456';
+            $form['refisteruser[street]'] = 'vauban';
+            $form['refisteruser[city]'] = 'mulhouse';
+            $form['refisteruser[codePostal]'] = '68100';
+            $form['refisteruser[phone]'] = '0741547854';
 
 
         $client->submit ($form);
@@ -78,6 +90,10 @@ class RegisterTest extends WebTestCase
         $form['refisteruser[email]'] = 'sofiane5@gmail.com';
         $form['refisteruser[plainPassword][first]'] = 'Sissouf123456';
         $form['refisteruser[plainPassword][second]'] = 'Sissouf123456';
+        $form['refisteruser[street]'] = 'vauban';
+        $form['refisteruser[city]'] = 'mulhouse';
+        $form['refisteruser[codePostal]'] = '68100';
+        $form['refisteruser[phone]'] = '0741547854';
 
 
         $client->submit ($form);
