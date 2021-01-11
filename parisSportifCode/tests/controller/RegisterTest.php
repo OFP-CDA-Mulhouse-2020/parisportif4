@@ -87,7 +87,7 @@ class RegisterTest extends WebTestCase
         $form['refisteruser[lastname]'] = 'namoune';
         $form['refisteruser[firstname]'] = 'sofiane';
         $form['refisteruser[birthdate]'] = '1994-01-04';
-        $form['refisteruser[email]'] = 'sofiane5@gmail.com';
+        $form['refisteruser[email]'] = 'sofiane6@gmail.com';
         $form['refisteruser[plainPassword][first]'] = 'Sissouf123456';
         $form['refisteruser[plainPassword][second]'] = 'Sissouf123456';
         $form['refisteruser[street]'] = 'vauban';

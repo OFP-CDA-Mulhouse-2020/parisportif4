@@ -40,7 +40,7 @@ class SecurityControllerTest extends WebTestCase
         $client = static ::createClient ();
         $crawler = $client->request ('GET', '/login');
         $form = $crawler->selectButton ('Se connecter')->form([
-            'email' => 'sofiane5@gmail.com',
+            'email' => 'sofiane6@gmail.com',
             'password' => 'Sissouf123456'
         ]);
         $client->submit ($form);
