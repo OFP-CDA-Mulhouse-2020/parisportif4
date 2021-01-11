@@ -412,15 +412,8 @@ class User implements UserInterface
          $this->plainPassword = null;
     }
 
-    /*public function getStatusDocument(): ?DocumentUser
+    public function buildTableuser(array $dataUser):self
     {
-        return $this->StatusDocument;
+
     }
-
-    public function setStatusDocument(?DocumentUser $StatusDocument): self
-    {
-        $this->StatusDocument = $StatusDocument;
-
-        return $this;
-    }*/
 }
