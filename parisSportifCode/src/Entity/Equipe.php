@@ -27,7 +27,7 @@ class Equipe
     }
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")

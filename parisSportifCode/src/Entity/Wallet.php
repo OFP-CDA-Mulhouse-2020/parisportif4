@@ -72,7 +72,7 @@ class Wallet
         return $this;
     }
 
-    public function getWithdrawMoney () : ?int
+    public function getDrawMoney () : ?int
     {
         return $this -> withdrawMoney/100;
     }
@@ -111,18 +111,18 @@ class Wallet
     }
 
 
-    public function getWithAddEarnings () : ?float
+    public function getAddEarnings () : ?float
     {
         return $this -> withAddEarnings/100;
     }
 
-    public function WithAddEarnings ( ?int $withAddEarnings, bool $statusEarnings )
+    public function AddEarnings ( ?int $Earnings, bool $statusEarnings )
     {
         $result = false;
         if($statusEarnings == true )
         {
-            $this -> withAddEarnings = $withAddEarnings*100;
-            $this->credit += ($withAddEarnings*100);
+            $this -> withAddEarnings = $Earnings*100;
+            $this->credit += ($Earnings*100);
             $result = true;
         }
 

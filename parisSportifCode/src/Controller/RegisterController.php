@@ -36,7 +36,13 @@ class RegisterController extends AbstractController
             $user->setFirstname ($user->getFirstname ());
             $user->setLastname ($user->getLastname ());
             $user->setBirthDate ($user->getBirthDate ());
-            $user->setCreateDate (new DateTime());
+            $user->setPhone ($user->getPhone ());
+            $user->setStreetNumber ('AB');
+            $user->setStreet ($user->getStreet ());
+            $user->setCity ($user->getCity ());
+            $user->setCodePostal ($user->getCodePostal ());
+
+            //$user->setCreateDate (new DateTime());
           
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();

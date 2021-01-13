@@ -28,6 +28,10 @@ class RefisteruserType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
+            ->add('street',TextType::class)
+            ->add('city',TextType::class)
+            ->add ('codePostal',TextType::class)
+            ->add('phone',TextType::class)
         ;
     }
 
