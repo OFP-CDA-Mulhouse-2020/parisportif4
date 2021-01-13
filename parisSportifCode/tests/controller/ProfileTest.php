@@ -69,6 +69,17 @@ class ProfileTest extends WebTestCase
 
     }
 
+    public function testProfileEditPassword()
+    {
+        $client = static::createClient();
+        $userRepository = static::$container->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('sofiane6@gmail.com');
+        $client->loginUser ($testUser);
+        $client->request('GET', '/auth/edit/password');
+        $this->assertResponseStatusCodeSame(200);
+
+    }
+
     public function testLabelProfileEdit()
     {
         $client = static::createClient();
@@ -76,7 +87,7 @@ class ProfileTest extends WebTestCase
         $testUser = $userRepository->findOneByEmail('sofiane6@gmail.com');
         $client->loginUser ($testUser);
 
-        $crawler = $client->request('GET', '/auth/edit');
+        $crawler = $client->request('GET', '/auth/edit/password');
         $this->assertCount(1,$crawler->filter('form input[name="edit_user_password[oldPassword]"]'));
         $this->assertCount(1,$crawler->filter('form input[name="edit_user_password[plainPassword][first]"]'));
         $this->assertCount(1,$crawler->filter('form input[name="edit_user_password[plainPassword][second]"]'));
@@ -90,7 +101,7 @@ class ProfileTest extends WebTestCase
         $testUser = $userRepository->findOneByEmail('sofiane6@gmail.com');
         $client->loginUser ($testUser);
 
-        $crawler = $client->request('GET', '/auth/edit');
+        $crawler = $client->request('GET', '/auth/edit/password');
         $buttonCrawlerNode = $crawler->selectButton('Valider');
         $form = $buttonCrawlerNode->form();
         $form['edit_user_password[oldPassword]'] = '';
@@ -110,7 +121,7 @@ class ProfileTest extends WebTestCase
         $testUser = $userRepository->findOneByEmail('sofiane6@gmail.com');
         $client->loginUser ($testUser);
 
-        $crawler = $client->request('GET', '/auth/edit');
+        $crawler = $client->request('GET', '/auth/edit/password');
         $buttonCrawlerNode = $crawler->selectButton('Valider');
         $form = $buttonCrawlerNode->form();
         $form['edit_user_password[oldPassword]'] = 'Sissouf123456';
@@ -130,7 +141,7 @@ class ProfileTest extends WebTestCase
         $testUser = $userRepository->findOneByEmail('sofiane6@gmail.com');
         $client->loginUser ($testUser);
 
-        $crawler = $client->request('GET', '/auth/edit');
+        $crawler = $client->request('GET', '/auth/edit/password');
         $buttonCrawlerNode = $crawler->selectButton('Valider');
         $form = $buttonCrawlerNode->form();
 
@@ -150,7 +161,7 @@ class ProfileTest extends WebTestCase
         $testUser = $userRepository->findOneByEmail('sofiane6@gmail.com');
         $client->loginUser ($testUser);
 
-        $crawler = $client->request('GET', '/auth/edit');
+        $crawler = $client->request('GET', '/auth/edit/password');
         $buttonCrawlerNode = $crawler->selectButton('Valider');
         $form = $buttonCrawlerNode->form();
 

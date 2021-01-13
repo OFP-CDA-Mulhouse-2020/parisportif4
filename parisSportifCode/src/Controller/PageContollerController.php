@@ -17,29 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class PageContollerController extends AbstractController
 {
     /**
-     * @Route("/auth/editOption", name="page_edit")
-     * @IsGranted("ROLE_USER")
-     * @param UserInterface $user
-     * @return Response
-     */
-    public function index(UserInterface $user): Response
-    {
-        //$this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
-        $user = $user->getUsername ();
-
-
-        $repository= $this->getDoctrine ()->getRepository (User::class);
-        $users = $repository->findOneBy (['email' => $user]);
-        //var_dump ($users);
-
-        return $this->render('page_contoller/editOption.html.twig',[
-            'controller_name' => 'HomeController',
-            'user' => $users
-        ]);
-    }
-
-
-    /**
      * @param UserInterface $user
      * @return Response
      * @Route("/auth", name="auth")
@@ -59,6 +36,28 @@ class PageContollerController extends AbstractController
         return $this->render('page_contoller/index.html.twig',[
             'controller_name' => 'HomeController',
             'users' => $users
+        ]);
+    }
+
+    /**
+     * @Route("/auth/edit", name="page_edit")
+     * @IsGranted("ROLE_USER")
+     * @param UserInterface $user
+     * @return Response
+     */
+    public function index(UserInterface $user): Response
+    {
+        //$this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
+        $user = $user->getUsername ();
+
+
+        $repository= $this->getDoctrine ()->getRepository (User::class);
+        $users = $repository->findOneBy (['email' => $user]);
+        //var_dump ($users);
+
+        return $this->render('page_contoller/editOption.html.twig',[
+            'controller_name' => 'HomeController',
+            'user' => $users
         ]);
     }
 
