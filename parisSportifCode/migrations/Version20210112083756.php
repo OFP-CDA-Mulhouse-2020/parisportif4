@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210105091826 extends AbstractMigration
+final class Version20210112083756 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -29,20 +29,17 @@ final class Version20210105091826 extends AbstractMigration
         $this->addSql('CREATE TABLE sport (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE sport_collectif (id INT AUTO_INCREMENT NOT NULL, nombre_joueurs INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE sport_individuel (id INT AUTO_INCREMENT NOT NULL, sport_individuel_id INT NOT NULL, INDEX IDX_D0D7A60E8C35B4F2 (sport_individuel_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, birth_date DATETIME NOT NULL, street VARCHAR(255) NOT NULL, street_number VARCHAR(255) DEFAULT NULL, code_postal VARCHAR(5) NOT NULL, city VARCHAR(180) NOT NULL, phone VARCHAR(255) NOT NULL, create_date DATETIME NOT NULL, user_validation TINYINT(1) NOT NULL, user_validation_date DATETIME DEFAULT NULL, user_suspended TINYINT(1) NOT NULL, user_suspended_date DATETIME DEFAULT NULL, user_deleted TINYINT(1) NOT NULL, user_deleted_date DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), UNIQUE INDEX UNIQ_8D93D649444F97DD (phone), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE wallet (id INT AUTO_INCREMENT NOT NULL, credit INT NOT NULL, add_money INT DEFAULT NULL, withdraw_money INT DEFAULT NULL, draw_bet INT DEFAULT NULL, with_add_earnings INT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE evenement_sport ADD CONSTRAINT FK_892F432AAC78BCF8 FOREIGN KEY (sport_id) REFERENCES sport (id)');
         $this->addSql('ALTER TABLE joueurs ADD CONSTRAINT FK_F0FD889DA3DC7281 FOREIGN KEY (joueurs_id) REFERENCES sport_individuel (id)');
         $this->addSql('ALTER TABLE joueurs ADD CONSTRAINT FK_F0FD889DC9D220D8 FOREIGN KEY (joueurs_equipe_id) REFERENCES equipe (id)');
         $this->addSql('ALTER TABLE sport_individuel ADD CONSTRAINT FK_D0D7A60E8C35B4F2 FOREIGN KEY (sport_individuel_id) REFERENCES sport (id)');
-        $this->addSql('ALTER TABLE user ADD status_document_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649C7E50DC6 FOREIGN KEY (status_document_id) REFERENCES document_user (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649C7E50DC6 ON user (status_document_id)');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649C7E50DC6');
         $this->addSql('ALTER TABLE joueurs DROP FOREIGN KEY FK_F0FD889DC9D220D8');
         $this->addSql('ALTER TABLE evenement_sport DROP FOREIGN KEY FK_892F432AAC78BCF8');
         $this->addSql('ALTER TABLE sport_individuel DROP FOREIGN KEY FK_D0D7A60E8C35B4F2');
@@ -56,8 +53,7 @@ final class Version20210105091826 extends AbstractMigration
         $this->addSql('DROP TABLE sport');
         $this->addSql('DROP TABLE sport_collectif');
         $this->addSql('DROP TABLE sport_individuel');
+        $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE wallet');
-        $this->addSql('DROP INDEX UNIQ_8D93D649C7E50DC6 ON user');
-        $this->addSql('ALTER TABLE user DROP status_document_id');
     }
 }
