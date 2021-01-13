@@ -37,7 +37,7 @@ class RegisterController extends AbstractController
             $user->setLastname ($user->getLastname ());
             $user->setBirthDate ($user->getBirthDate ());
             $user->setPhone ($user->getPhone ());
-            $user->setStreetNumber ('85');
+            $user->setStreetNumber ('AB');
             $user->setStreet ($user->getStreet ());
             $user->setCity ($user->getCity ());
             $user->setCodePostal ($user->getCodePostal ());

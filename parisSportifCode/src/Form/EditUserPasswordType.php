@@ -32,7 +32,7 @@ class EditUserPasswordType extends AbstractType
 
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
+                'first_options'  => ['label' => 'nouveau Mot de passe'],
                 'second_options' => ['label' => 'Confirmer mot de passe'],
             ])
 
