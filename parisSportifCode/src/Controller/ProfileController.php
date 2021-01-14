@@ -14,25 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class PageContollerController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
-     * @param UserInterface $user
      * @return Response
      * @Route("/auth", name="auth")
      * @IsGranted("ROLE_USER")
      */
-    public function auth (UserInterface $user)
+    public function auth ()
     {
-
-        //$this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
-        $user = $user->getUsername ();
-
-
-        $repository= $this->getDoctrine ()->getRepository (User::class);
-        $users = $repository->findOneBy (['email' => $user]);
-        //var_dump ($users);
-
+        $this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
+        $users = $this->getUser();
         return $this->render('page_contoller/index.html.twig',[
             'controller_name' => 'HomeController',
             'users' => $users
@@ -42,19 +34,12 @@ class PageContollerController extends AbstractController
     /**
      * @Route("/auth/edit", name="page_edit")
      * @IsGranted("ROLE_USER")
-     * @param UserInterface $user
      * @return Response
      */
-    public function index(UserInterface $user): Response
+    public function index(): Response
     {
-        //$this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
-        $user = $user->getUsername ();
-
-
-        $repository= $this->getDoctrine ()->getRepository (User::class);
-        $users = $repository->findOneBy (['email' => $user]);
-        //var_dump ($users);
-
+        $this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
+        $users = $this->getUser();
         return $this->render('page_contoller/editOption.html.twig',[
             'controller_name' => 'HomeController',
             'user' => $users
