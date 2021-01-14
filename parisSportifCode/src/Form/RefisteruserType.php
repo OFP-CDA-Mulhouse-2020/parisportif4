@@ -17,8 +17,8 @@ class RefisteruserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lastname',TextType::class)
-            ->add('firstname',TextType::class)
+            ->add('lastname', TextType::class)
+            ->add('firstname', TextType::class)
             ->add('birthdate', BirthdayType::class, [
                 'widget' => 'single_text',
             ])
@@ -28,10 +28,10 @@ class RefisteruserType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
-            ->add('street',TextType::class)
-            ->add('city',TextType::class)
-            ->add ('codePostal',TextType::class)
-            ->add('phone',TextType::class)
+            ->add('street', TextType::class)
+            ->add('city', TextType::class)
+            ->add('codePostal', TextType::class)
+            ->add('phone', TextType::class)
         ;
     }
 

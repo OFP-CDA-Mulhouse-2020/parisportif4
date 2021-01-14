@@ -32,7 +32,7 @@ class SportTest extends KernelTestCase
     {
 
         $sport = new Sport();
-        $sport->setName ($name);
+        $sport->setName($name);
         $errors = $this->validator->validate($sport, null, "naming");
         $this->assertEquals(0, count($errors));
     }
@@ -54,7 +54,7 @@ class SportTest extends KernelTestCase
     {
 
         $sport = new Sport();
-        $sport->setName ($name);
+        $sport->setName($name);
         $errors = $this->validator->validate($sport, null, "naming");
         $this->assertEquals(0, count($errors));
     }

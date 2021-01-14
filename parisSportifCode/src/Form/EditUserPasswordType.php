@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form;
-
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -43,7 +41,6 @@ class EditUserPasswordType extends AbstractType
             ])
 
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -52,5 +49,4 @@ class EditUserPasswordType extends AbstractType
             'data_class' => User::class,
         ]);
     }
-
 }

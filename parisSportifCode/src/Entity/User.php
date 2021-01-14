@@ -224,56 +224,56 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getStreet () : ?string
+    public function getStreet(): ?string
     {
         return $this -> street;
     }
 
-    public function setStreet ( ?string $street ) : self
+    public function setStreet(?string $street): self
     {
         $this -> street = $street;
         return $this;
     }
 
-    public function getStreetNumber () : ?string
+    public function getStreetNumber(): ?string
     {
         return $this -> street_number;
     }
 
-    public function setStreetNumber ( ?string $street_number ) : self
+    public function setStreetNumber(?string $street_number): self
     {
         $this -> street_number = $street_number;
         return $this;
     }
 
-    public function getCodePostal () : ?string
+    public function getCodePostal(): ?string
     {
         return $this -> code_postal;
     }
 
-    public function setCodePostal ( ?string $code_postal ) : self
+    public function setCodePostal(?string $code_postal): self
     {
         $this -> code_postal = $code_postal;
         return $this;
     }
 
-    public function getCity () : ?string
+    public function getCity(): ?string
     {
         return $this -> city;
     }
 
-    public function setCity ( ?string $city ) : self
+    public function setCity(?string $city): self
     {
         $this -> city = $city;
         return $this;
     }
 
-    public function getPhone () : string
+    public function getPhone(): string
     {
         return $this -> phone;
     }
 
-    public function setPhone ( string $phone ) : self
+    public function setPhone(string $phone): self
     {
         $this -> phone = $phone;
         return $this;
@@ -292,8 +292,6 @@ class User implements UserInterface
     public function setUserValidation(): ?bool
     {
         return $this->userValidation = true;
-
-
     }
 
     public function getUserValidationDate(): ?\DateTimeInterface

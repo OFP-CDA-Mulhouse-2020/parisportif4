@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\EditUserEmailType;
 use App\Form\EditUserPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProfileController extends AbstractController
 {
@@ -21,11 +19,11 @@ class ProfileController extends AbstractController
      * @Route("/auth", name="auth")
      * @IsGranted("ROLE_USER")
      */
-    public function auth ()
+    public function auth()
     {
-        $this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $users = $this->getUser();
-        return $this->render('page_contoller/index.html.twig',[
+        return $this->render('page_contoller/index.html.twig', [
             'controller_name' => 'HomeController',
             'users' => $users
         ]);
@@ -36,11 +34,11 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @return Response
      */
-    public function index(): Response
+    public function editPage(): Response
     {
-        $this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $users = $this->getUser();
-        return $this->render('page_contoller/editOption.html.twig',[
+        return $this->render('page_contoller/editOption.html.twig', [
             'controller_name' => 'HomeController',
             'user' => $users
         ]);
@@ -53,69 +51,62 @@ class ProfileController extends AbstractController
      * @Route("/auth/edit/password", name="auth_edit_password")
      * @IsGranted("ROLE_USER")
      */
-    public function userProfileEditPassword(
+    public function EditPasswordProfile(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder
     ): Response {
-
         $user = $this->getUser();
-
         $formPassword = $this->createForm(EditUserPasswordType::class, $user);
-        $formEmail = $this->createForm (EditUserEmailType::class);
         $formPassword->handleRequest($request);
-
-
         if ($formPassword->isSubmitted() && $formPassword->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $oldpwd = $request->request->get('edit_user_password')['oldPassword'];
-
-            if($passwordEncoder->isPasswordValid ($user,$oldpwd)) {
-
-                $user -> setPassword (
-                    $passwordEncoder -> encodePassword (
-                        $user ,
-                        $user -> getPlainPassword ()
-                    )
-                );
-                $entityManager -> persist ( $user );
-                $entityManager -> flush ();
-
-                $this->addFlash ('success','Votre mot de passe à bien été changé !');
-
-            }else {
-                $formPassword->addError (new FormError('Old password incorrect'));
+            $oldpassword = $request->request->get('edit_user_password')['oldPassword'];
+            if ($passwordEncoder->isPasswordValid($user, $oldpassword)) {
+                $user -> setPassword($passwordEncoder -> encodePassword($user, $user -> getPlainPassword()));
+                $entityManager -> persist($user);
+                $entityManager -> flush();
+                $this->addFlash('success', 'Votre mot de passe à bien été changé !');
+            } else {
+                $formPassword->addError(new FormError('Old password incorrect'));
             }
-
         }
-
         return $this->render('page_contoller/editPassword.html.twig', [
             'user' => $user,
             'formEdit' => $formPassword->createView(),
-            'formEmail' => $formEmail->createView (),
             'editPassword' => true,
-            'editEmail' => false,
         ]);
     }
 
     /**
-     * @param UserInterface $user
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      * @Route("/auth/edit/email", name="auth_edit_email")
      * @IsGranted("ROLE_USER")
      */
-    public function editUserEmail(UserInterface $user ): Response
+    public function editEmailProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = $this->getUser();
-        $formEmail = $this->createForm (EditUserEmailType::class);
-        $formPassword = $this->createForm(EditUserPasswordType::class, $user);
+        $formEmail = $this->createForm(EditUserEmailType::class, $user);
+        $formEmail->handleRequest($request);
+        if ($formEmail->isSubmitted() && $formEmail->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $password = $request->request->get('edit_user_email')['plainPassword'];
+            if ($passwordEncoder->isPasswordValid($user, $password)) {
+                $user -> setEmail($request -> request -> get('edit_user_email')['email']);
+                $entityManager -> persist($user);
+                $entityManager -> flush();
 
-        return $this->render ('page_contoller/editEmail.html.twig',[
+                $this -> addFlash('success', 'Votre email a bien été changé !');
+            } else {
+                $formEmail->addError(new FormError('password incorrect'));
+            }
+        }
+
+        return $this->render('page_contoller/editEmail.html.twig', [
             'user' => $user,
-            'formEmail' => $formEmail->createView (),
-            'formEdit' => $formPassword->createView(),
-            'editPassword' => false,
+            'formEmail' => $formEmail->createView(),
             'editEmail' => true,
         ]);
-
     }
 }

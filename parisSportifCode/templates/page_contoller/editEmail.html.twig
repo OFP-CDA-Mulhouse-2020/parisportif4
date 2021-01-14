@@ -37,6 +37,11 @@
                     <div class="card mb-3">
                         <div class="mt-3 text-center">
                             <h4>Edit Email</h4>
+                            {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
                         </div>
                         <div class="card-body text-center">
 

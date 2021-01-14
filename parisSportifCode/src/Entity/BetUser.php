@@ -58,42 +58,39 @@ class BetUser
         return $this->amountBetDate;
     }
 
-    public function getAmountBet () : ?float
+    public function getAmountBet(): ?float
     {
-        return $this -> amountBet/100;
+        return $this -> amountBet / 100;
     }
 
-    public function setAmountBet ( ?int $amountBet, int $amountUser) : bool
+    public function setAmountBet(?int $amountBet, int $amountUser): bool
     {
         $result = false;
-        if($amountBet <= $amountUser){
-           $this -> amountBet = ($amountBet*100);
+        if ($amountBet <= $amountUser) {
+            $this -> amountBet = ($amountBet * 100);
             $result = true;
         }
         return $result;
-
     }
 
-    public function getStatusBet () : ?bool
+    public function getStatusBet(): ?bool
     {
         return $this -> statusBet;
     }
 
-    public function setStatusBet ( ?bool $statusBet ) : self
+    public function setStatusBet(?bool $statusBet): self
     {
         $this -> statusBet = $statusBet;
         return $this;
     }
 
-    public function getEarnings () : ?float
+    public function getEarnings(): ?float
     {
-        return $this -> Earnings/100;
+        return $this -> Earnings / 100;
     }
 
-    public function setEarnings ( ?int $Earnings, ?float $cote) : void
+    public function setEarnings(?int $Earnings, ?float $cote): void
     {
-        $this -> Earnings = ($Earnings*100)*$cote;
+        $this -> Earnings = ($Earnings * 100) * $cote;
     }
-
-
 }

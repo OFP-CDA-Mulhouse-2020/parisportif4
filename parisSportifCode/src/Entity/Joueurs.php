@@ -112,6 +112,4 @@ class Joueurs
 
         return $this;
     }
-
-
 }

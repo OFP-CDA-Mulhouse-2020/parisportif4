@@ -126,5 +126,4 @@ class Sport
 
         return $this;
     }
-
 }

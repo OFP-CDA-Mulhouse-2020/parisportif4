@@ -45,7 +45,7 @@ class Bet
      * @Assert\Type(type="bool")
      */
     private bool $resultBet;
-    
+
     public function __construct()
     {
         $this->createDate = new DateTime();
@@ -56,25 +56,25 @@ class Bet
         return $this->id;
     }
 
-    public function getNameBet () : ?string
+    public function getNameBet(): ?string
     {
         return $this -> nameBet;
     }
 
-    public function setNameBet ( ?string $nameBet ) : self
+    public function setNameBet(?string $nameBet): self
     {
         $this -> nameBet = $nameBet;
         return $this;
     }
 
-    public function getCote () : ?int
+    public function getCote(): ?int
     {
-        return $this -> cote/100;
+        return $this -> cote / 100;
     }
 
-    public function setCote ( ?int $cote ) : self
+    public function setCote(?int $cote): self
     {
-        $this -> cote = $cote*100;
+        $this -> cote = $cote * 100;
         return $this;
     }
 
@@ -83,12 +83,12 @@ class Bet
         return $this->createDate;
     }
 
-    public function isResultBet () : bool
+    public function isResultBet(): bool
     {
         return $this -> resultBet;
     }
 
-    public function setResultBet ( bool $resultBet ) : self
+    public function setResultBet(bool $resultBet): self
     {
         $this -> resultBet = $resultBet;
         return $this;

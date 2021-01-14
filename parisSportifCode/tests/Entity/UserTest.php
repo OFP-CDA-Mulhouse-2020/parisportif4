@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\Entity;
-
 
 use App\Entity\User;
 use DateTime;
@@ -95,7 +93,7 @@ class UserTest extends KernelTestCase
     {
 
         $user = new User();
-        $user->setFirstname ($firstname);
+        $user->setFirstname($firstname);
         $errors = $this->validator->validate($user);
         $this->assertGreaterThanOrEqual(1, count($errors));
     }
@@ -118,7 +116,7 @@ class UserTest extends KernelTestCase
     {
 
         $user = new User();
-        $user->setFirstname ($firstname);
+        $user->setFirstname($firstname);
         $errors = $this->validator->validate($user);
         $this->assertEquals(8, count($errors));
     }
@@ -136,10 +134,10 @@ class UserTest extends KernelTestCase
      * @param $birthDate
      * @dataProvider provideInvalidBirthDateValues
      */
-    public function testInvalidBirthDate( $birthDate)
+    public function testInvalidBirthDate($birthDate)
     {
         $user = new User();
-        $user->setBirthDate ($birthDate);
+        $user->setBirthDate($birthDate);
         $errors = $this->validator->validate($user);
         $this->assertGreaterThanOrEqual(1, count($errors));
     }
@@ -157,15 +155,15 @@ class UserTest extends KernelTestCase
      * @param $birthDate
      * @dataProvider provideValidBirthDateValues
      */
-    public function testValidBirthDate ($birthDate)
+    public function testValidBirthDate($birthDate)
     {
         $user = new User();
-        $user->setBirthDate ($birthDate);
+        $user->setBirthDate($birthDate);
         $errors = $this->validator->validate($user);
         $this->assertEquals(8, count($errors));
     }
 
-    public function provideValidBirthDateValues ()
+    public function provideValidBirthDateValues()
     {
         return [
             [DateTime::createFromFormat('Y-m-d', '1994-01-04')],
@@ -173,20 +171,20 @@ class UserTest extends KernelTestCase
             [DateTime::createFromFormat('Y-m-d', '2000-01-04')],
         ];
     }
-    
+
     /**
      * @param $password
      * @dataProvider provideInvalidPasswordValues
      */
-    public function testInvalidPassword ( $password)
+    public function testInvalidPassword($password)
     {
         $user = new User();
-        $user->setPlainPassword ($password);
+        $user->setPlainPassword($password);
         $errors = $this->validator->validate($user);
         $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
-    public function provideInvalidPasswordValues ()
+    public function provideInvalidPasswordValues()
     {
         return [
             ['sissouf'],
@@ -199,15 +197,15 @@ class UserTest extends KernelTestCase
      * @param $password
      * @dataProvider provideValidPasswordValues
      */
-    public function testValidPassword ( $password)
+    public function testValidPassword($password)
     {
         $user = new User();
-        $user->setPlainPassword ($password);
+        $user->setPlainPassword($password);
         $errors = $this->validator->validate($user);
         $this->assertEquals(8, count($errors));
     }
 
-    public function provideValidPasswordValues ()
+    public function provideValidPasswordValues()
     {
         return [
             ['Sissouf1'],
@@ -216,52 +214,52 @@ class UserTest extends KernelTestCase
         ];
     }
 
-    public function testValidate ()
+    public function testValidate()
     {
         $user = new User();
-        self::assertSame (false,$user->getUserValidation ());
-        $user->setUserValidation ();
-        self::assertSame (true,$user->getUserValidation ());
+        self::assertSame(false, $user->getUserValidation());
+        $user->setUserValidation();
+        self::assertSame(true, $user->getUserValidation());
     }
 
-    public function testSuspended ()
+    public function testSuspended()
     {
         $user = new User();
-        self::assertSame (false,$user->getUserSuspended ());
-        $user->setUserSuspended ();
-        self::assertSame (true,$user->getUserSuspended ());
+        self::assertSame(false, $user->getUserSuspended());
+        $user->setUserSuspended();
+        self::assertSame(true, $user->getUserSuspended());
     }
 
-    public function testDeleted ()
+    public function testDeleted()
     {
         $user = new User();
-        self::assertSame (false,$user->getUserDeleted ());
-        $user->setUserDeleted () ;
-        self::assertSame (true,$user->getUserDeleted ());
+        self::assertSame(false, $user->getUserDeleted());
+        $user->setUserDeleted() ;
+        self::assertSame(true, $user->getUserDeleted());
     }
 
 
-    public function testActivatedAccountUser ()
+    public function testActivatedAccountUser()
     {
         $user = new User();
-        self::assertNull ($user->getUserValidationDate ());
+        self::assertNull($user->getUserValidationDate());
         $user->isUserValidated();
-        self::assertInstanceOf(DateTimeInterface::class, $user->getUserValidationDate ());
+        self::assertInstanceOf(DateTimeInterface::class, $user->getUserValidationDate());
     }
 
-    public function testSuspendedAccountUser ()
+    public function testSuspendedAccountUser()
     {
         $user = new User();
-        self::assertNull ($user->getUserSuspendedDate ());
-        $user->isUserSuspended ();
-        self::assertInstanceOf(DateTimeInterface::class, $user->getUserSuspendedDate ());
+        self::assertNull($user->getUserSuspendedDate());
+        $user->isUserSuspended();
+        self::assertInstanceOf(DateTimeInterface::class, $user->getUserSuspendedDate());
     }
 
-    public function testDeletedAccountUser ()
+    public function testDeletedAccountUser()
     {
         $user = new User();
-        self::assertNull ($user->getUserDeletedDate());
-        $user->isUserDeleted ();
+        self::assertNull($user->getUserDeletedDate());
+        $user->isUserDeleted();
         self::assertInstanceOf(DateTimeInterface::class, $user->getUserDeletedDate());
     }
 
@@ -353,16 +351,15 @@ class UserTest extends KernelTestCase
      * @dataProvider ProviderInvalidStreetNumber
      * @param $streetNumber
      */
-    public function testInvalidStreetNumber ($streetNumber)
+    public function testInvalidStreetNumber($streetNumber)
     {
         $user = new User();
         $user->setStreetNumber($streetNumber);
         $errors = $this->validator->validate($user);
-        $this->assertGreaterThanOrEqual (1,count($errors));
-
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
-    public function ProviderInvalidStreetNumber ()
+    public function ProviderInvalidStreetNumber()
     {
         return [
           ["85?"],
@@ -375,16 +372,15 @@ class UserTest extends KernelTestCase
      * @dataProvider ProviderValidStreetNumber
      * @param $streetNumber
      */
-    public function testValidStreetNumber ($streetNumber)
+    public function testValidStreetNumber($streetNumber)
     {
         $user = new User();
-        $user->setStreetNumber ($streetNumber);
+        $user->setStreetNumber($streetNumber);
         $errors = $this->validator->validate($user);
-        $this->assertEquals (9,count($errors));
-
+        $this->assertEquals(9, count($errors));
     }
 
-    public function ProviderValidStreetNumber ()
+    public function ProviderValidStreetNumber()
     {
         return [
             [""],
@@ -398,15 +394,15 @@ class UserTest extends KernelTestCase
      * @dataProvider ProviderInvalidCodePostal
      * @param $codePostal
      */
-    public function testInvalidCodePostal ($codePostal)
+    public function testInvalidCodePostal($codePostal)
     {
-        $user = new User ();
-        $user->setCodePostal ($codePostal);
+        $user = new User();
+        $user->setCodePostal($codePostal);
         $errors = $this->validator->validate($user);
-        $this->assertGreaterThanOrEqual (1,count($errors));
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
-    public function ProviderInvalidCodePostal ()
+    public function ProviderInvalidCodePostal()
     {
         return [
             [""],
@@ -419,15 +415,15 @@ class UserTest extends KernelTestCase
      * @dataProvider ProviderValidCodePostal
      * @param $codePostal
      */
-    public function testValidCodePostal ($codePostal)
+    public function testValidCodePostal($codePostal)
     {
         $user = new User();
-        $user->setCodePostal ($codePostal);
+        $user->setCodePostal($codePostal);
         $errors = $this->validator->validate($user);
-        $this->assertEquals (8,count($errors));
+        $this->assertEquals(8, count($errors));
     }
 
-    public function ProviderValidCodePostal ()
+    public function ProviderValidCodePostal()
     {
         return [
             ["75000"],
@@ -441,12 +437,12 @@ class UserTest extends KernelTestCase
      * @dataProvider ProviderInvalidCity
      * @param $city
      */
-    public function testInvalidCity ($city)
+    public function testInvalidCity($city)
     {
         $user = new User();
-        $user->setCity ($city);
+        $user->setCity($city);
         $errors = $this->validator->validate($user);
-        $this->assertGreaterThanOrEqual (1,count($errors));
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
     public function ProviderInvalidCity()
@@ -462,23 +458,19 @@ class UserTest extends KernelTestCase
      * @dataProvider providerValidCity
      * @param $city
      */
-    public function testValidCity ($city)
+    public function testValidCity($city)
     {
         $user = new User();
-        $user->setCity ($city);
+        $user->setCity($city);
         $errors = $this->validator->validate($user);
-        $this->assertEquals (8,count($errors));
+        $this->assertEquals(8, count($errors));
     }
 
-    public function providerValidCity ()
+    public function providerValidCity()
     {
         return [
             ["Mulhouse"],
             ["marseille"],
         ];
     }
-
-
-
-
 }

@@ -55,55 +55,53 @@ class Wallet
         return $this->id;
     }
 
-    public function getCredit () : ?int
+    public function getCredit(): ?int
     {
-        return $this -> credit/100;
+        return $this -> credit / 100;
     }
 
-    public function getAddMoney () : ?int
+    public function getAddMoney(): ?int
     {
-        return $this -> addMoney/100;
+        return $this -> addMoney / 100;
     }
 
-    public function AddMoney ( ?float $addMoney ) : self
+    public function AddMoney(?float $addMoney): self
     {
-        $this -> addMoney = $addMoney*100;
-        $this->credit += ($addMoney*100);
+        $this -> addMoney = $addMoney * 100;
+        $this->credit += ($addMoney * 100);
         return $this;
     }
 
-    public function getDrawMoney () : ?int
+    public function getDrawMoney(): ?int
     {
-        return $this -> withdrawMoney/100;
+        return $this -> withdrawMoney / 100;
     }
 
-    public function Drawmoney(?int $drawmoney) : self
+    public function Drawmoney(?int $drawmoney): self
     {
-        if($drawmoney > $this->getCredit ())
-        {
+        if ($drawmoney > $this->getCredit()) {
             $this->isValid = false;
-        }else
-        {
-            $this->withdrawMoney = $drawmoney*100;
-            $this->credit -= ($drawmoney*100);
+        } else {
+            $this->withdrawMoney = $drawmoney * 100;
+            $this->credit -= ($drawmoney * 100);
 
             $this->isValid = true;
         }
         return $this;
     }
 
-    public function isValiddrawmoney (): bool
+    public function isValiddrawmoney(): bool
     {
         return $this->isValid ;
     }
 
-    public function getDrawBet () : ?float
+    public function getDrawBet(): ?float
     {
-        return $this -> drawBet/100;
+        return $this -> drawBet / 100;
     }
 
 
-    public function isValidDrawBet ( ?int $drawBet, bool $valide ) : void
+    public function isValidDrawBet(?int $drawBet, bool $valide): void
     {
         if ($valide == true) {
             $this -> drawBet = $drawBet;
@@ -111,25 +109,20 @@ class Wallet
     }
 
 
-    public function getAddEarnings () : ?float
+    public function getAddEarnings(): ?float
     {
-        return $this -> withAddEarnings/100;
+        return $this -> withAddEarnings / 100;
     }
 
-    public function AddEarnings ( ?int $Earnings, bool $statusEarnings )
+    public function AddEarnings(?int $Earnings, bool $statusEarnings)
     {
         $result = false;
-        if($statusEarnings == true )
-        {
-            $this -> withAddEarnings = $Earnings*100;
-            $this->credit += ($Earnings*100);
+        if ($statusEarnings == true) {
+            $this -> withAddEarnings = $Earnings * 100;
+            $this->credit += ($Earnings * 100);
             $result = true;
         }
 
         return $result;
-
     }
-
-
-
 }

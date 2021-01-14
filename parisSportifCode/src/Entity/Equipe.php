@@ -84,5 +84,4 @@ class Equipe
 
         return $this;
     }
-
 }
