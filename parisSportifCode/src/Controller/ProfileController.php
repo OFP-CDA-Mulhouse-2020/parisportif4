@@ -118,28 +118,27 @@ class ProfileController extends AbstractController
      * @Route("/auth/edit/information", name="auth_edit_information")
      * @IsGranted("ROLE_USER")
      */
-    public function editRestInformation( Request $request, UserPasswordEncoderInterface $passwordEncoder):Response
+    public function editRestInformation(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $user = $this->getUser ();
-        $formRestInfo = $this->createForm (EditUserRestInformation::class, $user);
-        $formRestInfo->handleRequest ($request);
-        if($formRestInfo->isSubmitted () && $formRestInfo->isValid ())
-        {
-            $entityManger = $this->getDoctrine ()->getManager ();
+        $user = $this->getUser();
+        $formRestInfo = $this->createForm(EditUserRestInformation::class, $user);
+        $formRestInfo->handleRequest($request);
+        if ($formRestInfo->isSubmitted() && $formRestInfo->isValid()) {
+            $entityManger = $this->getDoctrine()->getManager();
             $password = $request->request->get('edit_user_rest_information')['plainPassword'];
             if ($passwordEncoder->isPasswordValid($user, $password)) {
-            $user -> setStreet($request -> request -> get('edit_user_rest_information')['street']);
-            $user -> setCity($request -> request -> get('edit_user_rest_information')['city']);
-            $user -> setCodePostal($request -> request -> get('edit_user_rest_information')['codePostal']);
-            $user -> setPhone($request -> request -> get('edit_user_rest_information')['phone']);
-            $entityManger->persist ($user);
-            $entityManger-> flush ();
-            $this -> addFlash ('success', 'Vos information a bien été changé');
+                $user -> setStreet($request -> request -> get('edit_user_rest_information')['street']);
+                $user -> setCity($request -> request -> get('edit_user_rest_information')['city']);
+                $user -> setCodePostal($request -> request -> get('edit_user_rest_information')['codePostal']);
+                $user -> setPhone($request -> request -> get('edit_user_rest_information')['phone']);
+                $entityManger->persist($user);
+                $entityManger-> flush();
+                $this -> addFlash('success', 'Vos information a bien été changé');
             } else {
                 $formRestInfo->addError(new FormError('password incorrect'));
             }
         }
-        return $this->render ('page_contoller/editInformation.html.twig', [
+        return $this->render('page_contoller/editInformation.html.twig', [
             'user' => $user,
             'formInformation' => $formRestInfo->createView(),
             'editInformation' => true,

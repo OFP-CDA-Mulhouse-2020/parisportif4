@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\controller;
-
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -120,5 +118,4 @@ class editInformationUserTest extends WebTestCase
         $client->submit($form);
         $this->assertSelectorExists('.alert-success');
     }
-
 }

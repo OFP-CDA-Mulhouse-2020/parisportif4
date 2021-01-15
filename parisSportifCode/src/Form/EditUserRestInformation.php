@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form;
-
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -51,5 +49,4 @@ class EditUserRestInformation extends AbstractType
             'data_class' => User::class,
         ]);
     }
-
 }

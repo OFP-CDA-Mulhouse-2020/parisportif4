@@ -338,6 +338,4 @@ class ProfileTest extends WebTestCase
         $client->submit($form);
         $this->assertSelectorExists('.alert-success');
     }
-
-
 }
