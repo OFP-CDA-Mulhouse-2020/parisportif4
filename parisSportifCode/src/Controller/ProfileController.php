@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\EditUserEmailType;
 use App\Form\EditUserPasswordType;
+use App\Form\EditUserRestInformation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -60,8 +61,8 @@ class ProfileController extends AbstractController
         $formPassword->handleRequest($request);
         if ($formPassword->isSubmitted() && $formPassword->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $oldpassword = $request->request->get('edit_user_password')['oldPassword'];
-            if ($passwordEncoder->isPasswordValid($user, $oldpassword)) {
+            $oldPassword = $request->request->get('edit_user_password')['oldPassword'];
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
                 $user -> setPassword($passwordEncoder -> encodePassword($user, $user -> getPlainPassword()));
                 $entityManager -> persist($user);
                 $entityManager -> flush();
@@ -107,6 +108,41 @@ class ProfileController extends AbstractController
             'user' => $user,
             'formEmail' => $formEmail->createView(),
             'editEmail' => true,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return Response
+     * @Route("/auth/edit/information", name="auth_edit_information")
+     * @IsGranted("ROLE_USER")
+     */
+    public function editRestInformation( Request $request, UserPasswordEncoderInterface $passwordEncoder):Response
+    {
+        $user = $this->getUser ();
+        $formRestInfo = $this->createForm (EditUserRestInformation::class, $user);
+        $formRestInfo->handleRequest ($request);
+        if($formRestInfo->isSubmitted () && $formRestInfo->isValid ())
+        {
+            $entityManger = $this->getDoctrine ()->getManager ();
+            $password = $request->request->get('edit_user_rest_information')['plainPassword'];
+            if ($passwordEncoder->isPasswordValid($user, $password)) {
+            $user -> setStreet($request -> request -> get('edit_user_rest_information')['street']);
+            $user -> setCity($request -> request -> get('edit_user_rest_information')['city']);
+            $user -> setCodePostal($request -> request -> get('edit_user_rest_information')['codePostal']);
+            $user -> setPhone($request -> request -> get('edit_user_rest_information')['phone']);
+            $entityManger->persist ($user);
+            $entityManger-> flush ();
+            $this -> addFlash ('success', 'Vos information a bien été changé');
+            } else {
+                $formRestInfo->addError(new FormError('password incorrect'));
+            }
+        }
+        return $this->render ('page_contoller/editInformation.html.twig', [
+            'user' => $user,
+            'formInformation' => $formRestInfo->createView(),
+            'editInformation' => true,
         ]);
     }
 }
