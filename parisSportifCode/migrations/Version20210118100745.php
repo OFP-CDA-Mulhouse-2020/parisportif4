@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210112083756 extends AbstractMigration
+final class Version20210118100745 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -29,12 +29,13 @@ final class Version20210112083756 extends AbstractMigration
         $this->addSql('CREATE TABLE sport (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE sport_collectif (id INT AUTO_INCREMENT NOT NULL, nombre_joueurs INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE sport_individuel (id INT AUTO_INCREMENT NOT NULL, sport_individuel_id INT NOT NULL, INDEX IDX_D0D7A60E8C35B4F2 (sport_individuel_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, birth_date DATETIME NOT NULL, street VARCHAR(255) NOT NULL, street_number VARCHAR(255) DEFAULT NULL, code_postal VARCHAR(5) NOT NULL, city VARCHAR(180) NOT NULL, phone VARCHAR(255) NOT NULL, create_date DATETIME NOT NULL, user_validation TINYINT(1) NOT NULL, user_validation_date DATETIME DEFAULT NULL, user_suspended TINYINT(1) NOT NULL, user_suspended_date DATETIME DEFAULT NULL, user_deleted TINYINT(1) NOT NULL, user_deleted_date DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), UNIQUE INDEX UNIQ_8D93D649444F97DD (phone), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE wallet (id INT AUTO_INCREMENT NOT NULL, credit INT NOT NULL, add_money INT DEFAULT NULL, withdraw_money INT DEFAULT NULL, draw_bet INT DEFAULT NULL, with_add_earnings INT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, wallet_id INT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, birth_date DATETIME NOT NULL, street VARCHAR(255) NOT NULL, street_number VARCHAR(255) DEFAULT NULL, code_postal VARCHAR(5) NOT NULL, city VARCHAR(180) NOT NULL, phone VARCHAR(255) NOT NULL, create_date DATETIME NOT NULL, user_validation TINYINT(1) NOT NULL, user_validation_date DATETIME DEFAULT NULL, user_suspended TINYINT(1) NOT NULL, user_suspended_date DATETIME DEFAULT NULL, user_deleted TINYINT(1) NOT NULL, user_deleted_date DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), UNIQUE INDEX UNIQ_8D93D649444F97DD (phone), UNIQUE INDEX UNIQ_8D93D649712520F3 (wallet_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE wallet (id INT AUTO_INCREMENT NOT NULL, credit INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE evenement_sport ADD CONSTRAINT FK_892F432AAC78BCF8 FOREIGN KEY (sport_id) REFERENCES sport (id)');
         $this->addSql('ALTER TABLE joueurs ADD CONSTRAINT FK_F0FD889DA3DC7281 FOREIGN KEY (joueurs_id) REFERENCES sport_individuel (id)');
         $this->addSql('ALTER TABLE joueurs ADD CONSTRAINT FK_F0FD889DC9D220D8 FOREIGN KEY (joueurs_equipe_id) REFERENCES equipe (id)');
         $this->addSql('ALTER TABLE sport_individuel ADD CONSTRAINT FK_D0D7A60E8C35B4F2 FOREIGN KEY (sport_individuel_id) REFERENCES sport (id)');
+        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649712520F3 FOREIGN KEY (wallet_id) REFERENCES wallet (id)');
     }
 
     public function down(Schema $schema) : void
@@ -44,6 +45,7 @@ final class Version20210112083756 extends AbstractMigration
         $this->addSql('ALTER TABLE evenement_sport DROP FOREIGN KEY FK_892F432AAC78BCF8');
         $this->addSql('ALTER TABLE sport_individuel DROP FOREIGN KEY FK_D0D7A60E8C35B4F2');
         $this->addSql('ALTER TABLE joueurs DROP FOREIGN KEY FK_F0FD889DA3DC7281');
+        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649712520F3');
         $this->addSql('DROP TABLE bet');
         $this->addSql('DROP TABLE bet_user');
         $this->addSql('DROP TABLE document_user');
