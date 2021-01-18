@@ -36,19 +36,16 @@ class Wallet
         return $this -> credit;
     }
 
-    public function addToCredit(int $credit) {
+    public function addToCredit(int $credit)
+    {
         $this->credit += $credit;
         return $this;
     }
 
-    public function removeFromCredit(int $credit) {
+    public function removeFromCredit(int $credit)
+    {
         $this->credit -= $credit;
 
         return $this;
     }
-
-
-
-
-
 }

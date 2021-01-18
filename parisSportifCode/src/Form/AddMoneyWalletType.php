@@ -1,10 +1,6 @@
 <?php
 
-
 namespace App\Form;
-
-
-
 
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\AbstractType;
@@ -14,9 +10,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddMoneyWalletType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $option) {
+    public function buildForm(FormBuilderInterface $builder, array $option)
+    {
         $builder
-            ->add('credit',IntegerType::class)
+            ->add('credit', IntegerType::class)
             ->add('Valider', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success btn-block'
@@ -29,5 +26,4 @@ class AddMoneyWalletType extends AbstractType
         $resolver->setDefaults([
         ]);
     }
-
 }
