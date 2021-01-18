@@ -85,7 +85,7 @@ class WalletController extends AbstractController
                 $entityManager -> flush();
                 $this->addFlash('success', 'la somme a bien été retirer !');
             } else {
-                $formWallet->addError(new FormError('the amount is greater than your credit'));
+                $formWallet->addError(new FormError('gisterTesthe amount is greater than your credit'));
             }
         }
         return $this->render('page_wallet/withdrawMoney.html.twig', [
