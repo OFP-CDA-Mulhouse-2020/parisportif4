@@ -151,6 +151,12 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Wallet::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Wallet $wallet;
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
@@ -412,5 +418,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
          $this->plainPassword = null;
+    }
+
+    public function getWallet(): ?Wallet
+    {
+        return $this->wallet;
+    }
+
+    public function setWallet(Wallet $wallet): self
+    {
+        $this->wallet = $wallet;
+
+        return $this;
     }
 }

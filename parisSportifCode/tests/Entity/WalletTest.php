@@ -107,16 +107,4 @@ class WalletTest extends KernelTestCase
             [200]
         ];
     }
-
-    public function testInWithAddEarnings()
-    {
-        $wallet = new Wallet();
-        $this->assertEquals(false, $wallet->AddEarnings(100, false));
-    }
-
-    public function testWithAddEarnings()
-    {
-        $wallet = new Wallet();
-        $this->assertEquals(true, $wallet->AddEarnings(100, true));
-    }
 }

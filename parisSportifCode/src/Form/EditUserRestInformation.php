@@ -18,17 +18,6 @@ class EditUserRestInformation extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $option)
     {
         $builder
-            /*->add('lastname', TextType::class)
-            ->add('firstname', TextType::class)
-            ->add('birthdate', BirthdayType::class, [
-                'widget' => 'single_text',
-            ])
-            ->add('email', EmailType::class)
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ))*/
             ->add('street', TextType::class)
             ->add('city', TextType::class)
             ->add('codePostal', TextType::class)

@@ -30,7 +30,6 @@ class ProfileTest extends WebTestCase
         $this->assertSelectorTextContains('title', 'Hello PageContollerController!');
         $this->assertEquals(4, $crawler->filter('nav div div a.nav-item')->count());
         $this->assertSelectorTextContains('nav div div a.nav-item', 'Home');
-        $this->assertSelectorTextContains('', 'Features');
         $this->assertSelectorTextContains('', 'Pricing');
         $this->assertSelectorTextContains('', 'Disabled');
         $this->assertEquals(4, $crawler->filter('div h6.mb-0')->count());
@@ -142,6 +141,7 @@ class ProfileTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('ul li');
     }
+
     public function testEditPassword()
     {
         $client = static::createClient();
@@ -170,6 +170,7 @@ class ProfileTest extends WebTestCase
         $client->request('GET', '/auth/edit/email');
         $this->assertResponseStatusCodeSame(200);
     }
+
     public function testLabelProfileEditEmail()
     {
         $client = static::createClient();
