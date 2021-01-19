@@ -38,7 +38,7 @@ class Joueurs
      *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
      * @Groups({"naming"})
      */
-    private ?string $prenom;
+    private ?string $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,16 +50,16 @@ class Joueurs
     private ?string $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SportIndividuel::class, inversedBy="joueurs")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="joueurs")
      */
-    private ?SportIndividuel $joueurs;
+    private ?Equipe $equipe;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="joueurs")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Sport::class)
      */
-    private ?Equipe $joueurs_equipe;
+    private ?Sport $sport;
+
+
 
     public function getName(): ?string
     {
@@ -70,13 +70,13 @@ class Joueurs
         $this->name = $name;
         return $this;
     }
-    public function getPrenom(): ?string
+    public function getLastname(): ?string
     {
-        return $this->prenom;
+        return $this->lastname;
     }
-    public function setPrenom($prenom): self
+    public function setLastname($lastname): self
     {
-        $this->prenom = $prenom;
+        $this->lastname = $lastname;
         return $this;
     }
     public function getStatus(): ?string
@@ -89,27 +89,28 @@ class Joueurs
         return $this;
     }
 
-    public function getJoueurs(): ?SportIndividuel
+    public function getEquipe(): ?Equipe
     {
-        return $this->joueurs;
+        return $this->equipe;
     }
 
-    public function setJoueurs(?SportIndividuel $joueurs): self
+    public function setEquipe(?Equipe $team): self
     {
-        $this->joueurs = $joueurs;
+        $this->equipe = $team;
 
         return $this;
     }
 
-    public function getJoueursEquipe(): ?Equipe
+    public function getSport(): ?Sport
     {
-        return $this->joueurs_equipe;
+        return $this->sport;
     }
 
-    public function setJoueursEquipe(?Equipe $joueurs_equipe): self
+    public function setSport(?Sport $sport): self
     {
-        $this->joueurs_equipe = $joueurs_equipe;
+        $this->sport = $sport;
 
         return $this;
     }
+
 }
