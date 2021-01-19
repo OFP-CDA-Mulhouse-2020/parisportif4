@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,26 +8,26 @@ use Symfony\Component\HttpFoundation\Response;
 class RegisterTest extends WebTestCase
 {
 
-    public function testDisplayRegister ()
+    public function testDisplayRegister()
     {
-        $client = static ::createClient ();
-        $crawler = $client->request ('GET', '/register');
-        $this->assertResponseStatusCodeSame (Response::HTTP_OK);
-        $this->assertSelectorTextContains ('h1', 'Register');
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[lastname]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[firstname]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[birthdate]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[email]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[plainPassword][first]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[plainPassword][second]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[street]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[city]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[codePostal]"]'));
-        $this->assertCount(1,$crawler->filter('form input[name="refisteruser[phone]"]'));
+        $client = static ::createClient();
+        $crawler = $client->request('GET', '/register');
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertSelectorTextContains('h1', 'Register');
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[lastname]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[firstname]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[birthdate]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[email]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[plainPassword][first]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[plainPassword][second]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[street]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[city]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[codePostal]"]'));
+        $this->assertCount(1, $crawler->filter('form input[name="refisteruser[phone]"]'));
         $this->assertSelectorNotExists('ul li');
     }
 
-    public function testBlankinputRegisterUser ()
+    public function testBlankinputRegisterUser()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
@@ -48,12 +46,12 @@ class RegisterTest extends WebTestCase
             $form['refisteruser[phone]'] = '0741547854';
 
 
-        $client->submit ($form);
-        $this->assertResponseStatusCodeSame (Response::HTTP_OK);
+        $client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('ul li');
     }
 
-    public function testInvalidbirthdateRegisterUser ()
+    public function testInvalidbirthdateRegisterUser()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
@@ -72,12 +70,12 @@ class RegisterTest extends WebTestCase
             $form['refisteruser[phone]'] = '0741547854';
 
 
-        $client->submit ($form);
-        $this->assertResponseStatusCodeSame (Response::HTTP_OK);
+        $client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorExists('ul li');
     }
 
-    public function testAfterRegisterUser ()
+    public function testAfterRegisterUser()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
@@ -96,11 +94,8 @@ class RegisterTest extends WebTestCase
         $form['refisteruser[phone]'] = '0741547854';
 
 
-        $client->submit ($form);
+        $client->submit($form);
         $this->assertResponseRedirects('/login');
-        $client->followRedirect ();
+        $client->followRedirect();
     }
-
-
-
 }

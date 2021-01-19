@@ -25,9 +25,9 @@ class SportCollectifTest extends KernelTestCase
 
     public function testNombresJoueursIsNotNull()
     {
-       $sport = new SportCollectif();
-       $errors = $this->validator->validate($sport, null, "nbJoueurs");
-       $this->assertEquals(0, count($errors));
+        $sport = new SportCollectif();
+        $errors = $this->validator->validate($sport, null, "nbJoueurs");
+        $this->assertEquals(0, count($errors));
     }
 
     public function testNombresJoueursIsInvalid()

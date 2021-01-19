@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\Entity;
-
 
 use App\Entity\Wallet;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -35,16 +33,14 @@ class WalletTest extends KernelTestCase
     public function testAddMoney($money)
     {
         $wallet = new Wallet();
-        self::assertSame (0,$wallet->getCredit ());
-        $wallet->AddMoney ($money);
+        self::assertSame(0, $wallet->getCredit());
+        $wallet->AddMoney($money);
         $errors = $this->validator->validate($wallet);
         $this->assertEquals(0, count($errors));
-        self::assertSame ((int)($money),$wallet->getCredit ());
-        self::assertSame ((int)($money),$wallet->getAddMoney ());
-
-
+        self::assertSame((int)($money), $wallet->getCredit());
+        self::assertSame((int)($money), $wallet->getAddMoney());
     }
-    public function providerAddMoney ()
+    public function providerAddMoney()
     {
         return [
             [500],
@@ -60,14 +56,12 @@ class WalletTest extends KernelTestCase
     public function testInvalidAddMoney($money)
     {
         $wallet = new Wallet();
-        self::assertSame (0,$wallet->getCredit ());
-        $wallet->AddMoney ($money);
+        self::assertSame(0, $wallet->getCredit());
+        $wallet->AddMoney($money);
         $errors = $this->validator->validate($wallet);
         $this->assertGreaterThanOrEqual(1, count($errors));
-
-
     }
-    public function providerInvalidAddMoney ()
+    public function providerInvalidAddMoney()
     {
         return [
             [0],
@@ -83,10 +77,9 @@ class WalletTest extends KernelTestCase
     public function testDrawMoney($drawMoney)
     {
         $wallet = new Wallet();
-        $wallet->AddMoney (100);
-        $wallet->Drawmoney ($drawMoney);
-        self::assertEquals (true,$wallet->isValidDrawMoney ());
-
+        $wallet->AddMoney(100);
+        $wallet->Drawmoney($drawMoney);
+        self::assertEquals(true, $wallet->isValidDrawMoney());
     }
 
     public function providerDrawMoney()
@@ -103,10 +96,9 @@ class WalletTest extends KernelTestCase
     public function testInvalidDrawMoney($drawMoney)
     {
         $wallet = new Wallet();
-        $wallet->AddMoney (100);
-        $wallet->Drawmoney ($drawMoney);
-        self::assertEquals (false,$wallet->isValidDrawMoney ());
-
+        $wallet->AddMoney(100);
+        $wallet->Drawmoney($drawMoney);
+        self::assertEquals(false, $wallet->isValidDrawMoney());
     }
 
     public function providerInvalidDrawMoney()
@@ -115,22 +107,4 @@ class WalletTest extends KernelTestCase
             [200]
         ];
     }
-
-    public function testInWithAddEarnings ()
-    {
-        $wallet = new Wallet();
-        $this->assertEquals (false,$wallet->AddEarnings (100,false));
-
-    }
-
-    public function testWithAddEarnings ()
-    {
-        $wallet = new Wallet();
-        $this->assertEquals (true,$wallet->AddEarnings (100,true));
-
-    }
-
-
-
-
 }

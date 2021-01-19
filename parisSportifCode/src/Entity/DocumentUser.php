@@ -47,13 +47,13 @@ class DocumentUser
         return $this;
     }
 
-    public function getIsValid () : ?bool
+    public function getIsValid(): ?bool
     {
         return $this -> isValid;
     }
 
 
-    public function isValid () : self
+    public function isValid(): self
     {
         $this -> isValid = true;
         return $this;

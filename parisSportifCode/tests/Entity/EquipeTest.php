@@ -2,7 +2,6 @@
 
 namespace App\Tests\Entity;
 
-
 use App\Entity\Equipe;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

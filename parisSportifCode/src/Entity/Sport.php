@@ -36,19 +36,29 @@ class Sport
     private ?string $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="sport")
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\PositiveOrZero
      */
-    private ArrayCollection $evenement;
+    private ?int $nbTeams;
 
     /**
-     * @ORM\OneToMany(targetEntity=SportIndividuel::class, mappedBy="sport_individuel")
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\PositiveOrZero
      */
-    private ArrayCollection $sportIndividuels;
+    private ?int $nbPlayers;
+
+    /**
+     * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="sport")
+     * @var Collection<int, EvenementSport>|null
+     */
+    private ?Collection $evenement;
+
 
     public function __construct()
     {
         $this->evenement = new ArrayCollection();
-        $this->sportIndividuels = new ArrayCollection();
     }
 
     /**
@@ -67,8 +77,32 @@ class Sport
         $this->name = $name;
     }
 
+    public function getNbTeams(): ?int
+    {
+        return $this->nbTeams;
+    }
+
+    public function setNbTeams(?int $nbTeams): self
+    {
+        $this->nbTeams = $nbTeams;
+
+        return $this;
+    }
+
+    public function getNbPlayers(): ?int
+    {
+        return $this->nbPlayers;
+    }
+
+    public function setNbPlayers(?int $nbPlayers): self
+    {
+        $this->nbPlayers = $nbPlayers;
+
+        return $this;
+    }
+
     /**
-     * @return Collection|EvenementSport[]
+     * @return Collection<int, EvenementSport>|EvenementSport[]
      */
     public function getEvenement(): Collection
     {
@@ -96,35 +130,4 @@ class Sport
 
         return $this;
     }
-
-    /**
-     * @return Collection|SportIndividuel[]
-     */
-    public function getSportIndividuels(): Collection
-    {
-        return $this->sportIndividuels;
-    }
-
-    public function addSportIndividuel(SportIndividuel $sportIndividuel): self
-    {
-        if (!$this->sportIndividuels->contains($sportIndividuel)) {
-            $this->sportIndividuels[] = $sportIndividuel;
-            $sportIndividuel->setSportIndividuel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSportIndividuel(SportIndividuel $sportIndividuel): self
-    {
-        if ($this->sportIndividuels->removeElement($sportIndividuel)) {
-            // set the owning side to null (unless already changed)
-            if ($sportIndividuel->getSportIndividuel() === $this) {
-                $sportIndividuel->setSportIndividuel(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

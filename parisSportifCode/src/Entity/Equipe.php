@@ -21,11 +21,6 @@ class Equipe
      */
     private ?int $id;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
@@ -36,13 +31,33 @@ class Equipe
     private ?string $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Joueurs::class, mappedBy="joueurs_equipe")
+     * @ORM\OneToMany(targetEntity=Joueurs::class, mappedBy="equipe")
+     * @var Collection<int, Joueurs>|null
      */
-    private ArrayCollection $joueurs;
+    private ?Collection $joueurs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Sport::class)
+     */
+    private ?Sport $sport;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=EvenementSport::class, inversedBy="equipes")
+     */
+    private $evenement;
+
+
 
     public function __construct()
     {
         $this->joueurs = new ArrayCollection();
+        $this->evenement = new ArrayCollection();
+
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -56,7 +71,7 @@ class Equipe
     }
 
     /**
-     * @return Collection|Joueurs[]
+     * @return Collection<int, Joueurs>|Joueurs[]
      */
     public function getJoueurs(): Collection
     {
@@ -85,4 +100,39 @@ class Equipe
         return $this;
     }
 
+    public function getSport(): ?Sport
+    {
+        return $this->sport;
+    }
+
+    public function setSport(?Sport $sport): self
+    {
+        $this->sport = $sport;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EvenementSport[]
+     */
+    public function getEvenement(): Collection
+    {
+        return $this->evenement;
+    }
+
+    public function addEvenement(EvenementSport $evenement): self
+    {
+        if (!$this->evenement->contains($evenement)) {
+            $this->evenement[] = $evenement;
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(EvenementSport $evenement): self
+    {
+        $this->evenement->removeElement($evenement);
+
+        return $this;
+    }
 }

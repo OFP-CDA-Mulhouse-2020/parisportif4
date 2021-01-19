@@ -156,6 +156,4 @@ class EvenementSportTest extends KernelTestCase
             ['BRIVE-LA-GAYADRE @'],
         ];
     }
-
-
 }

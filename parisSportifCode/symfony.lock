@@ -111,6 +111,9 @@
     "evenement/evenement": {
         "version": "v3.0.1"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "jolicode/jolinotif": {
         "version": "v2.2.0"
     },

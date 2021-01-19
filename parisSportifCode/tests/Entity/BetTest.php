@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\Entity;
-
 
 use App\Entity\Bet;
 use DateTime;
@@ -23,25 +21,24 @@ class BetTest extends KernelTestCase
     public function testInstanceOf()
     {
         $bet = new Bet();
-        $this->assertInstanceOf (Bet::class, $bet);
-        $this->assertClassHasAttribute ("nameBet", Bet::class);
-        $this->assertClassHasAttribute ("cote", Bet::class);
+        $this->assertInstanceOf(Bet::class, $bet);
+        $this->assertClassHasAttribute("nameBet", Bet::class);
+        $this->assertClassHasAttribute("cote", Bet::class);
     }
 
     /**
      * @dataProvider provierInvalidNameBet
      * @param $nameBet
      */
-    public function testInvalidNameBet ($nameBet)
+    public function testInvalidNameBet($nameBet)
     {
         $bet = new Bet();
-        $bet->setNameBet ($nameBet);
+        $bet->setNameBet($nameBet);
         $errors = $this->validator->validate($bet);
         $this->assertGreaterThanOrEqual(2, count($errors));
-
     }
 
-    public function provierInvalidNameBet ()
+    public function provierInvalidNameBet()
     {
         return [
           ['homme du match1']
@@ -52,16 +49,15 @@ class BetTest extends KernelTestCase
      * @dataProvider provierValidNameBet
      * @param $nameBet
      */
-    public function testValidNameBet ($nameBet)
+    public function testValidNameBet($nameBet)
     {
         $bet = new Bet();
-        $bet->setNameBet ($nameBet);
-        $errors = $this->validator->validate($bet,null);
+        $bet->setNameBet($nameBet);
+        $errors = $this->validator->validate($bet, null);
         $this->assertEquals(1, count($errors));
-
     }
 
-    public function provierValidNameBet ()
+    public function provierValidNameBet()
     {
         return [
             ['homme du match'],
@@ -74,15 +70,15 @@ class BetTest extends KernelTestCase
      * @dataProvider providerInvalidCote
      * @param $cote
      */
-    public function testInvalidCote ($cote)
+    public function testInvalidCote($cote)
     {
         $bet = new Bet();
-        $bet ->setCote ($cote);
+        $bet ->setCote($cote);
         $errors = $this->validator->validate($bet);
         $this->assertGreaterThanOrEqual(2, count($errors));
     }
 
-    public function providerInvalidCote ()
+    public function providerInvalidCote()
     {
         return [
             [1]
@@ -93,20 +89,19 @@ class BetTest extends KernelTestCase
      * @dataProvider providerValidCote
      * @param $cote
      */
-    public function testValidCote ($cote)
+    public function testValidCote($cote)
     {
         $bet = new Bet();
-        $bet ->setCote ($cote);
+        $bet ->setCote($cote);
         $errors = $this->validator->validate($bet);
         $this->assertEquals(1, count($errors));
     }
 
-    public function providerValidCote ()
+    public function providerValidCote()
     {
         return [
             [2],
             [2.10]
         ];
     }
-
 }
