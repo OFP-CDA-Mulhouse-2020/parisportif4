@@ -58,15 +58,16 @@ class Competition
     private DateTimeInterface $endAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="competition")
-     * @var Collection<int, EvenementSport>|null
+     * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="competionn", orphanRemoval=true)
      */
-    private ?Collection $evenement;
+    private $evenement;
 
     public function __construct()
     {
         $this->evenement = new ArrayCollection();
     }
+
+
 
 
     public function getId(): ?int
@@ -111,33 +112,35 @@ class Competition
     }
 
     /**
-     * @return Collection<int, EvenementSport>|EvenementSport[]
+     * @return Collection|EvenementSport[]
      */
-    public function getEvent(): Collection
+    public function getEvenement(): Collection
     {
         return $this->evenement;
     }
 
-    public function addEvent(EvenementSport $event): self
+    public function addEvenement(EvenementSport $evenement): self
     {
-        if (!$this->evenement->contains($event)) {
-            $this->evenement[] = $event;
-            $event->setCompetition($this);
+        if (!$this->evenement->contains($evenement)) {
+            $this->evenement[] = $evenement;
+            $evenement->setCompetionn($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(EvenementSport $event): self
+    public function removeEvenement(EvenementSport $evenement): self
     {
-        if ($this->evenement->removeElement($event)) {
+        if ($this->evenement->removeElement($evenement)) {
             // set the owning side to null (unless already changed)
-            if ($event->getCompetition() === $this) {
-                $event->setCompetition(null);
+            if ($evenement->getCompetionn() === $this) {
+                $evenement->setCompetionn(null);
             }
         }
 
         return $this;
     }
+
+
 
 }
