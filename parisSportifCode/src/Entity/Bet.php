@@ -46,6 +46,14 @@ class Bet
      */
     private bool $resultBet;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=EvenementSport::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?EvenementSport $evenement;
+
+
+
     public function __construct()
     {
         $this->createDate = new DateTime();
@@ -72,7 +80,7 @@ class Bet
         return $this -> cote / 100;
     }
 
-    public function setCote(?int $cote): self
+    public function setCote(?float $cote): self
     {
         $this -> cote = $cote * 100;
         return $this;
@@ -91,6 +99,18 @@ class Bet
     public function setResultBet(bool $resultBet): self
     {
         $this -> resultBet = $resultBet;
+        return $this;
+    }
+
+    public function getEvenement(): ?EvenementSport
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?EvenementSport $evenement): self
+    {
+        $this->evenement = $evenement;
+
         return $this;
     }
 }
