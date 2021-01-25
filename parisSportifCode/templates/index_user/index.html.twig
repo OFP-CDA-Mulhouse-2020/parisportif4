@@ -1,0 +1,273 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+{% block body %}
+    <header class="container-fluid  py-4 bg-dark text-white">
+        <div class="row">
+            <div class="row py-4">
+                <div class="col-sm-10 mx-auto text-center">
+                    <p>
+                        FAMILLE, VIE SOCIALE, SANTE FINANCIERE. ETES VOUS PRET A TOUT MISER ? POUR ETRE AIDE, APPELEZ LE 09-74-75-13-12
+                    </p>
+                </div>
+                <div class="col-sm-10 mx-auto text-center">
+                    <H4 class="text-danger">
+                        LES JEUX D'ARGENT ET DE HASARD SONT INTERDIT AUX MINEURS
+                    </H4>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="row ">
+        <div class="col-sm-12 header-top ">
+            <nav class="navbar navbar-expand navbar-light bg-danger nav-main">
+                <div class="container-fluid">
+                    <div id="logo">
+                        <a class="navbar-brand" href="#">LOGO</a>
+                    </div>
+                    <div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                {# Dropdown 1 #}
+                                <li class="nav-item dropdown dropdown-1">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Wallet({{ wallet.credit }} €)
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Solde du compte</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Ajouter</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">retrait</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {# Dropdown 2 #}
+                                <li class="nav-item dropdown dropdown-2 ">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ users.firstname }} {{ users.lastname }}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Mes informations</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Aactivation de compte</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clotûre de compte</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    {# Header Bottom #}
+    <div class="row">
+    <div
+            class="col-sm-12 header-bottom">
+        {# Nav Secondary #}
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning nav-secondary">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav d-flex justify-content-around w-100">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Tout les Sport</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class='fas fa-futbol' style='font-size:26px'></i> Football</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class='fas fa-futbol' style='font-size:24px'></i> Handball</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class='fas fa-basketball-ball' style='font-size:26px'></i> Basket</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Tennis</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#"><i class='fas fa-table-tennis' style='font-size:24px'></i> Tennis table</a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Formula 1</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <section class="container-fluid" id="page-content">
+        <div class="row">
+            {# ASIDE LEFT #}
+            <div class="col-sm-12 col-md-3">
+                <aside class="container-fluid aside-left">
+                    {# chaque sport avec sa liste des compet #}
+                    <div class="row card mt-4">
+                        <div class="container-fluid col-sm-12 nav-bet">
+                            <div
+                                    class="accordion accordion-flush" id="accordionFlushExample">
+                                {# 1 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Football
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible aux niveau du sport Football
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {# 2 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Handball
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Handball
+                                        </div>
+                                    </div>
+                                </div>
+                                {# 3 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Basket
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Basket
+                                        </div>
+                                    </div>
+                                </div>
+                                {# 4 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Tennis
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Basket
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Tennis table
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Tennis de table
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Formula 1
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport  Formula 1
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <section class="central">
+                    <div class="container-fluid p-0">
+                        <div class="row mt-4">
+                            <div class="col-sm-12 mt-4 bet-board card p-2">
+                                <h4>Football</h4>
+                                <table class="table table-hover fw-bold">
+                                    <tbody>
+                                    <tr>
+                                        <th scope="" colspan="2">Barcelonne vs Liverpool</th>
+                                        {% for listBet in listBets %}
+                                            <th class="" colspan="2">
+                                                <a type="button" class="btn btn-danger btn-sm" href="/indexuser/choice/bet/{{ listBet.id }}">{{ listBet.nameBet }} {{ listBet.cote }}</a>
+                                            </th>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+                <div class="col-sm-12 col-md-3">
+                    <aside class="container-fluid aside-right">
+                        <div class="row card mt-4 p-2">
+                            <section class="col-sm-12 bet-ticket">
+                                {% if users.betUsers is not empty%}
+                                <div class="row">
+                                    {% for bUser in users.betUsers%}
+                                    <div class="col-10">
+                                        <p>{{ bUser.bet.evenement.name }}</p>
+                                        <p>{{ bUser.bet.evenement.equipe[0].name }} VS {{ bUser.bet.evenement.equipe[1].name }}</p>
+                                        <p>Cote : {{ bUser.bet.cote }}</p>
+                                        <form class="ui form" action="message" method="get">
+
+                                            <div class="field">
+                                                <label>Sum:</label>
+                                                <input type="number" name="sum">
+                                            </div>
+
+                                            <div class="field">
+                                                <input type="hidden" name="message" value="{{ bUser.id }}">
+                                            </div>
+
+                                            <button class="ui button" type="submit">Send</button>
+
+                                        </form>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                    <p>Ce livre n'est rattaché à aucune catégorie.</p>
+                                {% endif %}
+
+                            </section>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+    </section>
+        </div>
+
+
+{% endblock %}

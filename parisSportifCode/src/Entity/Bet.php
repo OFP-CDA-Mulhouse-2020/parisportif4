@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BetRepository;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,9 +48,23 @@ class Bet
      */
     private bool $resultBet;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=EvenementSport::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?EvenementSport $evenement;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BetUser::class, mappedBy="bet")
+     */
+    private $betUsers;
+
+
+
     public function __construct()
     {
         $this->createDate = new DateTime();
+        $this->betUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,12 +83,12 @@ class Bet
         return $this;
     }
 
-    public function getCote(): ?int
+    public function getCote(): ?float
     {
         return $this -> cote / 100;
     }
 
-    public function setCote(?int $cote): self
+    public function setCote(?float $cote): self
     {
         $this -> cote = $cote * 100;
         return $this;
@@ -91,6 +107,48 @@ class Bet
     public function setResultBet(bool $resultBet): self
     {
         $this -> resultBet = $resultBet;
+        return $this;
+    }
+
+    public function getEvenement(): ?EvenementSport
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?EvenementSport $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BetUser[]
+     */
+    public function getBetUsers(): Collection
+    {
+        return $this->betUsers;
+    }
+
+    public function addBetUser(BetUser $betUser): self
+    {
+        if (!$this->betUsers->contains($betUser)) {
+            $this->betUsers[] = $betUser;
+            $betUser->setBet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBetUser(BetUser $betUser): self
+    {
+        if ($this->betUsers->removeElement($betUser)) {
+            // set the owning side to null (unless already changed)
+            if ($betUser->getBet() === $this) {
+                $betUser->setBet(null);
+            }
+        }
+
         return $this;
     }
 }

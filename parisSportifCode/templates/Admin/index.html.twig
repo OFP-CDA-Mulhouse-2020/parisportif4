@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PageContollerController!{% endblock %}
+
+{% block body %}
+    <h4>Lite des paris disponible </h4>
+<table class="table table-hover fw-bold">
+    <thead>
+    <tr>
+        <td class="text-center" scope="col">id</td>
+        <td class="text-center" scope="col">event</td>
+        <td class="text-center" scope="col">name bet</td>
+        <td class="text-center" scope="col">cote</td>
+        <td class="text-center" scope="col">result</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for bet in listOfBet %}
+    <tr>
+        <td class="text-center" colspan="col">
+            <p>{{ bet.id }}</p></td>
+        <td class="text-center" colspan="col">
+            <p>{{ bet.evenement.id }}</p></td>
+        <td class="text-center" colspan="col">
+            <p>{{ bet.nameBet }}</p></td>
+        <td class="text-center" colspan="col">
+            <p>{{ bet.cote }}</p></td>
+        <td class="text-center" colspan="col">
+            <input type="checkbox" id="formTitle_radioSet_0" name="radioSet" value="">
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

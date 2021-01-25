@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EquipeRepository;
+//use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -42,16 +43,16 @@ class Equipe
     private ?Sport $sport;
 
     /**
-     * @ORM\ManyToMany(targetEntity=EvenementSport::class, inversedBy="equipes")
+     * @ORM\ManyToMany(targetEntity=EvenementSport::class, mappedBy="equipes")
+     * @var Collection<int, EvenementSport>|null
      */
-    private $evenement;
-
+    private ?Collection $evenementSports;
 
 
     public function __construct()
     {
         $this->joueurs = new ArrayCollection();
-        $this->evenement = new ArrayCollection();
+        $this->evenementSports = new ArrayCollection();
 
     }
 
@@ -82,7 +83,7 @@ class Equipe
     {
         if (!$this->joueurs->contains($joueur)) {
             $this->joueurs[] = $joueur;
-            $joueur->setJoueursEquipe($this);
+            $joueur->setEquipe($this);
         }
 
         return $this;
@@ -92,8 +93,8 @@ class Equipe
     {
         if ($this->joueurs->removeElement($joueur)) {
             // set the owning side to null (unless already changed)
-            if ($joueur->getJoueursEquipe() === $this) {
-                $joueur->setJoueursEquipe(null);
+            if ($joueur->getEquipe() === $this) {
+                $joueur->setEquipe(null);
             }
         }
 
@@ -115,24 +116,29 @@ class Equipe
     /**
      * @return Collection|EvenementSport[]
      */
-    public function getEvenement(): Collection
+    public function getEvenementSports(): Collection
     {
-        return $this->evenement;
+        return $this->evenementSports;
     }
 
-    public function addEvenement(EvenementSport $evenement): self
+    public function addEvenementSport(EvenementSport $evenementSport): self
     {
-        if (!$this->evenement->contains($evenement)) {
-            $this->evenement[] = $evenement;
+        if (!$this->evenementSports->contains($evenementSport)) {
+            $this->evenementSports[] = $evenementSport;
+            $evenementSport->addEquipe($this);
         }
 
         return $this;
     }
 
-    public function removeEvenement(EvenementSport $evenement): self
+    public function removeEvenementSport(EvenementSport $evenementSport): self
     {
-        $this->evenement->removeElement($evenement);
+        if ($this->evenementSports->removeElement($evenementSport)) {
+            $evenementSport->removeEquipe($this);
+        }
 
         return $this;
     }
+
+
 }

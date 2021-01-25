@@ -79,7 +79,7 @@ class WalletController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $money = $formWallet->get('credit')->getData();
             $limit = $wallet->getCredit();
-            if ($money < $limit) {
+            if ($money <= $limit) {
                 $wallet->removeFromCredit($money);
                 $entityManager -> persist($wallet);
                 $entityManager -> flush();
