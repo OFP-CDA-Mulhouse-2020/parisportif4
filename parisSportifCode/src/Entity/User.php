@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -157,10 +159,16 @@ class User implements UserInterface
      */
     private Wallet $wallet;
 
+    /**
+     * @ORM\OneToMany(targetEntity=BetUser::class, mappedBy="user")
+     */
+    private $betUsers;
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
         $this->createDate = new DateTime();
+        $this->betUsers = new ArrayCollection();
     }
 
     /**
@@ -428,6 +436,36 @@ class User implements UserInterface
     public function setWallet(Wallet $wallet): self
     {
         $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BetUser[]
+     */
+    public function getBetUsers(): Collection
+    {
+        return $this->betUsers;
+    }
+
+    public function addBetUser(BetUser $betUser): self
+    {
+        if (!$this->betUsers->contains($betUser)) {
+            $this->betUsers[] = $betUser;
+            $betUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBetUser(BetUser $betUser): self
+    {
+        if ($this->betUsers->removeElement($betUser)) {
+            // set the owning side to null (unless already changed)
+            if ($betUser->getUser() === $this) {
+                $betUser->setUser(null);
+            }
+        }
 
         return $this;
     }

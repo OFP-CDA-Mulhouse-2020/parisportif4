@@ -24,7 +24,7 @@ class EquipeLFixtures extends Fixture implements DependentFixtureInterface
         $sport = $this->getReference (SportFixtures::sport_1);
         $equipe1 = new Equipe();
 
-        $equipe1->setName ('barcelonne')
+        $equipe1->setName ('Liverpool')
                 ->setSport ($sport);
 
         $manager->persist ($equipe1);

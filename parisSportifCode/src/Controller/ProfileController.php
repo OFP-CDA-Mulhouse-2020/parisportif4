@@ -7,6 +7,7 @@ use App\Form\EditUserPasswordType;
 use App\Form\EditUserRestInformation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,6 +85,7 @@ class ProfileController extends AbstractController
      * @return Response
      * @Route("/auth/edit/email", name="auth_edit_email")
      * @IsGranted("ROLE_USER")
+     * @throws LogicException
      */
     public function editEmailProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -117,6 +119,7 @@ class ProfileController extends AbstractController
      * @return Response
      * @Route("/auth/edit/information", name="auth_edit_information")
      * @IsGranted("ROLE_USER")
+     * @throws LogicException
      */
     public function editRestInformation(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {

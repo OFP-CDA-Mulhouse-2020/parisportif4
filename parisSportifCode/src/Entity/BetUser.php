@@ -25,32 +25,38 @@ class BetUser
      */
     private DateTimeInterface $amountBetDate;
     /**
-     * @ORM\Column(type="integer", length=5)
+     * @ORM\Column(type="integer", length=5, nullable=true)
      * @Assert\Positive()
      * @Assert\LessThanOrEqual(value="10000")
      */
     private ?int $amountBet;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Assert\Type(type="bool")
-     */
-    private ?bool $statusBet;
-
-    /**
-     * @ORM\Column(type="integer", length=10)
+     * @ORM\Column(type="integer", length=5, nullable=true)
      * @Assert\Positive()
      */
-    private ?int $Earnings;
+    private ?int $gainPossible;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="betUsers")
+     */
+    private ?User $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Bet::class, inversedBy="betUsers")
+     */
+    private $bet;
+
 
     public function __construct()
     {
         $this->amountBetDate = new DateTime();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getAmountBetDate(): ?\DateTimeInterface
@@ -63,34 +69,48 @@ class BetUser
         return $this -> amountBet / 100;
     }
 
-    public function setAmountBet(?int $amountBet, int $amountUser): bool
+    public function setAmountBet(?int $amountBet, int $amountUser): self
     {
-        $result = false;
+
         if ($amountBet <= $amountUser) {
             $this -> amountBet = ($amountBet * 100);
-            $result = true;
         }
-        return $result;
-    }
-
-    public function getStatusBet(): ?bool
-    {
-        return $this -> statusBet;
-    }
-
-    public function setStatusBet(?bool $statusBet): self
-    {
-        $this -> statusBet = $statusBet;
         return $this;
     }
 
-    public function getEarnings(): ?float
+    public function getGainPossible () : ?float
     {
-        return $this -> Earnings / 100;
+        return $this -> gainPossible;
     }
 
-    public function setEarnings(?int $Earnings, ?float $cote): void
+    public function setGainPossible ( ?float $amountBet, float $cote ) : self
     {
-        $this -> Earnings = ($Earnings * 100) * $cote;
+        $gainGenerale =  $amountBet * $cote;
+        $this -> gainPossible = ($gainGenerale-$amountBet)*100;
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBet(): ?Bet
+    {
+        return $this->bet;
+    }
+
+    public function setBet(?Bet $bet): self
+    {
+        $this->bet = $bet;
+
+        return $this;
     }
 }
