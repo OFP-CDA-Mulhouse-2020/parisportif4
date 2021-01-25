@@ -1,25 +1,42 @@
 # parisportif4
 
-parieur (nom , prenom , date de naissance,  adress , ville , tel , mail , solde , mdp)
+Modeling and design
+#Sprint1 - Modeling & design
+#Tasks
+- Review existing sites 
+- Produce a class diagram
+- Produce a wireframe mockup
+- Optionally an HTML mockup
 
-pari ( date , type, solde , mise)
+#Sprint2 - Preparing the projet
 
-cote ( nom, cote)
+#Task
 
-rencontre ( nom , lieu , date )
+- prepare Symfony
+- install all configuration environment
 
-evenement ( nom )
+$Sprint3 - Security Module
 
-Sport ( nom , type )
+#Task
+- create user entity
+- test user entity
+- authentication
 
-parieur 0..* ---> 1 pari
+#Sprint3 - Functional test 
 
+#Task
+- create page
+- create controller
+- test controller
 
-pari 1..* ----- 1 cote
+#Sprint4 - add bet & validate
 
-
-cote 1..* ---> 1 rencontre 
-
-rencontre  1..* -----> 1 Evenement
-
-Evenement 1...*  ----->  1 Sport 
+#task
+- create sport
+- create teams 
+- create playeer
+- create bet
+- choice bet
+- payment bet
+- result bet
+- affect reselt bet & peyment use (win , Lose)
