@@ -24,6 +24,8 @@ class BetTest extends KernelTestCase
         $this->assertInstanceOf(Bet::class, $bet);
         $this->assertClassHasAttribute("nameBet", Bet::class);
         $this->assertClassHasAttribute("cote", Bet::class);
+        $this->assertClassHasAttribute("dateBetLimit", Bet::class);
+        $this->assertClassHasAttribute("resultBet", Bet::class);
     }
 
     /**
@@ -35,7 +37,7 @@ class BetTest extends KernelTestCase
         $bet = new Bet();
         $bet->setNameBet($nameBet);
         $errors = $this->validator->validate($bet);
-        $this->assertGreaterThanOrEqual(2, count($errors));
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
     public function provierInvalidNameBet()
@@ -54,7 +56,7 @@ class BetTest extends KernelTestCase
         $bet = new Bet();
         $bet->setNameBet($nameBet);
         $errors = $this->validator->validate($bet, null);
-        $this->assertEquals(1, count($errors));
+        $this->assertEquals(2, count($errors));
     }
 
     public function provierValidNameBet()
@@ -75,7 +77,7 @@ class BetTest extends KernelTestCase
         $bet = new Bet();
         $bet ->setCote($cote);
         $errors = $this->validator->validate($bet);
-        $this->assertGreaterThanOrEqual(2, count($errors));
+        $this->assertGreaterThanOrEqual(1, count($errors));
     }
 
     public function providerInvalidCote()
@@ -94,7 +96,7 @@ class BetTest extends KernelTestCase
         $bet = new Bet();
         $bet ->setCote($cote);
         $errors = $this->validator->validate($bet);
-        $this->assertEquals(1, count($errors));
+        $this->assertEquals(2, count($errors));
     }
 
     public function providerValidCote()

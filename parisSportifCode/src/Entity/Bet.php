@@ -20,7 +20,7 @@ class Bet
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private ?int $id = null;
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank ()
@@ -38,15 +38,21 @@ class Bet
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *      message="Date start vide",
+     * )
+     * @Assert\Type(
+     *     type="datetime",
+     *     message="Format incorrect"
+     * )
      */
-    private DateTimeInterface $createDate;
+    private DateTimeInterface $dateBetLimit;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Assert\Type(type="bool")
      */
-    private bool $resultBet;
+    private bool $resultBet = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=EvenementSport::class)
@@ -57,13 +63,12 @@ class Bet
     /**
      * @ORM\OneToMany(targetEntity=BetUser::class, mappedBy="bet")
      */
-    private $betUsers;
+    private  $betUsers;
 
 
 
     public function __construct()
     {
-        $this->createDate = new DateTime();
         $this->betUsers = new ArrayCollection();
     }
 
@@ -94,9 +99,22 @@ class Bet
         return $this;
     }
 
-    public function getCreateBetDate(): \DateTimeInterface
+    /**
+     * @return DateTimeInterface
+     */
+    public function getDateBetLimit(): ?DateTimeInterface
     {
-        return $this->createDate;
+        return $this->dateBetLimit;
+    }
+
+    /**
+     * @param DateTimeInterface $DateBetLimit
+     * @return Bet
+     */
+    public function setDateBetLimit(DateTimeInterface $DateBetLimit): self
+    {
+        $this->dateBetLimit = $DateBetLimit;
+        return $this;
     }
 
     public function isResultBet(): bool

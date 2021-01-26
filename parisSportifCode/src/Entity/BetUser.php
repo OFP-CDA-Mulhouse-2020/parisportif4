@@ -69,13 +69,15 @@ class BetUser
         return $this -> amountBet / 100;
     }
 
-    public function setAmountBet(?int $amountBet, int $amountUser): self
+    public function setAmountBet(?int $amountBet, int $amountUser): bool
     {
 
-        if ($amountBet <= $amountUser) {
-            $this -> amountBet = ($amountBet * 100);
+        if ($amountBet > $amountUser) {
+            return false;
         }
-        return $this;
+            $this -> amountBet = ($amountBet * 100);
+
+        return true;
     }
 
     public function getGainPossible () : ?float
@@ -85,8 +87,7 @@ class BetUser
 
     public function setGainPossible ( ?float $amountBet, float $cote ) : self
     {
-        $gainGenerale =  $amountBet * $cote;
-        $this -> gainPossible = ($gainGenerale-$amountBet)*100;
+        $this -> gainPossible = ($amountBet * $cote)*100;
         return $this;
     }
 

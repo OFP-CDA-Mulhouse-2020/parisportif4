@@ -23,6 +23,7 @@ class BetUserTest extends KernelTestCase
         $this->assertInstanceOf(BetUser::class, $betUser);
         $this->assertClassHasAttribute("amountBetDate", BetUser::class);
         $this->assertClassHasAttribute("amountBet", BetUser::class);
+        $this->assertClassHasAttribute("gainPossible", BetUser::class);
     }
 
     /**
@@ -60,5 +61,21 @@ class BetUserTest extends KernelTestCase
         return [
             [100],
         ];
+    }
+
+    public function testValidCalculGain()
+    {
+        $betUser = new BetUser();
+        $betUser->setGainPossible(50,1.2);
+        $errors = $this->validator->validate($betUser);
+        $this->assertEquals(0, count($errors));
+    }
+
+    public function testInlidCalculGain()
+    {
+        $betUser = new BetUser();
+        $betUser->setGainPossible(-50,1.2);
+        $errors = $this->validator->validate($betUser);
+        $this->assertEquals(1, count($errors));
     }
 }

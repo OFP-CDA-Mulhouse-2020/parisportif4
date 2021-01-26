@@ -22,6 +22,8 @@ class SportTest extends KernelTestCase
         $sport = new Sport();
         $this->assertInstanceOf(Sport::class, $sport);
         $this->assertClassHasAttribute("name", Sport::class);
+        $this->assertClassHasAttribute("nbTeams", Sport::class);
+        $this->assertClassHasAttribute("nbPlayers", Sport::class);
     }
 
     /**
@@ -68,4 +70,40 @@ class SportTest extends KernelTestCase
             ['basket2']
         ];
     }
+
+    public function testValidNumberTeams()
+    {
+        $sport = new Sport();
+        $sport->setNbTeams(2);
+        $errors = $this->validator->validate($sport);
+        $this->assertGreaterThanOrEqual(0, count($errors));
+
+    }
+
+    public function testInvalidNumberTeams()
+    {
+        $sport = new Sport();
+        $sport->setNbTeams(-2);
+        $errors = $this->validator->validate($sport);
+        $this->assertGreaterThanOrEqual(1, count($errors));
+
+    }
+
+    public function testValidNbOfPlayers()
+    {
+        $sport = new Sport();
+        $sport->setNbPlayers(11);
+        $errors = $this->validator->validate($sport);
+        $this->assertGreaterThanOrEqual(0, count($errors));
+    }
+
+    public function testInvlidNbOfPlayers()
+    {
+        $sport = new Sport();
+        $sport->setNbPlayers(11);
+        $errors = $this->validator->validate($sport);
+        $this->assertGreaterThanOrEqual(1, count($errors));
+    }
+
+
 }

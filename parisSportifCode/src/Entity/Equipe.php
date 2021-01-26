@@ -32,6 +32,15 @@ class Equipe
     private ?string $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-ZÀ-ÿ-]{2,16}$/")
+     * @Groups({"naming"})
+     */
+    private ?string $contry;
+
+    /**
      * @ORM\OneToMany(targetEntity=Joueurs::class, mappedBy="equipe")
      * @var Collection<int, Joueurs>|null
      */
@@ -68,6 +77,24 @@ class Equipe
     public function setName($name): self
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContry(): ?string
+    {
+        return $this->contry;
+    }
+
+    /**
+     * @param string|null $contry
+     * @return Equipe
+     */
+    public function setContry(?string $contry): self
+    {
+        $this->contry = $contry;
         return $this;
     }
 

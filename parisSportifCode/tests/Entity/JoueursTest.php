@@ -24,7 +24,7 @@ class JoueursTest extends KernelTestCase
         $event = new Joueurs();
         $this->assertInstanceOf(Joueurs::class, $event);
         $this->assertClassHasAttribute("name", Joueurs::class);
-        $this->assertClassHasAttribute("prenom", Joueurs::class);
+        $this->assertClassHasAttribute("lastname", Joueurs::class);
         $this->assertClassHasAttribute("status", Joueurs::class);
     }
 
