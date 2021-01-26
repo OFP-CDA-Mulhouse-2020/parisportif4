@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210125030537 extends AbstractMigration
+final class Version20210126065739 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,11 +20,11 @@ final class Version20210125030537 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE bet (id INT AUTO_INCREMENT NOT NULL, evenement_id INT NOT NULL, name_bet VARCHAR(255) NOT NULL, cote INT NOT NULL, create_date DATETIME NOT NULL, result_bet TINYINT(1) DEFAULT NULL, INDEX IDX_FBF0EC9BFD02F13 (evenement_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE bet (id INT AUTO_INCREMENT NOT NULL, evenement_id INT NOT NULL, name_bet VARCHAR(255) NOT NULL, cote INT NOT NULL, date_bet_limit DATETIME NOT NULL, result_bet TINYINT(1) DEFAULT NULL, INDEX IDX_FBF0EC9BFD02F13 (evenement_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE bet_user (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, bet_id INT DEFAULT NULL, amount_bet_date DATETIME NOT NULL, amount_bet INT DEFAULT NULL, gain_possible INT DEFAULT NULL, INDEX IDX_A8450575A76ED395 (user_id), INDEX IDX_A8450575D871DC26 (bet_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE competition (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, start_at DATETIME NOT NULL, end_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE document_user (id INT AUTO_INCREMENT NOT NULL, document LONGBLOB NOT NULL, is_valid TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE equipe (id INT AUTO_INCREMENT NOT NULL, sport_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, INDEX IDX_2449BA15AC78BCF8 (sport_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE equipe (id INT AUTO_INCREMENT NOT NULL, sport_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, contry VARCHAR(255) NOT NULL, INDEX IDX_2449BA15AC78BCF8 (sport_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE evenement_sport (id INT AUTO_INCREMENT NOT NULL, sport_id INT DEFAULT NULL, competionn_id INT NOT NULL, name VARCHAR(255) NOT NULL, begin_date DATETIME NOT NULL, event_place VARCHAR(255) NOT NULL, INDEX IDX_892F432AAC78BCF8 (sport_id), INDEX IDX_892F432A361BE7CA (competionn_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE evenement_sport_equipe (evenement_sport_id INT NOT NULL, equipe_id INT NOT NULL, INDEX IDX_ECBB02E2231E2710 (evenement_sport_id), INDEX IDX_ECBB02E26D861B89 (equipe_id), PRIMARY KEY(evenement_sport_id, equipe_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE joueurs (id INT AUTO_INCREMENT NOT NULL, equipe_id INT DEFAULT NULL, sport_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, INDEX IDX_F0FD889D6D861B89 (equipe_id), INDEX IDX_F0FD889DAC78BCF8 (sport_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

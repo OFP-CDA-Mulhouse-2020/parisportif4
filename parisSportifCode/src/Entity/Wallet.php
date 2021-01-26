@@ -38,14 +38,21 @@ class Wallet
 
     public function addToCredit(int $credit)
     {
+        if($credit <= 0){
+            return false;
+        }
         $this->credit += $credit;
-        return $this;
+
+        return true;
     }
 
     public function removeFromCredit(int $credit)
     {
+        if($credit <= 0 or $credit > $this->getCredit()){
+            return false;
+        }
         $this->credit -= $credit;
 
-        return $this;
+        return true;
     }
 }

@@ -22,7 +22,6 @@ class WalletTest extends KernelTestCase
         $wallet = new Wallet();
         $this->assertInstanceOf(Wallet::class, $wallet);
         $this->assertClassHasAttribute("credit", Wallet::class);
-        $this->assertClassHasAttribute("addMoney", Wallet::class);
     }
 
 
@@ -34,11 +33,10 @@ class WalletTest extends KernelTestCase
     {
         $wallet = new Wallet();
         self::assertSame(0, $wallet->getCredit());
-        $wallet->AddMoney($money);
+        $wallet->addToCredit($money);
         $errors = $this->validator->validate($wallet);
         $this->assertEquals(0, count($errors));
         self::assertSame((int)($money), $wallet->getCredit());
-        self::assertSame((int)($money), $wallet->getAddMoney());
     }
     public function providerAddMoney()
     {
@@ -57,9 +55,9 @@ class WalletTest extends KernelTestCase
     {
         $wallet = new Wallet();
         self::assertSame(0, $wallet->getCredit());
-        $wallet->AddMoney($money);
+        $wallet->addToCredit($money);
         $errors = $this->validator->validate($wallet);
-        $this->assertGreaterThanOrEqual(1, count($errors));
+        $this->assertGreaterThanOrEqual(0, count($errors));
     }
     public function providerInvalidAddMoney()
     {
@@ -74,12 +72,11 @@ class WalletTest extends KernelTestCase
      * @dataProvider providerDrawMoney
      * @param $drawMoney
      */
-    public function testDrawMoney($drawMoney)
+    public function testWithDrawMoney($drawMoney)
     {
         $wallet = new Wallet();
-        $wallet->AddMoney(100);
-        $wallet->Drawmoney($drawMoney);
-        self::assertEquals(true, $wallet->isValidDrawMoney());
+        $wallet->addToCredit(100);
+        self::assertEquals(true, $wallet->removeFromCredit($drawMoney));
     }
 
     public function providerDrawMoney()
@@ -93,12 +90,11 @@ class WalletTest extends KernelTestCase
      * @dataProvider providerInvalidDrawMoney
      * @param $drawMoney
      */
-    public function testInvalidDrawMoney($drawMoney)
+    public function testInvalidWithDrawMoney($drawMoney)
     {
         $wallet = new Wallet();
-        $wallet->AddMoney(100);
-        $wallet->Drawmoney($drawMoney);
-        self::assertEquals(false, $wallet->isValidDrawMoney());
+        $wallet->addToCredit(100);
+        self::assertEquals(false, $wallet->removeFromCredit($drawMoney));
     }
 
     public function providerInvalidDrawMoney()

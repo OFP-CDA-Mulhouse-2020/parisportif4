@@ -22,6 +22,7 @@ class EquipeBFixtures extends Fixture implements DependentFixtureInterface
         $equipe = new Equipe();
 
         $equipe->setName ('barcelonne')
+                ->setContry('Espagne')
                 ->setSport ($sport);
 
         $manager->persist ($equipe);
