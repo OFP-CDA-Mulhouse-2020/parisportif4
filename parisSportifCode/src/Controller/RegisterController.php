@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Wallet;
 use App\Form\RefisteruserType;
+use App\Service\DataBaseManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class RegisterController extends AbstractController
      * @Route("/register", name="user_registration")
      * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DataBaseManager $dbmanager): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
@@ -29,7 +30,7 @@ class RegisterController extends AbstractController
         $user = new User();
         $user->setWallet(new Wallet());
 
-        return $this->handleRegistrationForm($request, $user, $passwordEncoder);
+        return $this->handleRegistrationForm($request, $user, $passwordEncoder, $dbmanager);
     }
 
     /**
@@ -41,7 +42,8 @@ class RegisterController extends AbstractController
     private function handleRegistrationForm(
         Request $request,
         User $user,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        DataBaseManager $dbmanager
     ): Response {
         $form = $this->createForm(RefisteruserType::class, $user);
         $form->handleRequest($request);
@@ -54,9 +56,7 @@ class RegisterController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $dbmanager->insertDataIntoBase($user);
 
 
             return $this->redirectToRoute('app_login');

@@ -7,9 +7,15 @@ use App\Entity\Wallet;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $user = new User();
@@ -41,6 +47,21 @@ class UserFixtures extends Fixture
         $user2->setRoles(["ROLE_USER"]);
         $user2->setPassword('$2y$12$2ccpBT1toKcy/1GWcEcNbeeV2Bp6jjnh.T4ia49tfe6HmyPbpUM0W');
         $manager->persist($user2);
+
+        $user3 = new User();
+        $user3->setWallet(new Wallet());
+        $user3->setFirstname("Tintin");
+        $user3->setLastname("Dupont");
+        $user3->setEmail("tintin.dupont@mail.com");
+        $user3->setBirthDate(DateTime::createFromFormat('Y-m-d', '1994-02-21'));
+        $user3->setStreet("Rue de la bichette");
+        $user3->setStreetNumber("3");
+        $user3->setCodePostal("67640");
+        $user3->setCity("Lipsheim");
+        $user3->setPhone("0612345678");
+        $user3->setRoles(["ROLE_ADMIN"]);
+        $user3->setPassword($this->passwordEncoder->encodePassword($user, '@Test123'));
+        $manager->persist($user3);
 
         $manager->flush();
     }

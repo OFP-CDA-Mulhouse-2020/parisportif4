@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\EditUserEmailType;
 use App\Form\EditUserPasswordType;
 use App\Form\EditUserRestInformation;
+use App\Service\DataBaseManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Exception\LogicException;
@@ -55,18 +56,17 @@ class ProfileController extends AbstractController
      */
     public function EditPasswordProfile(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        DataBaseManager $dbmanager
     ): Response {
         $user = $this->getUser();
         $formPassword = $this->createForm(EditUserPasswordType::class, $user);
         $formPassword->handleRequest($request);
         if ($formPassword->isSubmitted() && $formPassword->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $oldPassword = $request->request->get('edit_user_password')['oldPassword'];
             if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
                 $user -> setPassword($passwordEncoder -> encodePassword($user, $user -> getPlainPassword()));
-                $entityManager -> persist($user);
-                $entityManager -> flush();
+                $dbmanager->insertDataIntoBase($user);
                 $this->addFlash('success', 'Votre mot de passe à bien été changé !');
             } else {
                 $formPassword->addError(new FormError('Old password incorrect'));
@@ -87,19 +87,20 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @throws LogicException
      */
-    public function editEmailProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function editEmailProfile(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        DataBaseManager $dbmanager
+        ): Response
     {
         $user = $this->getUser();
         $formEmail = $this->createForm(EditUserEmailType::class, $user);
         $formEmail->handleRequest($request);
         if ($formEmail->isSubmitted() && $formEmail->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $password = $request->request->get('edit_user_email')['plainPassword'];
             if ($passwordEncoder->isPasswordValid($user, $password)) {
                 $user -> setEmail($request -> request -> get('edit_user_email')['email']);
-                $entityManager -> persist($user);
-                $entityManager -> flush();
-
+                $dbmanager->insertDataIntoBase($user);
                 $this -> addFlash('success', 'Votre email a bien été changé !');
             } else {
                 $formEmail->addError(new FormError('password incorrect'));
@@ -121,21 +122,23 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @throws LogicException
      */
-    public function editRestInformation(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function editRestInformation(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        DataBaseManager $dbmanager
+        ): Response
     {
         $user = $this->getUser();
         $formRestInfo = $this->createForm(EditUserRestInformation::class, $user);
         $formRestInfo->handleRequest($request);
         if ($formRestInfo->isSubmitted() && $formRestInfo->isValid()) {
-            $entityManger = $this->getDoctrine()->getManager();
             $password = $request->request->get('edit_user_rest_information')['plainPassword'];
             if ($passwordEncoder->isPasswordValid($user, $password)) {
                 $user -> setStreet($request -> request -> get('edit_user_rest_information')['street']);
                 $user -> setCity($request -> request -> get('edit_user_rest_information')['city']);
                 $user -> setCodePostal($request -> request -> get('edit_user_rest_information')['codePostal']);
                 $user -> setPhone($request -> request -> get('edit_user_rest_information')['phone']);
-                $entityManger->persist($user);
-                $entityManger-> flush();
+                $dbmanager->insertDataIntoBase($user);
                 $this -> addFlash('success', 'Vos information a bien été changé');
             } else {
                 $formRestInfo->addError(new FormError('password incorrect'));
