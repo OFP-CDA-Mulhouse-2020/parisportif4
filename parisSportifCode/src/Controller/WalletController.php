@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Wallet;
 use App\Form\AddMoneyWalletType;
 use App\Repository\WalletRepository;
-use App\Service\DataBaseManager;
+use App\Services\DataBaseManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;

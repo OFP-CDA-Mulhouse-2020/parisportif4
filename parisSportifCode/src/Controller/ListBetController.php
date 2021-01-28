@@ -6,7 +6,7 @@ use App\Entity\BetUser;
 use App\Form\PayementBetType;
 use App\Repository\BetRepository;
 use App\Repository\BetUserRepository;
-use App\Service\DataBaseManager;
+use App\Services\DataBaseManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

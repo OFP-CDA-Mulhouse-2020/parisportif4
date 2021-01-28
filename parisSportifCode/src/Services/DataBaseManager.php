@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
