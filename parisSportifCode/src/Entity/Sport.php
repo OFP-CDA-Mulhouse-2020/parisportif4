@@ -19,7 +19,7 @@ class Sport
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private ?int $id = null;
 
     public function getId(): ?int
     {

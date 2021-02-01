@@ -210,17 +210,28 @@
                     <div class="container-fluid p-0">
                         <div class="row mt-4">
                             <div class="col-sm-12 mt-4 bet-board card p-2">
-                                <h4>Football</h4>
+                                <h4>All Sports</h4>
                                 <table class="table table-hover fw-bold">
-                                    <tbody>
+                                    <thead>
                                     <tr>
-                                        <th scope="" colspan="2">Barcelonne vs Liverpool</th>
-                                        {% for listBet in listBets %}
-                                            <th class="" colspan="2">
-                                                <a type="button" class="btn btn-danger btn-sm" href="/indexuser/choice/bet/{{ listBet.id }}">{{ listBet.nameBet }} {{ listBet.cote }}</a>
-                                            </th>
-                                        {% endfor %}
+                                        <th scope="col" colspan="2">Match</th>
+                                        <th class="text-center" scope="col">Bet</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for listBet in listBets %}
+                                        <tr>
+                                            <td class="" colspan="2">
+                                                <p>{{ listBet.evenement.equipe[0].name }}<br>
+                                                    {{ listBet.evenement.equipe[1].name }}<br>
+                                                    {{ listBet.evenement.competionn.name }}<br>
+                                                </p>
+                                            </td>
+                                            <td class="text-center">
+                                                <a type="button" class="btn btn-danger btn-sm" href="/indexuser/choice/bet/{{ listBet.id }}">{{ listBet.nameBet }} {{ listBet.cote }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -258,7 +269,7 @@
                                     {% endfor %}
                                 </div>
                                 {% else %}
-                                    <p>Ce livre n'est rattaché à aucune catégorie.</p>
+                                    <p>Vous etes rattaché à aucun pari.</p>
                                 {% endif %}
 
                             </section>
