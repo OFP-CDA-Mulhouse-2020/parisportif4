@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\DocumentUser;
 use App\Entity\User;
 use App\Entity\Wallet;
 use DateTime;
@@ -22,6 +23,7 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user->setWallet(new Wallet());
+        $user->setDocument(new DocumentUser());
         $user->setFirstname("namoune");
         $user->setLastname("Sofiane");
         $user->setEmail("sofiane1@gmail.com");
@@ -37,6 +39,7 @@ class UserFixtures extends Fixture
 
         $user2 = new User();
         $user2->setWallet(new Wallet());
+        $user2->setDocument(new DocumentUser());
         $user2->setFirstname("bazine");
         $user2->setLastname("mohammmed");
         $user2->setEmail("sofiane2@gmail.com");
@@ -52,6 +55,7 @@ class UserFixtures extends Fixture
 
         $user3 = new User();
         $user3->setWallet(new Wallet());
+        $user3->setDocument(new DocumentUser());
         $user3->setFirstname("Tintin");
         $user3->setLastname("Dupont");
         $user3->setEmail("tintin.dupont@mail.com");

@@ -110,6 +110,12 @@ class User implements UserInterface
     private bool $userValidation = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     */
+    private bool $userVerified = false;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?\DateTimeInterface $userValidationDate = null;
@@ -158,6 +164,12 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private Wallet $wallet;
+
+    /**
+     * @ORM\OneToOne(targetEntity=DocumentUser::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private DocumentUser $document;
 
     /**
      * @ORM\OneToMany(targetEntity=BetUser::class, mappedBy="user")
@@ -308,6 +320,16 @@ class User implements UserInterface
         return $this->userValidation = true;
     }
 
+    public function getUserVerified(): ?bool
+    {
+        return $this->userVerified;
+    }
+
+    public function setUserVerified(): ?bool
+    {
+        return $this->userVerified = true;
+    }
+
     public function getUserValidationDate(): ?\DateTimeInterface
     {
         return $this->userValidationDate;
@@ -436,6 +458,18 @@ class User implements UserInterface
     public function setWallet(Wallet $wallet): self
     {
         $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    public function getDocument(): ?DocumentUser
+    {
+        return $this->document;
+    }
+
+    public function setDocument(DocumentUser $document): self
+    {
+        $this->document = $document;
 
         return $this;
     }
