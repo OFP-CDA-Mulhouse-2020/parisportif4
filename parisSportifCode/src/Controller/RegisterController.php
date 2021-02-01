@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DocumentUser;
 use App\Entity\User;
 use App\Entity\Wallet;
 use App\Form\RefisteruserType;
@@ -41,6 +42,7 @@ class RegisterController extends AbstractController
 
         $user = new User();
         $user->setWallet(new Wallet());
+        $user->setDocument(new DocumentUser());
 
         $form = $this->createForm(RefisteruserType::class, $user);
         $form->handleRequest($request);

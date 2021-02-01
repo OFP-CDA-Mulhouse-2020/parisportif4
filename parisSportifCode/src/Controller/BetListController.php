@@ -11,7 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class BetListController extends AbstractController
 {
     /**
-     * @param BetRepository $betUserRepository
+     * @param BetUserRepository $betUserRepository
+     * @param BetRepository $betRepository
      * @return Response
      * @Route("/bet/list", name="bet_list")
      */

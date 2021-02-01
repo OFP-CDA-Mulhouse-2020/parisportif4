@@ -19,9 +19,9 @@ class DocumentUser
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="string")
      */
-    private $Document;
+    private string $brochureFilename = ' ';
 
     /**
      * @ORM\Column(type="boolean")
@@ -35,23 +35,17 @@ class DocumentUser
         return $this->id;
     }
 
-    public function getDocument()
+    public function getBrochureFilename(): string
     {
-        return $this->Document;
+        return $this->brochureFilename;
     }
 
-    public function setDocument($Document): self
+    public function setBrochureFilename($brochureFilename):self
     {
-        $this->Document = $Document;
+        $this->brochureFilename = $brochureFilename;
 
         return $this;
     }
-
-    public function getIsValid(): ?bool
-    {
-        return $this -> isValid;
-    }
-
 
     public function isValid(): self
     {

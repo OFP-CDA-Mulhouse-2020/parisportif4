@@ -60,7 +60,7 @@ class EmailVerification
         } catch (VerifyEmailExceptionInterface $e) {
         }
 
-        $user->setUserValidation();
+        $user->setUserVerified();
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
