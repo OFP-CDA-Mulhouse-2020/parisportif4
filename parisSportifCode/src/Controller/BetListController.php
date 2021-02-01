@@ -18,19 +18,12 @@ class BetListController extends AbstractController
     public function index(BetUserRepository $betUserRepository, BetRepository $betRepository): Response
     {
         $user = $this->getUser();
+        $walletAmount = $user->getWallet()->getCredit();
         
         $id = $user->getId();
         $betsUser = $betUserRepository->findBy(
             ['user' => $id]
         );
-        
-        
-        // $betID = $user->getBetUsers()->getBet();
-        // $bet = $betRepository->findBy(
-        // ['id' => $betID]
-        // );
-        // $betName = $bet[0]->getNameBet();
-        // dd($betID);
         
 
 
@@ -38,7 +31,7 @@ class BetListController extends AbstractController
             'controller_name' => 'BetListController',
             'user' => $user,
             'betsUser' => $betsUser,
-            // 'betName' => $betName
+            'credit' => $walletAmount
         ]);
     }
 }
