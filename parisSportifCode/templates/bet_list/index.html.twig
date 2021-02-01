@@ -14,10 +14,16 @@
     {% if user is not empty %}
     <a>ID utilisateur : {{ user.id }}</a>
     </br>
+    <a>Solde actuel : {{ credit }}</a>
+    </br>
     {% for eachbet in betsUser %}
+    </br>
     <a>Pari en cours : {{ eachbet.bet.nameBet }}, pour l'évènement : {{ eachbet.bet.evenement.name }} </a>
     </br>
     <a>Montant parié : {{ eachbet.amountbet }}, gain possible : {{ eachbet.gainpossible }} </a>
+    </br>
+    <a href="betmodifier{{eachbet.id}}">Modifier ou supprimer le pari</a>
+    {# <a>{{eachbet.id}} </a> #}
     </br>
     {% endfor %}
     {% endif %}
