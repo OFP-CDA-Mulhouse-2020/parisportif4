@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210201130258 extends AbstractMigration
+final class Version20210201140502 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -28,6 +28,7 @@ final class Version20210201130258 extends AbstractMigration
         $this->addSql('CREATE TABLE evenement_sport (id INT AUTO_INCREMENT NOT NULL, sport_id INT DEFAULT NULL, competionn_id INT NOT NULL, name VARCHAR(255) NOT NULL, begin_date DATETIME NOT NULL, event_place VARCHAR(255) NOT NULL, INDEX IDX_892F432AAC78BCF8 (sport_id), INDEX IDX_892F432A361BE7CA (competionn_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE evenement_sport_equipe (evenement_sport_id INT NOT NULL, equipe_id INT NOT NULL, INDEX IDX_ECBB02E2231E2710 (evenement_sport_id), INDEX IDX_ECBB02E26D861B89 (equipe_id), PRIMARY KEY(evenement_sport_id, equipe_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE joueurs (id INT AUTO_INCREMENT NOT NULL, equipe_id INT DEFAULT NULL, sport_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, INDEX IDX_F0FD889D6D861B89 (equipe_id), INDEX IDX_F0FD889DAC78BCF8 (sport_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE reset_password_request (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', expires_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_7CE748AA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE sport (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, nb_teams INT NOT NULL, nb_players INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, wallet_id INT NOT NULL, document_id INT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, email VARCHAR(180) NOT NULL, birth_date DATETIME NOT NULL, street VARCHAR(255) NOT NULL, street_number VARCHAR(255) DEFAULT NULL, code_postal VARCHAR(5) NOT NULL, city VARCHAR(180) NOT NULL, phone VARCHAR(255) NOT NULL, create_date DATETIME NOT NULL, user_validation TINYINT(1) NOT NULL, user_verified TINYINT(1) NOT NULL, user_validation_date DATETIME DEFAULT NULL, user_suspended TINYINT(1) NOT NULL, user_suspended_date DATETIME DEFAULT NULL, user_deleted TINYINT(1) NOT NULL, user_deleted_date DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), UNIQUE INDEX UNIQ_8D93D649444F97DD (phone), UNIQUE INDEX UNIQ_8D93D649712520F3 (wallet_id), UNIQUE INDEX UNIQ_8D93D649C33F7837 (document_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE wallet (id INT AUTO_INCREMENT NOT NULL, credit INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -41,6 +42,7 @@ final class Version20210201130258 extends AbstractMigration
         $this->addSql('ALTER TABLE evenement_sport_equipe ADD CONSTRAINT FK_ECBB02E26D861B89 FOREIGN KEY (equipe_id) REFERENCES equipe (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE joueurs ADD CONSTRAINT FK_F0FD889D6D861B89 FOREIGN KEY (equipe_id) REFERENCES equipe (id)');
         $this->addSql('ALTER TABLE joueurs ADD CONSTRAINT FK_F0FD889DAC78BCF8 FOREIGN KEY (sport_id) REFERENCES sport (id)');
+        $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649712520F3 FOREIGN KEY (wallet_id) REFERENCES wallet (id)');
         $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649C33F7837 FOREIGN KEY (document_id) REFERENCES document_user (id)');
     }
@@ -59,6 +61,7 @@ final class Version20210201130258 extends AbstractMigration
         $this->addSql('ALTER TABLE evenement_sport DROP FOREIGN KEY FK_892F432AAC78BCF8');
         $this->addSql('ALTER TABLE joueurs DROP FOREIGN KEY FK_F0FD889DAC78BCF8');
         $this->addSql('ALTER TABLE bet_user DROP FOREIGN KEY FK_A8450575A76ED395');
+        $this->addSql('ALTER TABLE reset_password_request DROP FOREIGN KEY FK_7CE748AA76ED395');
         $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649712520F3');
         $this->addSql('DROP TABLE bet');
         $this->addSql('DROP TABLE bet_user');
@@ -68,6 +71,7 @@ final class Version20210201130258 extends AbstractMigration
         $this->addSql('DROP TABLE evenement_sport');
         $this->addSql('DROP TABLE evenement_sport_equipe');
         $this->addSql('DROP TABLE joueurs');
+        $this->addSql('DROP TABLE reset_password_request');
         $this->addSql('DROP TABLE sport');
         $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE wallet');
