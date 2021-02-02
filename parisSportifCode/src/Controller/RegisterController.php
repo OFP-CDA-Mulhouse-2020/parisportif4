@@ -8,6 +8,7 @@ use App\Entity\Wallet;
 use App\Form\RefisteruserType;
 use App\Security\EmailVerification;
 use App\Services\DataBaseManager;
+use App\Services\EmailService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,11 +31,15 @@ class RegisterController extends AbstractController
     /**
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param DataBaseManager $dbmanager
+     * @param DataBaseManager $dbManager
+     * @param EmailService $emailService
      * @return Response
      * @Route("/register", name="user_registration")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DataBaseManager $dbmanager): Response
+    public function register(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             DataBaseManager $dbManager,
+                             EmailService $emailService): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
@@ -54,17 +59,8 @@ class RegisterController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $dbmanager->insertDataIntoBase($user);
-
-            $this->emailVerification->sendEmailConfirmation(
-                'app_verify_email',
-                $user,
-                (new TemplatedEmail())
-                    ->from(new Address('equipePari.confirm@pariSportif.com','confirmationEmail'))
-                    ->to($user->getEmail())
-                    ->htmlTemplate('register/confirmation_email.html.twig')
-                    ->subject('Confirm your Email to start betting ')
-            );
+            $dbManager->insertDataIntoBase($user);
+            $emailService->sendRegisterEmail($user);
 
             return $this->redirectToRoute('app_login');
         }
@@ -79,15 +75,16 @@ class RegisterController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      * @param Request $request
+     * @param EmailService $emailService
      * @return Response
      */
-    public function verifyUserEmail(Request $request): Response
+    public function verifyUserEmail(Request $request, EmailService $emailService): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
 
         try {
-            $this->emailVerification->handleEmailConfirmation($request, $this->getUser());
+            $emailService->getEmailVerification()->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
