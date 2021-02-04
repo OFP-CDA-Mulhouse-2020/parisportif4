@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WalletController extends AbstractController
 {
     /**
+     * @param WalletRepository $walletRepository
      * @return Response
      * @IsGranted("ROLE_USER")
      * @Route("/wallet", name="wallet")
@@ -34,6 +35,7 @@ class WalletController extends AbstractController
 
     /**
      * @param Request $request
+     * @param DataBaseManager $dbmanager
      * @return Response
      * @IsGranted("ROLE_USER")
      * @Route("/wallet/add", name="wallet_add")
@@ -61,6 +63,7 @@ class WalletController extends AbstractController
 
     /**
      * @param Request $request
+     * @param DataBaseManager $dbmanager
      * @return Response
      * @IsGranted("ROLE_USER")
      * @Route("/wallet/withdraw", name="wallet_draw")
