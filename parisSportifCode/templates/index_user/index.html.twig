@@ -2,117 +2,8 @@
 
 {% block title %}Hello HomeController!{% endblock %}
 {% block body %}
-    <header class="container-fluid  py-4 bg-dark text-white">
-        <div class="row">
-            <div class="row py-4">
-                <div class="col-sm-10 mx-auto text-center">
-                    <p>
-                        FAMILLE, VIE SOCIALE, SANTE FINANCIERE. ETES VOUS PRET A TOUT MISER ? POUR ETRE AIDE, APPELEZ LE 09-74-75-13-12
-                    </p>
-                </div>
-                <div class="col-sm-10 mx-auto text-center">
-                    <H4 class="text-danger">
-                        LES JEUX D'ARGENT ET DE HASARD SONT INTERDIT AUX MINEURS
-                    </H4>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="row ">
-        <div class="col-sm-12 header-top ">
-            <nav class="navbar navbar-expand navbar-light bg-danger nav-main">
-                <div class="container-fluid">
-                    <div id="logo">
-                        <a class="navbar-brand" href="#">LOGO</a>
-                    </div>
-                    <div>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <a class="navbar-brand" href="{{ path('bet_list') }}">Mes Paris en cours</a>
-                                {# Dropdown 1 #}
-                                <li class="nav-item dropdown dropdown-1">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Wallet({{ wallet.credit }} €)
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Solde du compte</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Ajouter</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">retrait</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                {# Dropdown 2 #}
-                                <li class="nav-item dropdown dropdown-2 ">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ users.firstname }} {{ users.lastname }}
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Mes informations</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Aactivation de compte</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Clotûre de compte</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-
-    {# Header Bottom #}
-    <div class="row">
-    <div
-            class="col-sm-12 header-bottom">
-        {# Nav Secondary #}
-        <nav class="navbar navbar-expand-lg navbar-light bg-warning nav-secondary">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav d-flex justify-content-around w-100">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Tout les Sport</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class='fas fa-futbol' style='font-size:26px'></i> Football</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class='fas fa-futbol' style='font-size:24px'></i> Handball</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class='fas fa-basketball-ball' style='font-size:26px'></i> Basket</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Tennis</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="#"><i class='fas fa-table-tennis' style='font-size:24px'></i> Tennis table</a>
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Formula 1</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
+  {% include "commonPart/header.html.twig" %}
+    {% include"commonPart/menu.html.twig" %}
     <section class="container-fluid" id="page-content">
         <div class="row">
             {# ASIDE LEFT #}
@@ -172,31 +63,7 @@
                                     </h2>
                                     <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                         <div class="accordion-body">
-                                            liste des compétition disponible au niveau du sport Basket
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingFour">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                            Tennis table
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">
-                                            liste des compétition disponible au niveau du sport Tennis de table
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingFour">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                            Formula 1
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">
-                                            liste des compétition disponible au niveau du sport  Formula 1
+                                            liste des compétition disponible au niveau du sport Tennis
                                         </div>
                                     </div>
                                 </div>
@@ -215,21 +82,27 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" colspan="2">Match</th>
-                                        <th class="text-center" scope="col">Bet</th>
+                                        <th class="text-center" scope="col"></th>
+                                        <th class="text-center" scope="col"></th>
+                                        <th class="text-center" scope="col"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for listBet in listBets %}
+                                    {% for ListEvenement in ListEvenements %}
                                         <tr>
                                             <td class="" colspan="2">
-                                                <p>{{ listBet.evenement.equipe[0].name }}<br>
-                                                    {{ listBet.evenement.equipe[1].name }}<br>
-                                                    {{ listBet.evenement.competionn.name }}<br>
+                                                <p>{{ ListEvenement.equipe[0].name }}<br>
+                                                    {{ ListEvenement.equipe[1].name }}<br>
+                                                    {{ ListEvenement.competionn.name }}<br>
                                                 </p>
                                             </td>
+                                            {% for listBet in listBets %}
+                                            {% if listBet.evenement.id == ListEvenement.id %}
                                             <td class="text-center">
                                                 <a type="button" class="btn btn-danger btn-sm" href="/indexuser/choice/bet/{{ listBet.id }}">{{ listBet.nameBet }} {{ listBet.cote }}</a>
                                             </td>
+                                            {% endif %}
+                                            {% endfor %}
                                         </tr>
                                     {% endfor %}
                                     </tbody>

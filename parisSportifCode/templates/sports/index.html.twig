@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ sport }}{% endblock %}
+
+{% block body %}
+    {% include "commonPart/header.html.twig" %}
+    {% include"commonPart/menu.html.twig" %}
+    <section class="container-fluid" id="page-content">
+        <div class="row">
+            {# ASIDE LEFT #}
+            <div class="col-sm-12 col-md-3">
+                <aside class="container-fluid aside-left">
+                    {# chaque sport avec sa liste des compet #}
+                    <div class="row card mt-4">
+                        <div class="container-fluid col-sm-12 nav-bet">
+                            <div
+                                    class="accordion accordion-flush" id="accordionFlushExample">
+                                {# 1 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Football
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible aux niveau du sport Football
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {# 2 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Handball
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Handball
+                                        </div>
+                                    </div>
+                                </div>
+                                {# 3 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Basket
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Basket
+                                        </div>
+                                    </div>
+                                </div>
+                                {# 4 #}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Tennis
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            liste des compétition disponible au niveau du sport Tennis
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <section class="central">
+                    <div class="container-fluid p-0">
+                        <div class="row mt-4">
+                            <div class="col-sm-12 mt-4 bet-board card p-2">
+                                <h4>All Sports</h4>
+                                <table class="table table-hover fw-bold">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" colspan="2">Match</th>
+                                        <th class="text-center" scope="col"></th>
+                                        <th class="text-center" scope="col"></th>
+                                        <th class="text-center" scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ListEvenement in ListEvenements %}
+                                        <tr>
+                                            <td class="" colspan="2">
+                                                <p>{{ ListEvenement.equipe[0].name }}<br>
+                                                    {{ ListEvenement.equipe[1].name }}<br>
+                                                    {{ ListEvenement.competionn.name }}<br>
+                                                </p>
+                                            </td>
+                                            {% for listBet in listBets %}
+                                                {% if listBet.evenement.id == ListEvenement.id %}
+                                                    <td class="text-center">
+                                                        <a type="button" class="btn btn-danger btn-sm" href="/indexuser/choice/bet/{{ listBet.id }}">{{ listBet.nameBet }} {{ listBet.cote }}</a>
+                                                    </td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <aside class="container-fluid aside-right">
+                    <div class="row card mt-4 p-2">
+                        <section class="col-sm-12 bet-ticket">
+                            {% if users.betUsers is not empty%}
+                                <div class="row">
+                                    {% for bUser in users.betUsers%}
+                                        <div class="col-10">
+                                            <p>{{ bUser.bet.evenement.name }}</p>
+                                            <p>{{ bUser.bet.evenement.equipe[0].name }} VS {{ bUser.bet.evenement.equipe[1].name }}</p>
+                                            <p>Cote : {{ bUser.bet.cote }}</p>
+                                            <form class="ui form" action="message" method="get">
+
+                                                <div class="field">
+                                                    <label>Sum:</label>
+                                                    <label>
+                                                        <input type="number" name="sum">
+                                                    </label>
+                                                </div>
+
+                                                <div class="field">
+                                                    <input type="hidden" name="message" value="{{ bUser.id }}">
+                                                </div>
+
+                                                <button class="ui button" type="submit">Send</button>
+
+                                            </form>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Vous etes rattaché à aucun pari.</p>
+                            {% endif %}
+
+                        </section>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </section>
+    </div>
+
+{% endblock %}
