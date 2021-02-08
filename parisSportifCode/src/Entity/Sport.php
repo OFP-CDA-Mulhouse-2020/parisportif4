@@ -67,6 +67,11 @@ class Sport
         $this->evenements = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
     /**
      * @return string|null
      */

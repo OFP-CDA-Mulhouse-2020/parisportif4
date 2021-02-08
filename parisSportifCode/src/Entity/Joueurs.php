@@ -59,7 +59,10 @@ class Joueurs
      */
     private ?Sport $sport;
 
-
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 
     public function getName(): ?string
     {

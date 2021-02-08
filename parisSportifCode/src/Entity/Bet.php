@@ -71,6 +71,10 @@ class Bet
     {
         $this->betUsers = new ArrayCollection();
     }
+    public function __toString(): string
+    {
+        return $this->getNameBet();
+    }
 
     public function getId(): ?int
     {

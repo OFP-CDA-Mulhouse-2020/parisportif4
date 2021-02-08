@@ -34,6 +34,10 @@ class DocumentUser
     {
         return $this->id;
     }
+    public function __toString(): string
+    {
+        return $this->getBrochureFilename();
+    }
 
     public function getBrochureFilename(): string
     {
