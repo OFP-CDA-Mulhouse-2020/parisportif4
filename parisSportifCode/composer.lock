@@ -7980,6 +7980,10 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.71"
+            },
             "funding": [
                 {
                     "url": "https://github.com/ondrejmirtes",
