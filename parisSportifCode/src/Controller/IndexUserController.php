@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Repository\BetRepository;
+use App\Repository\CompetitionRepository;
 use App\Repository\EvenementSportRepository;
 use App\Repository\WalletRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,23 +18,25 @@ class IndexUserController extends AbstractController
      * @param BetRepository $betRepository
      * @param WalletRepository $walletRepository
      * @param EvenementSportRepository $evenementSportRepository
+     * @param CompetitionRepository $competitionRepository
      * @return Response
      */
     public function index(BetRepository $betRepository,
                           WalletRepository $walletRepository,
-    EvenementSportRepository $evenementSportRepository): Response
+    EvenementSportRepository $evenementSportRepository,
+    CompetitionRepository $competitionRepository): Response
     {
-        $listEvenement = $evenementSportRepository->findAll();
-        $lisBet = $betRepository->findAll ();
-
         $user = $this->getUser();
         $credit = $walletRepository->find($user->getWallet()->getId());
-
+        $listEvenement = $evenementSportRepository->findAll();
+        $lisBet = $betRepository->findAll ();
+        $competition = $competitionRepository->findAll();
         return $this->render('index_user/index.html.twig', [
             'users' => $user,
             'wallet' => $credit,
             'ListEvenements' => $listEvenement,
             'listBets' => $lisBet,
+            'competitions' => $competition,
         ]);
     }
 }

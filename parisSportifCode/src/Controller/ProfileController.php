@@ -22,7 +22,7 @@ class ProfileController extends AbstractController
      * @Route("/auth", name="auth")
      * @IsGranted("ROLE_USER")
      */
-    public function auth()
+    public function auth(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $users = $this->getUser();
@@ -50,6 +50,7 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param DataBaseManager $dbmanager
      * @return Response
      * @Route("/auth/edit/password", name="auth_edit_password")
      * @IsGranted("ROLE_USER")
@@ -82,10 +83,10 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param DataBaseManager $dbmanager
      * @return Response
      * @Route("/auth/edit/email", name="auth_edit_email")
      * @IsGranted("ROLE_USER")
-     * @throws LogicException
      */
     public function editEmailProfile(
         Request $request,
@@ -117,10 +118,10 @@ class ProfileController extends AbstractController
     /**
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param DataBaseManager $dbmanager
      * @return Response
      * @Route("/auth/edit/information", name="auth_edit_information")
      * @IsGranted("ROLE_USER")
-     * @throws LogicException
      */
     public function editRestInformation(
         Request $request,
