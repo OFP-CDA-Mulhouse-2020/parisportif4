@@ -38,10 +38,13 @@ class ListBetController extends AbstractController
     /**
      * @param BetUserRepository $betUserRepository
      * @param Request $request
+     * @param DataBaseManager $dbmanager
      * @return Response
      * @Route("/message", name="message", methods="GET")
      */
-    public function payementBet(BetUserRepository $betUserRepository, Request $request, DataBaseManager $dbmanager): Response
+    public function payementBet(BetUserRepository $betUserRepository,
+                                Request $request,
+                                DataBaseManager $dbmanager): Response
     {
         $sum = $request->query->get("sum");
         $bitId = $request->query->get("message");

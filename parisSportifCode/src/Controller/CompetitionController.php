@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller;
 
 
@@ -11,27 +12,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IndexUserController extends AbstractController
+class CompetitionController extends AbstractController
 {
     /**
-     * @Route("/indexuser", name="index_user")
-     * @param BetRepository $betRepository
+     * @Route("/indexuser/competition/{idCompetition}", name="competition_choice")
+     * @param int $idCompetition
      * @param WalletRepository $walletRepository
+     * @param BetRepository $betRepository
      * @param EvenementSportRepository $evenementSportRepository
      * @param CompetitionRepository $competitionRepository
      * @return Response
      */
-    public function index(BetRepository $betRepository,
-                          WalletRepository $walletRepository,
-    EvenementSportRepository $evenementSportRepository,
-    CompetitionRepository $competitionRepository): Response
+    public function index(int $idCompetition, WalletRepository $walletRepository,
+                          BetRepository $betRepository,
+                          EvenementSportRepository $evenementSportRepository,
+                          CompetitionRepository $competitionRepository): Response
     {
         $user = $this->getUser();
         $credit = $walletRepository->find($user->getWallet()->getId());
-        $listEvenement = $evenementSportRepository->findAll();
+
+        $listEvenement = $evenementSportRepository->findBy(["sport"=> $idCompetition]);
         $lisBet = $betRepository->findAll ();
         $competition = $competitionRepository->findAll();
-        return $this->render('index_user/index.html.twig', [
+
+        return $this->render('competitions/index.html.twig',[
             'users' => $user,
             'wallet' => $credit,
             'ListEvenements' => $listEvenement,
@@ -39,4 +43,5 @@ class IndexUserController extends AbstractController
             'competitions' => $competition,
         ]);
     }
+
 }

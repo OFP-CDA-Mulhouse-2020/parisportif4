@@ -50,6 +50,12 @@ class Sport
     private ?int $nbPlayers;
 
     /**
+     * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="competion")
+     * @var Collection<int, EvenementSport>|null
+     */
+    private ?Collection $competition;
+
+    /**
      * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="sport")
      * @var Collection<int, EvenementSport>|null
      */
@@ -125,6 +131,36 @@ class Sport
             // set the owning side to null (unless already changed)
             if ($evenement->getSport() === $this) {
                 $evenement->setSport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Competition>|Competition[]
+     */
+    public function getCompetition(): Collection
+    {
+        return $this->competition;
+    }
+
+    public function addCompetition(Competition $competition): self
+    {
+        if (!$this->competition->contains($competition)) {
+            $this->competition[] = $competition;
+            $competition->setSport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompetition(Competition $competition): self
+    {
+        if ($this->competition->removeElement($competition)) {
+            // set the owning side to null (unless already changed)
+            if ($competition->getSport() === $this) {
+                $competition->setSport(null);
             }
         }
 

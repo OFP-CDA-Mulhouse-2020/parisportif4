@@ -58,6 +58,11 @@ class Competition
     private DateTimeInterface $endAt;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Sport::class, inversedBy="competition")
+     */
+    private ?Sport $sport;
+
+    /**
      * @ORM\OneToMany(targetEntity=EvenementSport::class, mappedBy="competionn", orphanRemoval=true)
      */
     private $evenement;
@@ -107,6 +112,18 @@ class Competition
     public function setEndAt(DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
+
+        return $this;
+    }
+
+    public function getSport(): ?Sport
+    {
+        return $this->sport;
+    }
+
+    public function setSport(?Sport $sport): self
+    {
+        $this->sport = $sport;
 
         return $this;
     }
