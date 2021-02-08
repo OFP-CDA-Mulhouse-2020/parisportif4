@@ -244,9 +244,9 @@
                     <aside class="container-fluid aside-right">
                         <div class="row card mt-4 p-2">
                             <section class="col-sm-12 bet-ticket">
-                                {% if users.betUsers is not empty%}
+                                {% if users.betUsers is not empty %}
                                 <div class="row">
-                                    {% for bUser in users.betUsers%}
+                                    {% for bUser in users.betUsers %}
                                     <div class="col-10">
                                         <p>{{ bUser.bet.evenement.name }}</p>
                                         <p>{{ bUser.bet.evenement.equipe[0].name }} VS {{ bUser.bet.evenement.equipe[1].name }}</p>
