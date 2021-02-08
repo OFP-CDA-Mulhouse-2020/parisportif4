@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\BetUserRepository;
 use App\Services\DataBaseManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,6 +22,40 @@ class BetModifierController extends AbstractController
         return $this->render('bet_modifier/index.html.twig', [
             'controller_name' => 'BetModifierController',
             'targetBet' => $targetBet
+        ]);
+    }
+
+    
+    /**
+     * @Route("/bet/modifiedamount{id}", name="betmodifiedamount{id}")
+     */
+    public function redirectToBetModified(
+        int $id,
+        BetUserRepository $betUserRepository,
+        Request $request,
+        DataBaseManager $dbmanager
+        ): Response
+    {
+
+        $targetBet = $betUserRepository->find($id);
+        $ancienMontant = $targetBet->getAmountBet();
+        $nouveauMontant = $request->query->get('montant');
+        //remborser puis soustraire le nouveau montant
+        $user = $this->getUser();
+        $wallet = $user->getWallet();
+        $walletAmount = $user->getWallet()->getCredit();
+        $wallet->addToCredit($ancienMontant);
+        $wallet->removeFromCredit($nouveauMontant);
+        $dbmanager->insertDataIntoBase($wallet);
+        $targetBet->setAmountBet($nouveauMontant, $walletAmount);
+        $dbmanager->insertDataIntoBase($targetBet);
+
+        return $this->render('bet_modifier/modified.html.twig', [
+            'controller_name' => 'BetModifierController',
+            'targetBet' => $targetBet,
+            'ancienMontant' => $ancienMontant,
+            'nouveauMontant' => $nouveauMontant
+            
         ]);
     }
 
