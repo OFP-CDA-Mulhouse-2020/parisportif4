@@ -14,6 +14,9 @@ class BetModifierController extends AbstractController
 {
     /**
      * @Route("/bet/betmodifier{id}", name="betmodifier{id}")
+     * @param int $id
+     * @param BetUserRepository $betUserRepository
+     * @return Response
      */
     public function redirectToBetModification(
         int $id, 
@@ -34,9 +37,14 @@ class BetModifierController extends AbstractController
         ]);
     }
 
-    
+
     /**
      * @Route("/bet/modifiedamount{id}", name="betmodifiedamount{id}")
+     * @param int $id
+     * @param BetUserRepository $betUserRepository
+     * @param Request $request
+     * @param DataBaseManager $dbmanager
+     * @return Response
      */
     public function redirectToBetModified(
         int $id,
@@ -72,9 +80,12 @@ class BetModifierController extends AbstractController
         ]);
     }
 
-    
+
     /**
      * @Route("/bet/betdeletionconfirmation{id}", name="confirm_delete{id}")
+     * @param int $id
+     * @param BetUserRepository $betUserRepository
+     * @return Response
      */
 
     public function redirectToBetDeletion(
@@ -93,9 +104,13 @@ class BetModifierController extends AbstractController
             'targetBet' => $targetBet
         ]);
     }
-    
+
     /**
      * @Route("/bet/betdeleted{id}", name="betdeleted{id}")
+     * @param int $id
+     * @param BetUserRepository $betUserRepository
+     * @param DataBaseManager $dbmanager
+     * @return Response
      */
     public function redirectToBetDeleted(
         int $id,
