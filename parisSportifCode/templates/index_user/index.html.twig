@@ -6,48 +6,8 @@
     {% include "commonPart/menu.html.twig" %}
     <section class="container-fluid" id="page-content">
         <div class="row">
-            {% include "commonPart/sportListLeft.html.twig" %}
-            <div class="col-sm-12 col-md-6">
-                <section class="central">
-                    <div class="container-fluid p-0">
-                        <div class="row mt-4">
-                            <div class="col-sm-12 mt-4 bet-board card p-2">
-                                <h4>All Sports</h4>
-                                <table class="table table-hover fw-bold">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" colspan="2">Match</th>
-                                        <th class="text-center" scope="col"></th>
-                                        <th class="text-center" scope="col"></th>
-                                        <th class="text-center" scope="col"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for ListEvenement in ListEvenements %}
-                                        <tr>
-                                            <td class="" colspan="2">
-                                                <p>{{ ListEvenement.equipe[0].name }}<br>
-                                                    {{ ListEvenement.equipe[1].name }}<br>
-                                                    {{ ListEvenement.competionn.name }}<br>
-                                                </p>
-                                            </td>
-                                            {% for listBet in listBets %}
-                                            {% if listBet.evenement.id == ListEvenement.id %}
-                                            <td class="text-center">
-                                                <a type="button" class="btn btn-danger btn-sm" href="/indexuser/choice/bet/{{ listBet.id }}">{{ listBet.nameBet }} {{ listBet.cote }}</a>
-                                            </td>
-                                            {% endif %}
-                                            {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
-                </section>
-            </div>
+            {% include"commonPart/competitionMenu.html.twig" %}
+            {% include"commonPart/listBet.html.twig" %}
                 <div class="col-sm-12 col-md-3">
                     <aside class="container-fluid aside-right">
                         <div class="row card mt-4 p-2">
