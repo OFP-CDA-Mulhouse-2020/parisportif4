@@ -140,7 +140,7 @@ class ProfileController extends AbstractController
                 $user -> setCodePostal($request -> request -> get('edit_user_rest_information')['codePostal']);
                 $user -> setPhone($request -> request -> get('edit_user_rest_information')['phone']);
                 $dbmanager->insertDataIntoBase($user);
-                $this -> addFlash('success', 'Vos information a bien été changé');
+                $this -> addFlash('success', 'Vos information ont bien été changées');
             } else {
                 $formRestInfo->addError(new FormError('password incorrect'));
             }

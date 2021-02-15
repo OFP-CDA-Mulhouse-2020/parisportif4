@@ -52,7 +52,7 @@ class WalletController extends AbstractController
             $money = $formWallet->get('credit')->getData();
             $wallet->addToCredit($money);
             $dbmanager->insertDataIntoBase($wallet);
-            $this->addFlash('success', 'la somme a bien été ajouter !');
+            $this->addFlash('success', 'La somme a bien été ajoutée à vos fonds!');
         }
         return $this->render('page_wallet/addMoney.html.twig', [
            'controller_name' => 'WalletController',
@@ -82,7 +82,7 @@ class WalletController extends AbstractController
             if ($money <= $limit) {
                 $wallet->removeFromCredit($money);
                 $dbmanager->insertDataIntoBase($wallet);
-                $this->addFlash('success', 'la somme a bien été retirer !');
+                $this->addFlash('success', 'La somme a bien été retirée de vos fonds!');
             } else {
                 $formWallet->addError(new FormError('The amount is greater than your credit'));
             }
