@@ -3,7 +3,7 @@
         <div class="container-fluid p-0">
             <div class="row mt-4">
                 <div class="col-sm-12 mt-4 bet-board card p-2">
-                    <h4>All Sports</h4>
+                    <h4>Prochains paris de {{ sport }}</h4>
                     <table class="table table-hover fw-bold">
                         <thead>
                         <tr>
@@ -26,7 +26,7 @@
                                 <td class="text-center">
                                     <p>
                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ ListEvenement.id }}" aria-expanded="false" aria-controls="collapseExample{{ ListEvenement.id }}">
-                                            choice bet
+                                            Parier !
                                         </button>
                                     </p>
                                     <div class="collapse" id="collapseExample{{ ListEvenement.id }}">

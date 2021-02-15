@@ -37,7 +37,7 @@ class EvenementFixtures extends Fixture implements DependentFixtureInterface
         $competition = $this->getReference (CompetitionFixtures::competition_1);
         $competition2 = $this->getReference(CompetitionFixtures::competition_2);
 
-        $evenement1->setName ('Face des groupes - journée 2')
+        $evenement1->setName ('Phase de groupes - journée 2')
             ->setBeginDate (DateTime::createFromFormat ('Y-m-d H:i:s','2021-01-29 19:00:00'))
             ->setEventPlace ('Espagne')
             ->setSport ($sport)
@@ -46,7 +46,7 @@ class EvenementFixtures extends Fixture implements DependentFixtureInterface
             ->setCompetionn ($competition);
         $manager->persist ($evenement1);
 
-        $evenement2->setName ('premier tour - journée 1')
+        $evenement2->setName ('Premier tour - journée 1')
             ->setBeginDate (DateTime::createFromFormat ('Y-m-d H:i:s','2021-01-29 19:00:00'))
             ->setEventPlace ('France')
             ->setSport ($sport2)
