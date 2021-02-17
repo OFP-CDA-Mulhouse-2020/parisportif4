@@ -2,52 +2,77 @@
 
 {% block title %}Hello HomeController!{% endblock %}
 {% block body %}
-  {% include "commonPart/header.html.twig" %}
+    {% include "commonPart/header.html.twig" %}
     {% include "commonPart/menu.html.twig" %}
+    {% if active == false %}
+        <div class="alert alert-danger text-center">Veuillez activer votre compte pour parier
+            <a class="navbar-brand" href="{{ path('app_document_new') }}">
+                <strong>clic ici</strong>
+            </a>
+        </div>
+    {% endif %}
     <section class="container-fluid" id="page-content">
         <div class="row">
             {% include"commonPart/competitionMenu.html.twig" %}
             {% include"commonPart/listBet.html.twig" %}
-                <div class="col-sm-12 col-md-3">
-                    <aside class="container-fluid aside-right">
-                        <div class="row card mt-4 p-2">
-                            <section class="col-sm-12 bet-ticket">
-                                {% if users.betUsers is not empty %}
+            <div class="col-sm-12 col-md-3">
+                <aside class="container-fluid aside-right">
+                    <div class="row card mt-4 p-2">
+                        <section class="col-sm-12 bet-ticket">
+                            {% for message in app.flashes('errors') %}
+                                <div class="alert alert-danger">
+                                    {{ message }}<a class="navbar-brand" href="{{ path('wallet_add') }}">
+                                        <strong>clic ici</strong>
+                                    </a>Pour ajouter de l'argent
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('errorA') %}
+                                <div class="alert alert-danger">
+                                    {{ message }}<a class="navbar-brand" href="{{ path('app_document_new') }}">
+                                        <strong>clic ici</strong>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                            {% for message in app.flashes('successP') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            {% if users.betUsers is not empty %}
                                 <div class="row">
                                     {% for bUser in users.betUsers %}
-                                    <div class="col-10">
-                                        <p>{{ bUser.bet.evenement.name }}</p>
-                                        <p>{{ bUser.bet.evenement.equipe[0].name }} VS {{ bUser.bet.evenement.equipe[1].name }}</p>
-                                        <p>Cote : {{ bUser.bet.cote }}</p>
-                                        <form class="ui form" action="message" method="get">
+                                        <div class="col-10">
+                                            <p>{{ bUser.bet.evenement.name }}</p>
+                                            <p>{{ bUser.bet.evenement.equipe[0].name }} VS {{ bUser.bet.evenement.equipe[1].name }}</p>
+                                            <p>Cote : {{ bUser.bet.cote }}</p>
+                                            <form class="ui form" action="message" method="get">
 
-                                            <div class="field">
-                                                <label>Sum:</label>
-                                                <input type="number" name="sum">
-                                            </div>
+                                                <div class="field">
+                                                    <label>Sum:</label>
+                                                    <input type="number" name="sum">
+                                                </div>
 
-                                            <div class="field">
-                                                <input type="hidden" name="message" value="{{ bUser.id }}">
-                                            </div>
+                                                <div class="field">
+                                                    <input type="hidden" name="message" value="{{ bUser.id }}">
+                                                </div>
 
-                                            <button class="ui button" type="submit">Send</button>
+                                                <button class="ui button" type="submit">Send</button>
 
-                                        </form>
-                                    </div>
+                                            </form>
+                                        </div>
                                     {% endfor %}
                                 </div>
-                                {% else %}
-                                    <p>Vous etes rattaché à aucun pari.</p>
-                                {% endif %}
+                            {% else %}
+                                <p>Vous etes rattaché à aucun pari.</p>
+                            {% endif %}
 
-                            </section>
-                        </div>
-                    </aside>
+                        </section>
+                    </div>
+                </aside>
 
-                </div>
             </div>
-    </section>
         </div>
+    </section>
 
 
 {% endblock %}

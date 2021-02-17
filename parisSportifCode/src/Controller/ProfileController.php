@@ -26,9 +26,11 @@ class ProfileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $users = $this->getUser();
+        $active = $users->getUserValidation();
         return $this->render('page_contoller/index.html.twig', [
             'controller_name' => 'HomeController',
-            'users' => $users
+            'users' => $users,
+            'active' => $active,
         ]);
     }
 
@@ -41,9 +43,11 @@ class ProfileController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $users = $this->getUser();
+        $active = $users->getUserValidation();
         return $this->render('page_contoller/editOption.html.twig', [
             'controller_name' => 'HomeController',
-            'user' => $users
+            'user' => $users,
+            'active' => $active,
         ]);
     }
 
@@ -61,6 +65,7 @@ class ProfileController extends AbstractController
         DataBaseManager $dbmanager
     ): Response {
         $user = $this->getUser();
+        $active = $user->getUserValidation();
         $formPassword = $this->createForm(EditUserPasswordType::class, $user);
         $formPassword->handleRequest($request);
         if ($formPassword->isSubmitted() && $formPassword->isValid()) {
@@ -77,6 +82,7 @@ class ProfileController extends AbstractController
             'user' => $user,
             'formEdit' => $formPassword->createView(),
             'editPassword' => true,
+            'active' => $active,
         ]);
     }
 
@@ -95,6 +101,7 @@ class ProfileController extends AbstractController
         ): Response
     {
         $user = $this->getUser();
+        $active = $user->getUserValidation();
         $formEmail = $this->createForm(EditUserEmailType::class, $user);
         $formEmail->handleRequest($request);
         if ($formEmail->isSubmitted() && $formEmail->isValid()) {
@@ -112,6 +119,7 @@ class ProfileController extends AbstractController
             'user' => $user,
             'formEmail' => $formEmail->createView(),
             'editEmail' => true,
+            'active' => $active,
         ]);
     }
 
@@ -130,6 +138,7 @@ class ProfileController extends AbstractController
         ): Response
     {
         $user = $this->getUser();
+        $active = $user->getUserValidation();
         $formRestInfo = $this->createForm(EditUserRestInformation::class, $user);
         $formRestInfo->handleRequest($request);
         if ($formRestInfo->isSubmitted() && $formRestInfo->isValid()) {
@@ -149,6 +158,7 @@ class ProfileController extends AbstractController
             'user' => $user,
             'formInformation' => $formRestInfo->createView(),
             'editInformation' => true,
+            'active' => $active,
         ]);
     }
 }

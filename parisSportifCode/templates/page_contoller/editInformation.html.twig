@@ -3,22 +3,106 @@
 {% block title %}Hello PageContollerController!{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur mon site</h1>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Features</a>
-                <a class="nav-item nav-link" href="#">Pricing</a>
-                <a class="nav-item nav-link disabled" href="#">Disabled</a>
-            </div>
+    {% include "commonPart/header.html.twig" %}
+    <div class="row ">
+        <div class="col-sm-12 header-top ">
+            <nav class="navbar navbar-expand navbar-light bg-danger nav-main">
+                <div class="container-fluid">
+                    <div id="logo">
+                        <a class="navbar-brand" href="#">LOGO</a>
+                    </div>
+                    <div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <a class="navbar-brand" href="{{ path('bet_list') }}">Paris en cours</a>
+                                {# Dropdown 1 #}
+                                <li class="nav-item dropdown dropdown-1">
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('wallet') }}">Solde du compte</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('wallet_add') }}">Ajouter des fonds</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('wallet_draw') }}">Retirer des fonds</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {# Dropdown 2 #}
+                                <li class="nav-item dropdown dropdown-2 ">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ user.firstname }} {{ user.lastname }}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('auth') }}">Mes informations</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_document_new') }}">Activation de compte</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clôture de compte</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-    </nav>
+    </div>
+    {# Header Bottom #}
+    <div class="row">
+        <div
+                class="col-sm-12 header-bottom">
+            {# Nav Secondary #}
+            <nav class="navbar navbar-expand-lg navbar-light bg-warning nav-secondary">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav d-flex justify-content-around w-100">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Tous les Sports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/sports/football"><i class='fas fa-futbol' style='font-size:26px'></i> Football</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/sports/handball"><i class='fas fa-futbol' style='font-size:24px'></i> Handball</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class='fas fa-basketball-ball' style='font-size:26px'></i> Basket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Tennis</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#"><i class='fas fa-table-tennis' style='font-size:24px'></i> Tennis de table</a>
 
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Formule 1</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    {% if active == false %}
+        <div class="alert alert-danger text-center">Veuillez activer votre compte pour parier
+            <a class="navbar-brand" href="{{ path('app_document_new') }}">
+                <strong>clic ici</strong>
+            </a>
+        </div>
+    {% endif %}
     <div class="container">
         <div class="main-body">
             <div class="row gutters-sm">

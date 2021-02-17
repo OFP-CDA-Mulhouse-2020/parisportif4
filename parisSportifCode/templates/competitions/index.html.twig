@@ -4,6 +4,13 @@
 {% block body %}
     {% include "commonPart/header.html.twig" %}
     {% include"commonPart/menu.html.twig" %}
+    {% if active == false %}
+        <div class="alert alert-danger text-center">Veuillez activer votre compte pour parier
+            <a class="navbar-brand" href="{{ path('app_document_new') }}">
+                <strong>clic ici</strong>
+            </a>
+        </div>
+    {% endif %}
     <section class="container-fluid" id="page-content">
         <div class="row">
             {# ASIDE LEFT #}
@@ -50,6 +57,5 @@
             </div>
         </div>
     </section>
-    </div>
 
 {% endblock %}
