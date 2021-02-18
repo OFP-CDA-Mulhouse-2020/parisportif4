@@ -16,6 +16,7 @@ class BetModifierController extends AbstractController
      * @Route("/bet/betmodifier{id}", name="betmodifier{id}")
      * @param int $id
      * @param BetUserRepository $betUserRepository
+     * @param WalletRepository $walletRepository
      * @return Response
      */
     public function redirectToBetModification(
@@ -44,6 +45,7 @@ class BetModifierController extends AbstractController
      * @param BetUserRepository $betUserRepository
      * @param Request $request
      * @param DataBaseManager $dbmanager
+     * @param WalletRepository $walletRepository
      * @return Response
      */
     public function redirectToBetModified(

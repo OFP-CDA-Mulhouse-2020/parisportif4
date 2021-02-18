@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\BetUser;
-use App\Form\PayementBetType;
 use App\Repository\BetRepository;
 use App\Repository\BetUserRepository;
 use App\Services\DataBaseManager;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,23 +48,30 @@ class ListBetController extends AbstractController
         $bitId = $request->query->get("message");
 
         $user = $this->getUser();
+        $active = $user->getUserValidation();
         $walletC = $user->getWallet();
         $wallet = $user->getWallet()->getCredit();
         $bet = $betUserRepository->find($bitId);
         $coteBet = $bet->getBet ()->getCote ();
-        if($bet->getAmountBet () == null) {
-            $bet -> setAmountBet ( $sum , $wallet );
-            $bet -> setGainPossible ($sum, $coteBet);
-            $walletC -> removeFromCredit ( $sum );
-            $dbmanager->insertDataIntoBase($walletC);
-            $dbmanager->insertDataIntoBase($bet);
-        }else{
-            $walletC->addToCredit($bet->getAmountBet ());
-            $bet -> setAmountBet ( $sum , $wallet );
-            $bet -> setGainPossible ($sum, $coteBet);
-            $walletC -> removeFromCredit ( $sum );
-            $dbmanager->insertDataIntoBase($walletC);
-            $dbmanager->insertDataIntoBase($bet);
+        if($active == true){
+            if($bet->getAmountBet () == null && $sum <= $wallet) {
+                $bet -> setAmountBet ( $sum , $wallet );
+                $bet -> setGainPossible ($sum, $coteBet);
+                $walletC -> removeFromCredit ( $sum );
+                $dbmanager->insertDataIntoBase($walletC);
+                $dbmanager->insertDataIntoBase($bet);
+                $this->addFlash('successP', 'Bravo! pari enregistrer bon chance');
+            }elseif($bet->getAmountBet () != null && $sum <= $wallet){
+                $walletC->addToCredit($bet->getAmountBet ());
+                $bet -> setAmountBet ( $sum , $wallet );
+                $bet -> setGainPossible ($sum, $coteBet);
+                $walletC -> removeFromCredit ( $sum );
+                $dbmanager->insertDataIntoBase($walletC);
+                $dbmanager->insertDataIntoBase($bet);
+            }else{
+                $this->addFlash('errors', 'vous avez pas assez d\'argent ');
+            }}else{
+            $this->addFlash('errorA', 'Veuillez activer votre compte pour parier ');
         }
 
         return $this->redirectToRoute('index_user');

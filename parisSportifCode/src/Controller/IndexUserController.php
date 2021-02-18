@@ -27,6 +27,7 @@ class IndexUserController extends AbstractController
     CompetitionRepository $competitionRepository): Response
     {
         $user = $this->getUser();
+        $active = $user->getUserValidation();
         $credit = $walletRepository->find($user->getWallet()->getId());
         $listEvenement = $evenementSportRepository->findAll();
         $lisBet = $betRepository->findAll ();
@@ -37,6 +38,7 @@ class IndexUserController extends AbstractController
             'ListEvenements' => $listEvenement,
             'listBets' => $lisBet,
             'competitions' => $competition,
+            'active' => $active,
         ]);
     }
 }

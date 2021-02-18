@@ -13,6 +13,7 @@ class BetListController extends AbstractController
 {
     /**
      * @param BetUserRepository $betUserRepository
+     * @param WalletRepository $walletRepository
      * @param BetRepository $betRepository
      * @return Response
      * @Route("/bet/list", name="bet_list")

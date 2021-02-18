@@ -30,6 +30,7 @@ class CompetitionController extends AbstractController
     {
         $user = $this->getUser();
         $credit = $walletRepository->find($user->getWallet()->getId());
+        $active = $user->getUserValidation();
 
         $listEvenement = $evenementSportRepository->findBy(["sport"=> $idCompetition]);
         $lisBet = $betRepository->findAll ();
@@ -41,6 +42,7 @@ class CompetitionController extends AbstractController
             'ListEvenements' => $listEvenement,
             'listBets' => $lisBet,
             'competitions' => $competition,
+            'active' => $active,
         ]);
     }
 
