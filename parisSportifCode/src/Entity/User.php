@@ -266,7 +266,7 @@ class User implements UserInterface
         return $this -> street_number;
     }
 
-    public function setStreetNumber(?string $street_number): self
+    public function setStreetNumber(string $street_number): self
     {
         $this -> street_number = $street_number;
         return $this;
@@ -315,9 +315,12 @@ class User implements UserInterface
         return $this->userValidation;
     }
 
-    public function setUserValidation(): ?bool
+    public function setUserValidation(bool $userValidation): self
     {
-        return $this->userValidation = true;
+        $this->userValidation = $userValidation;
+        $this->userValidationDate = new DateTime();
+
+        return $this;
     }
 
     public function getUserVerified(): ?bool
@@ -335,22 +338,25 @@ class User implements UserInterface
         return $this->userValidationDate;
     }
 
-    public function isUserValidated(): self
+    /*public function isUserValidated(bool $userValidated): self
     {
-        $this->userValidation = true;
+        $this->userValidation = $userValidated;
         $this->userValidationDate = new DateTime();
 
         return $this;
-    }
+    }*/
 
     public function getUserSuspended(): ?bool
     {
         return $this->userSuspended;
     }
 
-    public function setUserSuspended(): ?bool
+    public function setUserSuspended(bool $UserSuspended): self
     {
-        return $this->userSuspended = true;
+          $this->userSuspended = $UserSuspended;
+        $this->userSuspendedDate = new DateTime();
+
+        return $this;
     }
 
     public function getUserSuspendedDate(): ?\DateTimeInterface
@@ -358,22 +364,25 @@ class User implements UserInterface
         return $this->userSuspendedDate;
     }
 
-    public function isUserSuspended(): self
+    /*public function isUserSuspended(): self
     {
         $this->userSuspended = true;
         $this->userSuspendedDate = new DateTime();
 
         return $this;
-    }
+    }*/
 
     public function getUserDeleted(): ?bool
     {
         return $this->userDeleted;
     }
 
-    public function setUserDeleted(): ?bool
+    public function setUserDeleted(bool $UserDeleted): self
     {
-        return $this->userDeleted = true;
+         $this->userDeleted = $UserDeleted;
+        $this->userDeletedDate = new DateTime();
+
+        return $this;
     }
 
     public function getUserDeletedDate(): ?\DateTimeInterface
@@ -381,13 +390,13 @@ class User implements UserInterface
         return $this->userDeletedDate;
     }
 
-    public function isUserDeleted(): self
+    /*public function isUserDeleted(): self
     {
         $this->userDeleted = true;
         $this->userDeletedDate = new DateTime();
 
         return $this;
-    }
+    }*/
 
     /**
      * @see UserInterface

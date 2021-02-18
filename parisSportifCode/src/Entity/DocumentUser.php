@@ -27,8 +27,7 @@ class DocumentUser
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
      */
-    private ?bool $isValid = false;
-
+    private bool $isValid = false;
 
     public function getId(): ?int
     {
@@ -51,9 +50,25 @@ class DocumentUser
         return $this;
     }
 
-    public function isValid(): self
+    /*public function isValid(): self
     {
         $this -> isValid = true;
         return $this;
+    }*/
+
+    /**
+     * @return bool|null
+     */
+    public function getIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    /**
+     * @param bool|null $isValid
+     */
+    public function setIsValid(?bool $isValid): void
+    {
+        $this->isValid = $isValid;
     }
 }
