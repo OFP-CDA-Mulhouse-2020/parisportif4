@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Form\DocumentType;
+use App\Repository\WalletRepository;
 use App\Services\DataBaseManager;
 use App\Services\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,13 +23,18 @@ class DocumentController extends AbstractController
      * @param FileUploader $fileUploader
      * @param DataBaseManager $dbManager
      * * @IsGranted("ROLE_USER")
+     * @param WalletRepository $walletRepository
      * @return RedirectResponse|Response
      * @Route("/document/new", name="app_document_new")
      */
-    public function new(Request $request,FileUploader $fileUploader,DataBaseManager $dbManager)
+    public function new(Request $request,
+                        FileUploader $fileUploader,
+                        DataBaseManager $dbManager,
+                        WalletRepository $walletRepository)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $users = $this->getUser();
+        $credit = $walletRepository->find($users->getWallet()->getId());
         $document = $users->getDocument();
         $form = $this->createForm(DocumentType::class, $document);
         $form->handleRequest($request);
@@ -44,7 +50,7 @@ class DocumentController extends AbstractController
             return $this->redirectToRoute('app_document_new');
         }
         return $this->render('document/new.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView(),'wallet' => $credit,'users' => $users,
         ]);
     }
 

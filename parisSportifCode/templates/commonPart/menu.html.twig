@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand navbar-light bg-danger nav-main">
             <div class="container-fluid">
                 <div id="logo">
-                    <a class="navbar-brand" href="#">LOGO</a>
+                    <a class="navbar-brand" href="{{ path('index_user') }}">LOGO</a>
                 </div>
                 <div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,9 @@
                                     <li>
                                         <a class="dropdown-item" href="#">Clôture de compte</a>
                                     </li>
+                                    <a>
+                                        <a class="dropdown-item" href="{{ path('app_logout') }}">déconnexion</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -67,7 +70,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav d-flex justify-content-around w-100">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Tous les Sports</a>
+                            <a class="nav-link active" aria-current="page" href="{{ path('index_user') }}">Tous les Sports</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/sports/football"><i class='fas fa-futbol' style='font-size:26px'></i> Football</a>

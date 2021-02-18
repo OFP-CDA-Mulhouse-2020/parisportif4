@@ -3,11 +3,13 @@
 {% block title %}Document user{% endblock %}
 
 {% block body %}
-    <h1>Adding a file</h1>
-
+    {% include "commonPart/header.html.twig" %}
+    {% include "commonPart/menu.html.twig" %}
+    <div class="card-body text-center">
     {{ form_start(form, { attr: {novalidate: 'novalidate'} }) }}
 
     {{ form_row(form.brochure) }}
     <button id="submit" type="submit" class="btn btn-primary">submit</button>
     {{ form_end(form) }}
+    </div>
 {% endblock %}
