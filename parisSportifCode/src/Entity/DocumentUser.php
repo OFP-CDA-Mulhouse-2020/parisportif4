@@ -35,7 +35,7 @@ class DocumentUser
     }
     public function __toString(): string
     {
-        return $this->getBrochureFilename();
+        return $this->getId();
     }
 
     public function getBrochureFilename(): string

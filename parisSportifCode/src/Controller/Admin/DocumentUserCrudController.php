@@ -57,7 +57,6 @@ class DocumentUserCrudController extends AbstractCrudController
             IdField::new('id', 'ID')->onlyOnIndex(),
             TextField::new('brochureFilename')->setLabel('File Name'),
             BooleanField::new('is_valid')->setLabel('valid'),
-            DateTimeField::new('birthDate'),
 
         ];
     }
