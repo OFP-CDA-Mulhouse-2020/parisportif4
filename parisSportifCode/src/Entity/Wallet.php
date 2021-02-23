@@ -23,7 +23,7 @@ class Wallet
      * @ORM\Column(type="integer", length=10)
      * @Assert\PositiveOrZero
      */
-    private int $credit = 0;
+    private ?int $credit = 0;
 
 
     public function getId(): ?int

@@ -23,12 +23,8 @@ class AddMoneyWalletType extends AbstractType
                         ]
                     )
                 ]
-            ])
-            ->add('Valider', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success btn-block'
-                ]
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
