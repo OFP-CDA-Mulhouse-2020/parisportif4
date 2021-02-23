@@ -29,7 +29,7 @@ class BetCrudController extends AbstractCrudController
             TextareaField::new('name_bet'),
             DateTimeField::new('date_bet_limit'),
             NumberField::new('cote'),
-            BooleanField::new('result_bet')
+            BooleanField::new('resultBet')
         ];
     }
 

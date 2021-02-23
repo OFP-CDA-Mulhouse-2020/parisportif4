@@ -7,6 +7,7 @@ use App\Form\AddMoneyWalletType;
 use App\Repository\WalletRepository;
 use App\Services\DataBaseManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Stripe\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,7 @@ class WalletController extends AbstractController
      * @return Response
      * @IsGranted("ROLE_USER")
      * @Route("/wallet/add", name="wallet_add")
+     * @throws ApiErrorException
      */
     public function addMoney(Request $request,
                              DataBaseManager $dbmanager,
@@ -58,6 +60,13 @@ class WalletController extends AbstractController
         if ($formWallet->isSubmitted() && $formWallet->isValid()) {
             if($active == true) {
                 $money = $formWallet->get('credit')->getData();
+                \Stripe\Stripe::setApiKey("sk_test_51IMYwRHdeqTXU8MUEelRoEJWIQ3emdEOYvSyIGSz0OO9aTEMMBnl8IBFb3X8BJ1v2sU39w5MQDzQGYI4vAW6Grli00sHpajrkL");
+                \Stripe\Charge::create(array(
+                    "amount" => $money*100,
+                    "currency" => "eur",
+                    'source' => 'tok_visa',
+                    "description" => "charge for test"
+                ));
                 $wallet->addToCredit($money);
                 $dbmanager->insertDataIntoBase($wallet);
                 $this->addFlash('success', 'La somme a bien été ajoutée à vos fonds!');
